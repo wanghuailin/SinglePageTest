@@ -1,0 +1,581 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑课程主线test</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <style>
+        div {
+            min-height: 30px;
+        }
+
+        .block {
+            cursor: pointer;
+        }
+
+        .content {
+            border-left: 1px solid #b92c28;
+            margin-left: 1%;
+        }
+
+        hr {
+            margin-top: auto;
+            margin-bottom: auto;
+            border-top: 1px solid #b92c28;
+            line-height: 30px;
+            margin-top: 10px;
+            float: left;
+        }
+
+        .hr-col-md-1 {
+            width: 8.4%;
+        }
+
+        .hr-col-md-2 {
+            width: 16.5%;
+        }
+    </style>
+    <style>
+        #advanced {
+            margin-top: 30px;
+        }
+
+        #advanced > div {
+            width: 50%;
+            float: left;
+        }
+    </style>
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+    <script type="application/javascript" src="Script/Sortable.js"></script>
+    <script type="application/javascript" src="js/bootstrap.js"></script>
+</head>
+<body>
+<div>
+    <div class="bg-primary clearfix" id="chapter">章
+        <button class="pull-right btn btn-default badge" type="button" hex-del>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button class="pull-right btn btn-default badge" type="button">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </button>
+        <button class="pull-right btn btn-default badge" type="button" hex-showclass>
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="bg-success clearfix classtitle" id="class">课时
+        <button class="pull-right btn btn-default badge" type="button" hex-del>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button class="pull-right btn btn-default badge" type="button">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        </button>
+        <button class="pull-right btn btn-default badge" type="button" hex-showcontent>
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="bg-info clearfix" id="book"><span class="glyphicon glyphicon-book"></span> 教材
+        <button class="pull-right btn btn-default badge" type="button" hex-delcontent>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="bg-info clearfix" id="file"><span class="glyphicon glyphicon-film"></span> 课件
+        <button class="pull-right btn btn-default badge" type="button" hex-delcontent>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="bg-info clearfix" id="hte"><span class="glyphicon glyphicon-pencil"></span>试卷
+        <button class="pull-right btn btn-default badge" type="button" hex-delcontent>
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </div>
+    <ul class="list-group" id="addresourcescontent">
+        <li class="list-group-item" hex-book="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>教材
+        </li>
+        <li class="list-group-item" hex-file="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>课件
+        </li>
+        <li class="list-group-item" hex-hte="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>试卷
+        </li>
+    </ul>
+    <ul class="list-group" id="addclasscontent">
+        <li class="list-group-item" hex-class="">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>课时
+        </li>
+    </ul>
+</div>
+
+<div class="clearfix">
+    <button class="btn btn-default center-block" type="button" id="addchapter"><span
+            class="glyphicon glyphicon-plus"></span>章
+    </button>
+    <!--<button class="btn btn-default" type="button" id="addclass"><span class="glyphicon glyphicon-plus"></span>课时-->
+    <!--</button>-->
+    <button class="btn btn-default" type="button" id="disabled">
+        点击关闭拖动
+    </button>
+</div>
+
+<div id="multi" class="clearfix">
+    <div class="block">
+        <div class="bg-primary main">1章</div>
+        <div class="content">
+            <div class="classblock">
+                <hr class="hr-col-md-1">
+                <div class="bg-success col-md-offset-1 classtitle">课时1</div>
+                <div class="classcontent">
+                    <hr class="hr-col-md-2">
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                    </div>
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                    </div>
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                    </div>
+                </div>
+            </div>
+            <div class="classblock" id="123">
+                <div class="bg-success col-md-offset-1 classtitle">课时2</div>
+                <div class="classcontent">
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="bg-primary main">2章</div>
+        <div class="content">
+            <div class="classblock">
+                <div class="bg-success col-md-offset-1 classtitle">课时3</div>
+                <div class="classcontent">
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                    </div>
+                </div>
+            </div>
+            <div class="classblock">
+                <div class="bg-success col-md-offset-1 classtitle">课时4</div>
+                <div class="classcontent">
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                    </div>
+                    <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--同步内容-->
+<button id="animatebtn">点击展示另一个课程表</button>
+<div id="del" draggable="true" style="width: 100%;height: 50px;border: 1px dashed #000000">
+    垃圾箱
+</div>
+<div id="advanced">
+    <div id="my">
+        <div class="block">
+            <div class="bg-primary main">1章</div>
+            <div class="content">
+                <div class="classblock">
+                    <hr class="hr-col-md-1">
+                    <div class="bg-success col-md-offset-1 classtitle">课时1</div>
+                    <div class="classcontent">
+                        <hr class="hr-col-md-2">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时2</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="bg-primary main">2章</div>
+            <div class="content">
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时3</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时4</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="other">
+        <div class="block">
+            <div class="bg-primary main">3章</div>
+            <div class="content">
+                <div class="classblock">
+                    <hr class="hr-col-md-1">
+                    <div class="bg-success col-md-offset-1 classtitle">课时5</div>
+                    <div class="classcontent">
+                        <hr class="hr-col-md-2">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时6</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="bg-primary main">4章</div>
+            <div class="content">
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时7</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-pencil"></span>试卷
+                        </div>
+                    </div>
+                </div>
+                <div class="classblock">
+                    <div class="bg-success col-md-offset-1 classtitle">课时8</div>
+                    <div class="classcontent">
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-book"></span> 教材
+                        </div>
+                        <div class="bg-info col-md-offset-2"><span class="glyphicon glyphicon-film"></span> 课件
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--方法-->
+<script>
+    $(function () {
+        drap();
+
+        //添加主章
+        $("#addchapter").click(function () {
+            $('<div class="block"></div>').appendTo($('#multi'));
+            $('#chapter').clone().removeAttr('id').addClass('main').appendTo($('.block').last());
+        });
+        //添加主课时
+        $("#addclass").click(function () {
+            $('<div class="block"></div>').appendTo($('#multi'));
+            $('#class').clone().removeAttr('id').addClass('main').appendTo($('.block').last());
+        });
+
+        //显示课时list
+        mouseshow("[hex-showclass]", $("#addclasscontent"));
+
+        //显示内容list
+        mouseshow("[hex-showcontent]", $("#addresourcescontent"));
+
+        //添加副课时
+        $(document.body).on("click", "[hex-class]", function () {
+            addcontent("class", "col-md-offset-1", true);
+        });
+
+        //添加内容-教材
+        $(document.body).on("click", "[hex-book]", function () {
+            addcontent("book", "col-md-offset-2", false);
+        })
+        //添加内容-课件
+        $(document.body).on("click", "[hex-file]", function () {
+            addcontent("file", "col-md-offset-2", false);
+        })
+        //添加内容-试卷
+        $(document.body).on("click", "[hex-hte]", function () {
+            addcontent("hte", "col-md-offset-2", false);
+        })
+
+        //删除内容
+        $(document.body).on('click', '[hex-del]', function () {
+            $(this).parent().parent().remove();
+
+        })
+        //删除
+        $(document.body).on('click', '[hex-delcontent]', function () {
+            $(this).parent().remove();
+        })
+    })
+
+    //添加内容
+    function addcontent(contentid, classname, isclass) {
+        var block = $("#currentactive").parents('.block')
+        if ($(block).find(".content").length <= 0) {
+            //如果没有内容
+            $('<div class="content"></div>').appendTo($(block));
+        }
+        if (isclass) {
+            //如果加副课时
+            $('<div class="classblock"></div>').appendTo($(block).find(".content"));
+            $('#' + contentid + '').clone().removeAttr('id').addClass(classname).appendTo($(block).find(".classblock").last());
+        } else {
+            //如果课时加入资源
+            var classblock = $("#currentactive").parents('.classblock');
+            if ($(classblock).find(".classcontent").length <= 0) {
+                $('<div class="classcontent"></div>').appendTo($(classblock));
+            }
+            $('#' + contentid + '').clone().removeAttr('id').addClass(classname).appendTo($(classblock).find(".classcontent"));
+        }
+        drap();
+    }
+</script>
+<!--点击加号显示内容，随鼠标显示-->
+<script>
+    function mouseshow(trigger, shower) {
+        $(document.body).on("click", trigger, function () {
+            var top = parseInt($(this).offset().top) + parseInt($(this).height());
+            var left = parseInt($(this).offset().left) + parseInt($(this).width());
+            $(shower).css("top", top + 'px').css("left", left + 'px').css("position", "absolute").width("75px").show().css("z-index", "9");
+
+            $("#currentactive").removeAttr("id");
+            $(this).attr("id", "currentactive");
+
+            //鼠标移出当前项则隐藏
+            $(this).parent().mouseleave(function () {
+                $(shower).hide();
+            })
+        });
+
+        //鼠标移入到内容则显示
+        $(shower).mouseenter(function () {
+            $(shower).show();
+        })
+        //鼠标移出内容则隐藏
+        $(shower).mouseleave(function () {
+            $(shower).hide();
+        })
+
+    }
+</script>
+<!--拖动-->
+<script>
+    function drap() {
+        var sortable = "";
+        var contentsortable = [];
+        var classcontentsortable = [];
+
+        var byId = function (id) {
+            return document.getElementById(id);
+        };
+
+        sortable = Sortable.create(byId('multi'), {
+            animation: 150,
+            draggable: '.block',
+            handle: '.main'
+        });
+
+        [].forEach.call(byId('multi').getElementsByClassName('content'), function (el) {
+            var xx = Sortable.create(el, {
+                group: 'content',
+                animation: 150
+            });
+            contentsortable.push(xx);
+        });
+
+        [].forEach.call(byId('multi').getElementsByClassName('classcontent'), function (el) {
+            var yy = Sortable.create(el, {
+                group: 'classcontent',
+                animation: 150
+            });
+            classcontentsortable.push(yy);
+        });
+
+        $("#disabled").click(function () {
+            sortable.option("disabled", true);
+            contentsortable.forEach(function (item) {
+                item.option("disabled", true);
+            })
+            classcontentsortable.forEach(function (item) {
+                item.option("disabled", true);
+            })
+        });
+    }
+
+    //拖拽后的纠察，取值  onEnd:drapend
+    function drapend() {
+        $(".content").each(function () {
+            if ($(this).children().first().attr("class").contains("col-md-offset-2")) {
+                $(this).children().first().addClass("bg-danger");
+            }
+        });
+    }
+</script>
+<!--同步内容-->
+<script>
+    var byId = function (id) {
+        return document.getElementById(id);
+    };
+
+    $(function () {
+        $("#animatebtn").click(function () {
+            $("#my").animate({
+                width: '-=11%'
+            });
+            $("#other").animate({
+                width: '+=10%'
+            });
+        })
+        AdvancedContent();
+    })
+
+    function AdvancedContent(evt) {
+        Sortable.create(byId('my'), {
+            group: {
+                name: 'block',
+                pull: false,
+                put: true
+            },
+            animation: 150,
+            onEnd: function (evt) {
+                AdvancedContent(evt);
+            }
+        });
+        Sortable.create(byId('other'), {
+            group: {
+                name: 'block',
+                pull: 'clone',
+                put: false
+
+            },
+            animation: 150,
+            onEnd: function (evt) {
+                AdvancedContent(evt);
+            }
+        });
+
+        [].forEach.call(byId('my').getElementsByClassName('content'), function (el) {
+            Sortable.create(el, {
+                group: {
+                    name: 'advancedcontent',
+                    pull: false,
+                    put: true
+                },
+                animation: 150,
+                onEnd: function (evt) {
+                    AdvancedContent(evt);
+                }
+            });
+        });
+        [].forEach.call(byId('other').getElementsByClassName('content'), function (el) {
+            Sortable.create(el, {
+                group: {
+                    name: 'advancedcontent',
+                    pull: 'clone',
+                    put: false
+                },
+                animation: 150,
+                onEnd: function (evt) {
+                    AdvancedContent(evt);
+                }
+            });
+        });
+        [].forEach.call(byId('my').getElementsByClassName('classcontent'), function (el) {
+            Sortable.create(el, {
+                group: {
+                    name: 'advancedclasscontent',
+                    pull: false,
+                    put: true
+                },
+                animation: 150,
+                onEnd: function (evt) {
+                    AdvancedContent(evt);
+                }
+            });
+        });
+        [].forEach.call(byId('other').getElementsByClassName('classcontent'), function (el) {
+            Sortable.create(el, {
+                group: {
+                    name: 'advancedclasscontent',
+                    pull: 'clone',
+                    put: false
+                },
+                animation: 150,
+                onEnd: function (evt) {
+                    AdvancedContent(evt);
+                }
+            });
+        });
+    }
+</script>
+<script>
+    Sortable.create(byId('del'), {
+        group: {
+            name: 'delblock',
+            pull: false,
+            put: true
+        },
+        animation: 150,
+        onAdd: function (evt) {
+            console.log("onAdd！");
+//            console.log(evt.item);
+        }
+    });
+    Sortable.create(byId('my'), {
+        group: {
+            name: 'delblock',
+            pull: true,
+            put: false
+
+        },
+        animation: 150,
+        onEnd: function (evt) {
+            console.log("拖动章！");
+        }
+    });
+    [].forEach.call(byId('my').getElementsByClassName('content'), function (el) {
+        Sortable.create(el, {
+            group: {
+                name: 'delblock',
+                pull: true,
+                put: false
+            },
+            animation: 150,
+            onEnd: function (evt) {
+                console.log("拖动课时！");
+            }
+        });
+    });
+    [].forEach.call(byId('my').getElementsByClassName('classcontent'), function (el) {
+        Sortable.create(el, {
+            group: {
+                name: 'delblock',
+                pull: true,
+                put: false
+            },
+            animation: 150,
+            onEnd: function (evt) {
+                console.log("拖动资源！");
+            }
+        });
+    });
+
+//    $(document.body).on('drop', '#del', function (ev) {
+//        console.log("放入垃圾箱！");
+//        console.log(ev.target);
+//    })
+</script>
+</body>
+</html>

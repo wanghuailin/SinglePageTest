@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div>
+        <p>h5的datalist</p>
+        <input list="browsers" type="search">
+        <datalist id="browsers">
+            <option value="力学" key="1">
+            <option value="光学" key="2">
+            <option value="电学" key="3">
+            <option value="声学" key="4">
+            <option value="美学" key="5">
+        </datalist>
+    </div>
+
+    <button id="solo">取值</button>
+
+    <script>
+        $(function () {
+            $("#solo").click(function () {
+                var value = $('input[list="browsers"]').val();
+                var key = "";
+                $("#browsers").find("option").each(function () {
+                    if ($(this).attr("value") == value) {
+                        key = $(this).attr("key");
+                    }
+                })
+
+                if (key.length > 0) {
+                    alert(key);
+                } else {
+                    alert("no zhi")
+                }
+
+            })
+        });
+    </script>
+</body>
+</html>

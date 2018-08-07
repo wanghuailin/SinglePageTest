@@ -1,0 +1,43 @@
+﻿/*//屏幕滑块*/
+body {
+    overflow-x: hidden;
+}
+
+section.scene {
+    width:100%;
+    position: absolute;
+    padding-bottom:40px;
+    -webkit-transition: all .35s ease-out;
+    -moz-transition: all .35s ease-out;
+    transition: all .35s ease-out;
+}
+
+    section.scene.one {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+        section.scene.one.active {
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        section.scene.one.after {
+            -webkit-transform: translate3d(-100%,0, 0);
+            -moz-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+        }
+
+    section.scene.two {
+        -webkit-transform: translate3d(100%, 0, 0);
+        -moz-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
+
+        section.scene.two.active {
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }

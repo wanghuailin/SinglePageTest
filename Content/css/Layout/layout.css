@@ -1,0 +1,34 @@
+/* line 2, ../../sass/Layout/layout.sass */
+.syb-nav {
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background-color: #ffffff;
+}
+/* line 9, ../../sass/Layout/layout.sass */
+.syb-nav > div {
+  width: 1180px;
+  margin: 0 auto;
+}
+/* line 12, ../../sass/Layout/layout.sass */
+.syb-nav > div > .link {
+  height: 100%;
+}
+/* line 14, ../../sass/Layout/layout.sass */
+.syb-nav > div > .link > a {
+  height: 100%;
+  width: auto;
+  float: left;
+  display: block;
+  padding: 0 20px;
+  line-height: 50px;
+  font-size: 18px;
+  color: #666666;
+}
+/* line 23, ../../sass/Layout/layout.sass */
+.syb-nav > div > .link > a.active, .syb-nav > div > .link > a:hover {
+  background-color: #005d32;
+  color: #ffffff;
+}

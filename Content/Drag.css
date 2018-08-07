@@ -1,0 +1,14 @@
+.divblock{
+    width: 200px;
+    height: 200px;
+    color: white;
+    background-color: #4183c4;
+    border: 1px solid #dddddd;
+}
+.divsmallblock{
+    width: 100px;
+    height: 100px;
+    color: white;
+    background-color: #dddddd;
+    border: 1px solid #dddddd;
+}

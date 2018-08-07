@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>翻页for课程主线</title>
+    <style>
+        .content {
+            box-sizing: border-box;
+        }
+
+        .block {
+            border: 1px solid #47a447;
+            box-sizing: border-box;
+            background-color: #FFFFFF;
+        }
+        .hard{
+            background-color: #cacaca;
+        }
+    </style>
+    <script src="../Script/jquery-1.10.2.js"></script>
+    <script src="./turn.js"></script>
+    <script src="./zoom.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+    <div class="hard">数学九年级上册</div>
+    <div class="hard"></div>
+    <div class="block">
+        <div class="main" hex-toggle="show">
+            <div class="line">
+                <span><i hex-sequence="">第1章</i><strong hex-name="">特殊平行四边形</strong></span>
+            </div>
+        </div>
+        <div class="classblock"><!--repeat117215668228:start-->
+            <div class="content" key="863289126586" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第1课时</i>
+                    <strong hex-name="">矩形的性质与判定</strong></span></div>
+            </div>
+            <div class="content" key="863289126585" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第2课时</i><strong hex-name="">正方形的性质与判定</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863289184726" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第3课时</i><strong hex-name="">共用资源</strong></span></div>
+            </div>
+            <div class="content" key="863289126587" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第4课时</i><strong hex-name="">菱形的性质与判定</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863289305518" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第5课时</i><strong hex-name="">第五课时</strong></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="main" hex-toggle="show">
+            <div class="line"><span><i hex-sequence="">第2章</i><strong hex-name="">特殊平行四边形</strong><!--ms-if--></span>
+            </div>
+        </div>
+        <div class="classblock">
+            <div class="content" key="863290178683" issync="true">
+                <div class="classtitle" hex-toggle="show"><span><i hex-sequence="">第1课时</i><strong hex-name="">菱形的性质与判定（1）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178680" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第2课时</i><strong hex-name="">菱形的性质与判定（2）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178684" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第3课时</i><strong hex-name="">菱形的性质与判定（3）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178681" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第4课时</i><strong hex-name="">矩形的性质与判定（1）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178685" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第5课时</i><strong hex-name="">矩形的性质与判定（2）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178687" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第6课时</i><strong hex-name="">矩形的性质与判定（3）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178682" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第7课时</i><strong
+                        hex-name="">正方形的性质与判定（1）</strong></span></div>
+            </div>
+            <div class="content" key="863290178679" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第8课时</i><strong
+                        hex-name="">正方形的性质与判定（2）</strong></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="main" hex-toggle="show">
+            <div class="line"><span><i hex-sequence="">第3章</i><strong hex-name="">特殊平行四边形</strong><!--ms-if--></span>
+            </div>
+        </div>
+        <div class="classblock">
+            <div class="content" key="863290178683" issync="true">
+                <div class="classtitle" hex-toggle="show"><span><i hex-sequence="">第1课时</i><strong hex-name="">菱形的性质与判定（1）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178680" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第2课时</i><strong hex-name="">菱形的性质与判定（2）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178684" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第3课时</i><strong hex-name="">菱形的性质与判定（3）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178681" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第4课时</i><strong hex-name="">矩形的性质与判定（1）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178685" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第5课时</i><strong hex-name="">矩形的性质与判定（2）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178687" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第6课时</i><strong hex-name="">矩形的性质与判定（3）</strong></span>
+                </div>
+            </div>
+            <div class="content" key="863290178682" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第7课时</i><strong
+                        hex-name="">正方形的性质与判定（1）</strong></span></div>
+            </div>
+            <div class="content" key="863290178679" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第8课时</i><strong
+                        hex-name="">正方形的性质与判定（2）</strong></span></div>
+            </div>
+            <div class="content" key="863290178679" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第8课时</i><strong
+                        hex-name="">正方形的性质与判定（3）</strong></span></div>
+            </div>
+            <div class="content" key="863290178679" issync="true">
+                <div class="classtitle"><span><i hex-sequence="">第8课时</i><strong
+                        hex-name="">正方形的性质与判定（4）</strong></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="hard">萧晓老师</div>
+</div>
+<button id="pre">上一页</button>
+<button id="next">下一页</button>
+</body>
+<script>
+    $('#content').turn({
+        // Width
+        width: 500,
+        // Height
+        height: 300,
+        // Elevation
+        elevation: 50,
+        // Enable gradients
+        gradients: true,
+        // Auto center this flipbook
+        autoCenter: true,
+    });
+    $(function () {
+        $("#pre").click(function () {
+            $('#content').turn('previous');
+        })
+        $("#next").click(function () {
+            $('#content').turn('next');
+        })
+    })
+</script>
+</html>

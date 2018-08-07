@@ -1,0 +1,88 @@
+@charset "UTF-8";
+/* v 1.0.0 */
+/* 修改内容： */
+/* 1. */
+/* line 50, ../../sass/_function.sass */
+.thom_picture {
+  background-image: url("/image/thom.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.jonny_picture {
+  background-image: url("/image/jonny.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.colin_picture {
+  background-image: url("/image/colin.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.phil_picture {
+  background-image: url("/image/phil.jpg");
+}
+
+/* easy-animation.scss */
+/* line 12, ../../sass/Module/BuildCourse.sass */
+.main_div {
+  width: 1180px;
+  margin: 0 auto;
+}
+
+/* line 16, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine {
+  padding-top: 110px;
+  display: flex;
+}
+/* line 19, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .left {
+  flex: none;
+  width: 270px;
+}
+/* line 22, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content {
+  flex: 1;
+}
+/* line 24, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .nav {
+  padding: 20px 0;
+}
+/* line 26, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .step {
+  padding-bottom: 25px;
+}
+/* line 29, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .btn {
+  height: 50px;
+  border-bottom: 1px solid #e8e8e8;
+}
+/* line 32, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .btn > .left {
+  float: left;
+}
+/* line 34, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .btn > .left > h2 {
+  float: left;
+  color: #808080;
+  margin-right: 20px;
+  font-size: 16px;
+  line-height: 26px;
+}
+/* line 40, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .btn > .right {
+  float: right;
+}
+/* line 42, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .content {
+  background-color: #f8f8f8;
+  padding: 20px 50px;
+}
+/* line 45, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .save {
+  float: right;
+  margin-top: 20px;
+}
+/* line 48, ../../sass/Module/BuildCourse.sass */
+.hex-k12-BuildCourseLine > .content > .Courseline > .save > button {
+  margin-left: 20px;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js-pdf</title>
+    <script src="../Script/jquery-1.10.2.js"></script>
+    <script src="jspdf.min.js"></script>
+</head>
+<body>
+<div id="render_me">
+    <span>Hello world</span>
+</div>
+</body>
+<script>
+    var doc = new jsPDF()
+    doc.text('Hello world!', 10, 10)
+    doc.save('a4.pdf')
+</script>
+<!--<script>-->
+    <!--var doc = new jsPDF();-->
+    <!--var specialElementHandlers = {-->
+        <!--'#editor': function(element, renderer){-->
+            <!--return true;-->
+        <!--}-->
+    <!--};-->
+    <!--doc.fromHTML($('#render_me').get(0), 15, 15, {-->
+        <!--'width': 170,-->
+        <!--'elementHandlers': specialElementHandlers-->
+    <!--});-->
+    <!--doc.save("习题" + '.pdf');-->
+<!--</script>-->
+</html>

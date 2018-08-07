@@ -1,0 +1,149 @@
+@charset "UTF-8";
+/* v 1.0.0 */
+/* 修改内容： */
+/* 1. */
+/* line 50, ../../sass/_function.sass */
+.thom_picture {
+  background-image: url("/image/thom.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.jonny_picture {
+  background-image: url("/image/jonny.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.colin_picture {
+  background-image: url("/image/colin.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.phil_picture {
+  background-image: url("/image/phil.jpg");
+}
+
+/* easy-animation.scss */
+/* line 13, ../../sass/Module/index.sass */
+.hex-k12-index {
+  width: 1180px;
+  margin: 90px auto 0;
+}
+/* line 17, ../../sass/Module/index.sass */
+.hex-k12-index > div > .title {
+  height: 16px;
+}
+/* line 19, ../../sass/Module/index.sass */
+.hex-k12-index > div > .title > i {
+  height: 16px;
+  width: 5px;
+  display: block;
+  background-color: #60d7da;
+  border-radius: 5px;
+  float: left;
+}
+/* line 26, ../../sass/Module/index.sass */
+.hex-k12-index > div > .title > h2 {
+  font-size: 16px;
+  line-height: 16px;
+  color: #676767;
+  padding-left: 15px;
+}
+/* line 31, ../../sass/Module/index.sass */
+.hex-k12-index > div.logo {
+  width: 240px;
+  height: 130px;
+  margin: 0 auto;
+  background-color: black;
+}
+/* line 36, ../../sass/Module/index.sass */
+.hex-k12-index > div.logo > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+/* line 39, ../../sass/Module/index.sass */
+.hex-k12-index > div.search {
+  height: 90px;
+  width: 740px;
+  padding-top: 40px;
+  margin: 0 auto;
+}
+/* line 44, ../../sass/Module/index.sass */
+.hex-k12-index > div.grade {
+  overflow: hidden;
+  width: 1110px;
+  margin: 0 auto 220px;
+}
+/* line 48, ../../sass/Module/index.sass */
+.hex-k12-index > div.grade > .list {
+  width: 954px;
+  margin: 0 auto;
+}
+/* line 51, ../../sass/Module/index.sass */
+.hex-k12-index > div.mycourse {
+  width: 1110px;
+  margin: 0 auto;
+}
+
+/* line 54, ../../sass/Module/index.sass */
+body.bg {
+  background-image: url("../../../bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* line 59, ../../sass/Module/index.sass */
+body.bg > .bgcolor {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+/* line 70, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-Header .right > div > a {
+  color: #ffffff;
+}
+/* line 72, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-Header .right > div > a:hover {
+  color: #60d7da;
+}
+/* line 75, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-Footer span, body.bg .hex-cmpnt-Footer a {
+  color: #ffffff !important;
+}
+/* line 80, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-CourseList > .title > .left > h2 {
+  color: #FFFFFF;
+}
+/* line 83, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-CourseList > .title > .right > a {
+  color: #FFFFFF;
+}
+/* line 85, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-CourseList > .title > .right > a:hover {
+  color: #60d7da;
+}
+/* line 87, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-CourseList > .list {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+/* line 91, ../../sass/Module/index.sass */
+body.bg .grade > .title > h2 {
+  color: #FFFFFF;
+}
+/* line 93, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-Drop-downMenu {
+  background-image: url("../../../Components/Drop_downMenu/img/arrow_w.png");
+}
+/* line 95, ../../sass/Module/index.sass */
+body.bg .hex-cmpnt-Drop-downMenu:hover {
+  background-image: url("../../../Components/Drop_downMenu/img/arrow_h.png");
+}
+/* line 98, ../../sass/Module/index.sass */
+body.bg .mobile > a {
+  background-image: url("../../../Components/Header/img/phone_w.png") !important;
+}
+/* line 100, ../../sass/Module/index.sass */
+body.bg .mobile > a:hover {
+  background-image: url("../../../Components/Header/img/phone_h.png") !important;
+}

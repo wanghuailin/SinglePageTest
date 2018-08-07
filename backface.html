@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标悬浮180旋转显示</title>
+    <style>
+        .block {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .block > div {
+            width: 200px;
+            height: 200px;
+
+            -moz-transition: all 0.5s ease-out;
+            -o-transition: all 0.5s ease-out;
+            -webkit-transition: all 0.5s ease-out;
+            transition: all 0.5s ease-out;
+        }
+
+        .block > .front {
+            background-image: url("Content/images/user_default.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+            backface-visibility: hidden;
+            position: relative;
+        }
+
+        .block > .back {
+            background-image: url("Content/images/userdefault.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            backface-visibility: hidden;
+        }
+    </style>
+    <style>
+        .level > .back {
+            -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .level:hover > .front {
+            -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .level:hover > .back {
+            -moz-transform: rotateY(360deg);
+            -ms-transform: rotateY(360deg);
+            -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+        }
+    </style>
+    <style>
+        .vertical > .back {
+            -moz-transform: rotateX(180deg);
+            -ms-transform: rotateX(180deg);
+            -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+        }
+
+        .vertical:hover > .front {
+            -moz-transform: rotateX(180deg);
+            -ms-transform: rotateX(180deg);
+            -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+        }
+
+        .vertical:hover > .back {
+            -moz-transform: rotateX(360deg);
+            -ms-transform: rotateX(360deg);
+            -webkit-transform: rotateX(360deg);
+            transform: rotateX(360deg);
+        }
+    </style>
+    <style>
+        .rotatez > .back {
+            opacity: 0;
+
+            -moz-transform: rotateZ(180deg);
+            -ms-transform: rotateZ(180deg);
+            -webkit-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+        }
+
+        .rotatez:hover > .front {
+            opacity: 0;
+
+            -moz-transform: rotateZ(180deg);
+            -ms-transform: rotateZ(180deg);
+            -webkit-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+        }
+
+        .rotatez:hover > .back {
+            opacity: 1;
+
+            -moz-transform: rotateZ(360deg);
+            -ms-transform: rotateZ(360deg);
+            -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+        }
+    </style>
+</head>
+<body>
+<div class="block level">
+    <div class="front">
+    </div>
+    <div class="back">
+    </div>
+</div>
+<div class="block vertical">
+    <div class="front">
+    </div>
+    <div class="back">
+    </div>
+</div>
+<div class="block rotatez">
+    <div class="front">
+    </div>
+    <div class="back">
+    </div>
+</div>
+</body>
+</html>

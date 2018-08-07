@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>划重点简易版（兼容49版本浏览器）</title>
+    <link href="//static.hexfuture.net/Content/css/bootstrap.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//reader.hexfuture.net/Content/css/hex-cwshow.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/plugins/hexformula/css/formulaMath.min.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/plugins/hexformula/css/hexformula_size1-regular.min.css"
+          rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/iframe/iframe.min.css" rel="stylesheet">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .js-underline {
+            border-bottom: 3px solid #fc7039;
+        }
+    </style>
+</head>
+<body>
+<div id="pagecontent">
+
+</div>
+</body>
+<script src="../Script/jquery-1.10.2.js"></script>
+<script>
+    //获取数据（数学/语文）
+    var url = [{secId: "863289044970", ebookId: "863288436234"}, {
+        secId: "863297004164",
+        ebookId: "863296993893"
+    }, {secId: "863289045076", ebookId: "863288436234"}];
+    $.ajax({
+        url: "//api.hexfuture.com/Ebook/PageContent?ssotoken=6FD835BB7E9016171CFED5C73888933950412D8C73C69DB3E5E7BAD4A06CEFB4123824DCB4E624E348848484CD0DF96984D2423CA59A8C9528F5E0E86B32F521B1F054BBA6478199F5AD490440C7FBEA5A98687E12DAEA9B5A339C8F7CD07E1801D8DF7BA727AFCFB3553D400291FE1AE4620AC66C41629D",
+        method: "GET",
+        data: {secId: url[2].secId, ebookId: url[2].ebookId},
+        success: function (data, s, xhr) {
+            $("#pagecontent").html(data);
+            imgOnError();
+        }
+    });
+
+    function imgOnError(img) {
+        //渲染图片
+        $.each($("#pagecontent").find('img'), function (i, el) {
+            $(el).attr('src', "//reader.hexfuture.net" + $(el).attr('src'));
+        })
+    }
+</script>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            //当松开鼠标按钮时
+            $("#pagecontent").on("mouseup", function (e) {
+                e.stopPropagation();
+                var txt = window.getSelection ? window.getSelection() : document.selection.createRange().text;
+                var range = window.getSelection().getRangeAt(0);
+                sendRangeData(range);
+            });
+        })
+
+        function sendRangeData(range) {
+            if (range == null || typeof range !== "object") return;
+            var objRectList = getRects(range);
+            var rects = new Array();
+            $.each(objRectList, function (k) {
+                var rect = {};
+                rect.top = this.top + $(document).scrollTop();
+                rect.left = this.left;
+                rect.height = this.height;
+                rect.width = this.width;
+                //过滤包含重叠部分rect
+                if (k >= 1) {
+                    var left = objRectList[k - 1].left + objRectList[k - 1].width;
+                    if (!(objRectList[k - 1].top == this.top && left > this.left)) {
+                        rects.push(rect);
+                    }
+                } else {
+                    rects.push(rect);
+                }
+            });
+            randerUnderline(rects);
+        };
+        //获取选中框的矩形位置,DOMRect不兼容低版本浏览器
+        function getRects(range) {
+            var rectList = [];
+            if (range.startContainer != range.endContainer && range.getClientRects().length > 1) {
+                //跨段且里面有多个html标签
+                //1、将选区按段划分，--按p元素划分
+                //2、一行的使用getBoundingClientRect获取选取位置
+                //3、 todo 有一段p标签多行的情况，需要将一段文字选区划分成多行文字选区
+                //获取hexid下的node集合，找到对应的range选区，根据rect矩形的位置，判断是否换行，生成新的range
+                var listRange = _buildRangeList(range);
+                for (var i = 0; i <= listRange.length - 1; i++) {
+                    var itemrange = listRange[i];
+                    var temprectList = itemrange.getClientRects();
+                    var rectBoundingClient = itemrange.getBoundingClientRect();
+                    var result = true;
+                    //for循环减少最后一项，因为最后一项在一段的时候，值肯定和getBoundingClientRect相等
+                    for (var j = 0; j < temprectList.length - 1; j++) {
+                        //如果当前有选区为一整行，说明虽然在同一个p标签下，但是选择了多行
+                        if (temprectList[j].width + temprectList[j].left == rectBoundingClient.width + rectBoundingClient.left) {
+                            result = false;
+                        }
+                    }
+                    if (result) {
+                        rectList.push(itemrange.getBoundingClientRect());
+                    } else {
+                        for (var k = 0; k <= temprectList.length - 1; k++) {
+                            rectList.push(temprectList[k]);
+                        }
+                    }
+                }
+            } else {
+                rectList = range.getClientRects();
+                //rectList.push(range.getBoundingClientRect());
+            }
+            return getOrder(rectList);
+        }
+
+        //尝试划分一行|->失败
+        function test(range) {
+            var node = range.commonAncestorContainer.childNodes, rangeList = [];
+
+            var currentRange = document.createRange();
+            var firstNode = node[node.length - 1],
+                    length = firstNode.nodeType === Node.TEXT_NODE ? firstNode.length : 1;
+            currentRange.setStart(range.startContainer, range.startOffset);
+            currentRange.setEnd(firstNode, length);
+            rangeList.push(currentRange);
+
+            var currentRange = document.createRange();
+            var firstNode = node[node.length - 1]
+            currentRange.setStart(firstNode, 0);
+            currentRange.setEnd(range.endContainer, range.endOffset);
+            rangeList.push(currentRange);
+
+            return rangeList;
+        }
+
+        //RectList排序(从上下，左右)
+        function getOrder(objRectList) {
+            if (objRectList.length == 1) return objRectList;
+            var objRecArry = [];
+            $.each(objRectList, function (i) {
+                objRecArry[i] = objRectList[i];
+            });
+            return objRecArry.sort(compact);
+        }
+
+        function compact(v1, v2) {
+            if (v1.top - v2.top == 0) {
+                return v1.left - v2.left;
+            }
+            return v1.top - v2.top;
+        }
+
+        //划分段
+        function _buildRangeList(range) {
+            try {
+                var hexids = _countParagraphHexID(range),
+                        rangeList = [];
+
+                if (hexids === undefined || hexids.length <= 0) {
+                    rangeList.push(range);
+                    return rangeList;
+                }
+
+                //没有跨段
+                if (getHexIDByNode(range.startContainer) === getHexIDByNode(range.endContainer)) {
+                    rangeList.push(range);
+                    return rangeList;
+                }
+
+                //如果跨段落，则拆分range为多个range
+                for (var i = 0; i <= hexids.length - 1; i++) {
+
+                    var hexid = hexids[i],
+                            currentRange = document.createRange();
+
+                    if (hexid === getHexIDByNode(range.startContainer.parentNode)) {
+                        currentRange.setStart(range.startContainer, range.startOffset);
+                        // currentRange.setEnd(range.startContainer, range.startContainer.length - 1);
+                        //如果startContainer只是当前第一个元素，则失效，所以查找节点最后一个子元素来作为setEnd的截止节点
+                        var node = getNodeByHexId(hexid);
+                        if (node.childNodes.length > 0) {
+                            var lastNode = getLastNode(node),
+                                    length = lastNode.nodeType === Node.TEXT_NODE ? lastNode.length : 0;
+                            currentRange.setEnd(lastNode, length);
+                        } else {
+                            currentRange.setEnd(range.startContainer, range.startContainer.length - 1);
+                        }
+                        rangeList.push(currentRange);
+
+                    } else if (hexid === getHexIDByNode(range.endContainer.parentNode)) {
+                        var node = getNodeByHexId(hexid);
+                        var firstNode = node.firstChild;
+
+                        currentRange.setStart(firstNode, 0);
+                        currentRange.setEnd(range.endContainer, range.endOffset);
+                        rangeList.push(currentRange);
+
+                    } else {
+
+                        var node = getNodeByHexId(hexid);
+
+                        var firstNode = node.firstChild,
+                                lastNode = getLastNode(node),
+                                length = lastNode.nodeType === Node.TEXT_NODE ? lastNode.length : 0;
+
+                        currentRange.setStart(firstNode, 0);
+                        currentRange.setEnd(lastNode, length);
+                        rangeList.push(currentRange);
+                    }
+
+                }
+
+                return rangeList;
+            } catch (ex) {
+            }
+        };
+
+        //根据用户选择，拆分range.
+        function _countParagraphHexID(range) {
+            try {
+                var hexids = [],
+                        //cloneContents：返回新的 DocumentFragment 对象，它包含该范围表示的文档区域的副本
+                        cloneContent = range.cloneContents(),
+                        count = $(cloneContent).children().length; // cloneContent.children.length;//获取子元素数量，不递归。
+
+                for (var i = 0; i <= count - 1; i++) {
+
+                    var node = $(cloneContent).children()[i];
+
+                    var hexid = node.getAttribute("hexid");
+
+                    hexids.push(hexid);
+                }
+
+                return hexids;
+            } catch (ex) {
+
+            }
+        };
+
+        var pageContainerId = "pagecontent";
+        var pageContainer = document.getElementById(pageContainerId);
+        //递归查询父元素hexid.
+        function getHexIDByNode(node) {
+
+            if (node.nodeType === Node.ELEMENT_NODE) {
+
+            }
+
+            if (node.nodeType === Node.TEXT_NODE) {
+                node = node.parentNode;
+            }
+
+            var hexid = node.getAttribute("hexid");
+
+            if (hexid) {
+
+                return hexid;
+            }
+
+            if (node.parentNode == pageContainer) {
+                return "";
+            }
+
+            var parentNode = node.parentNode;
+
+            return hexid == null ? getHexIDByNode(parentNode) : "";
+        };
+
+        //获取hexid的document节点
+        function getNodeByHexId(hexid) {
+            return $("[hexid='" + hexid + "']")[0];
+        };
+
+        //根据长度－创建rangeOffset.
+        function getLastNode(node) {
+
+            if (node.nodeType === Node.TEXT_NODE) {
+
+                return node;
+            }
+
+
+            var nodeLast = node.childNodes[node.childNodes.length - 1];
+
+
+            if (nodeLast.nodeType === Node.TEXT_NODE) {
+
+                return nodeLast;
+            }
+
+            if (nodeLast.childNodes.length > 0) {
+
+                return getLastNode(nodeLast);
+            }
+
+            return nodeLast;
+        };
+
+        //划重点
+        function randerUnderline(Rects) {
+            var iframe = document.getElementById("pagecontent");
+            var pos = getAbsPoint(iframe);
+
+            $.each(Rects, function () {
+                //window.ActiveXObject：区别IE与其他浏览器 !!window.ActiveXObject=>IE浏览器
+                if (!!window.ActiveXObject || "ActiveXObject" in window) {
+                    var reviseheight = data.Fontsize + 2;
+                    var revisetop = (this.height - reviseheight) / 2 - 1;//-1为校正实际显示效果
+                    var newDiv = $('<div class="js-underline" style="position:absolute;top:' + (this.top + pos.y + revisetop) + 'px;left:' + (this.left + pos.x) + 'px;height:' + (reviseheight) + 'px;width: ' + this.width + 'px;' + '"></div>');
+                    $(document.body).append(newDiv);
+                } else {
+                    var newDiv = $('<div class="js-underline" style="position:absolute;top:' + (this.top + pos.y) + 'px;left:' + (this.left + pos.x) + 'px;height:' + this.height + 'px;width: ' + this.width + 'px;' + '"></div>');
+                    $(document.body).append(newDiv);
+                }
+            });
+        };
+
+        //获取元素距离页面左上角距离
+        function getAbsPoint(e) {
+            var x = e.offsetLeft;
+            var y = e.offsetTop;
+            while (e = e.offsetParent) {
+                x += e.offsetLeft;
+                y += e.offsetTop;
+            }
+            return {'x': x, 'y': y};
+        }
+    })
+</script>
+</html>

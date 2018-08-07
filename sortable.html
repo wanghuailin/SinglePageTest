@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+    <script type="application/javascript" src="Script/Sortable.js"></script>
+    <script type="application/javascript" src="js/bootstrap.js"></script>
+</head>
+<body>
+<ul id="list">
+    <li>бегемот</li>
+    <li>корм</li>
+    <li>антон</li>
+    <li>сало</li>
+    <li>железосталь</li>
+    <li>валик</li>
+    <li>кровать</li>
+    <li>краб</li>
+</ul>
+<ul id="foo">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+<ul id="bar">
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>0</li>
+</ul>
+<div id="multi" style="margin-left: 30px">
+    <div>
+        <div data-force="5" class="layer title title_xl">Multi</div>
+    </div>
+
+    <div class="layer tile" data-force="30">
+        <div class="tile__name">Group A</div>
+        <div class="tile__list">
+            <img src="Content/imgs/1.jpg"/>
+            <img src="Content/imgs/2.jpg"/>
+            <img src="Content/imgs/3.jpg"/>
+            <img src="Content/imgs/4.jpg"/>
+        </div>
+    </div>
+
+    <div class="layer tile" data-force="25">
+        <div class="tile__name">Group B</div>
+        <div class="tile__list">
+            <img src="Content/imgs/5.jpg"/><img src="Content/imgs/6.jpg"/><img src="Content/imgs/7.jpg"/>
+        </div>
+    </div>
+
+    <div class="layer tile" data-force="20">
+        <div class="tile__name">Group C</div>
+        <div class="tile__list">
+            <img src="Content/imgs/8.jpg"/>
+            <img src="Content/imgs/9.jpg"/>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        //base
+        var list = document.getElementById("list");
+        Sortable.create(list); // That's all.
+        DragNotOpenPage($("#list li"));
+
+        //group
+        var foo = document.getElementById("foo");
+        Sortable.create(foo, {group: "omega"});
+        DragNotOpenPage($("#foo li"));
+
+        var bar = document.getElementById("bar");
+        Sortable.create(bar, {group: "omega"});
+        DragNotOpenPage($("#bar li"));
+
+        // Multi groups
+        var byId = function (id) {
+            return document.getElementById(id);
+        };
+        Sortable.create(byId('multi'), {
+            animation: 150,
+            draggable: '.tile',
+            handle: '.tile__name'
+        });
+
+        [].forEach.call(byId('multi').getElementsByClassName('tile__list'), function (el) {
+            Sortable.create(el, {
+                group: 'photo',
+                animation: 150,
+                onEnd: function () {
+                },
+            });
+        });
+        DragNotOpenPage($("#multi img"));
+
+        //禁止拖拽打开新页面
+        function DragNotOpenPage(drag) {
+            $(document.body).on('dragstart', drag, function (event) {
+                event.stopPropagation();
+            });
+            $(document.body).on('drag', drag, function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+            $(document.body).on('drop', drag, function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+            $(document.body).on('dragover', drag, function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+            $(document.body).on('dragenter', drag, function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+            $(document.body).on('dragend', drag, function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            });
+        }
+    })
+</script>
+</body>
+</html>

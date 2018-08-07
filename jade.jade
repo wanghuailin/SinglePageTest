@@ -1,0 +1,79 @@
+//
+   Created by Wang on 2016/2/29.
+
+    //Basics
+- var x= {"name": "Bob"}
+- var y= {"book": {"name": "Hello", "price": 12.99}}
+- var z=x.name+ " hello world"
+- var q={"name": "Hello <em>World</em>"}
+- var w={"books": ["A", "B", "C"]}
+doctype html
+html
+    head
+        title my jade template
+    body
+        h1 Hello #{x.name}
+
+        //id & classes
+        #content
+            .content
+                input#bar.input1
+                input(type="text",placeholder="默认值 #{x.name}")
+                input(checked=true,disabled=false)
+
+        ul#books
+            li
+                a(herf="#book-a") Book A
+            li
+                a(herf="#book-b") Book B
+        ul#books2
+            li:a(herf="#") Book A1
+            li:a(herf="#") Book A2
+            li=q.name
+            li!=q.name
+
+        h1 sss
+        h2=y.book.name
+        h3 #{y.book.name} is price #{y.book.price}
+        h4
+            | h4
+            | neirong
+        h5.
+            sdd
+            sdsdskkkk
+        h6=z
+
+        if x.name=="Bob"
+            h1 hello #{x.name}
+        else
+            h1 no Bob
+
+        unless errors
+             h1 xxx
+        select
+            each book,i in w.books
+                option(value=i) book #{book}
+        ul
+            for item,i in w.books
+                li(key=i) book #{item}
+
+        case x.name
+            when "Bob"
+                p hi Bob
+            when "bob"
+                 p hi bob
+
+        mixin book(name,price)
+            li #{name} for #{price}$
+
+        ul#book3
+            +book("Bob",12.5)
+            +book("Bob",5.9)
+
+        mixin book(name)
+            div&attributes(attributes)= name
+
+        +book("HOH")#first.last
+        +book("HOH")(title="title")
+        +book("HOH")
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>avalon</title>
+    <script src="Script/jquery-1.10.2.js"></script>
+    <script src="Script/avalon.js"></script>
+    <script>
+        var viewmodel = avalon.define({
+            $id: "test",
+            "FillBlankAnswers": [{
+                "ReqStudentAnswerCount": 1,
+                "IsFormula": false,
+                "FillBlankAnswerOptions": [
+                    {"ItemID": 1, "Content": "第一空", "Score": 0.0},
+                    {"ItemID": 2,"Content": "第二空", "Score": 0.0}],
+                "FillBlanks": null
+            }],
+            "ExerciseId": "4296316846",
+            "ExerciseSubject": "<p hexid=\"02185fb1734cc707eee8880886efd9ba\">张成的填空题<span blankindex=\"1\" unselectable=\"on\" contenteditable=\"false\">__1__</span><br></p>",
+            "ExerciseSubjectEX": "张成的填空题__1__",
+            "ExerciseType": "填空题",
+            "ET": "FillBlank",
+            "Note": "<p hexid=\"0167266b138afeea936c1f79671b54b1\">题解<br></p>",
+            "DifficultLevel": 0,
+            "Score": 1.0,
+            "Tips": [
+                {"TipName": "提示一", "Content": "Warm up", "TipId": "4295832290"},
+                {"TipName": "提示二", "Content": "<p hexid=\"181e4deccc0d5ee5c8cb2dbf414f9543\">提示2<br></p>", "TipId": ""}
+            ],
+            "ExerciseTypeAliasID": 4295048620
+        })
+    </script>
+</head>
+<body ms-controller="test">
+<div hex-sub="FillBlankExercise">
+    <input name="UsedTipCount" type="hidden" value="">
+
+    <div class="hex-exe-problem">
+        <h2>
+            <span hex-sequence>序号、</span>
+                <span>
+                    (分值：
+                    <span hex-score ms-duplex="Score">
+                        {{Score}}
+                    </span>
+                    分)
+                </span>
+        </h2>
+        <div class="hex-exe-topic" hex-subject ms-duplex="ExerciseSubject">
+            {{ExerciseSubject}}
+        </div>
+        <div class="hexStudyE_blank" ms-repeat="FillBlankAnswers">
+            <div ms-repeat="el.FillBlankAnswerOptions">
+                <input ms-duplex="el.Content">{{el.Content}}</input>
+            </div>
+        </div>
+    </div>
+
+    <!--@*提示*@-->
+    <div class="hex-title-line">
+        <span>提示</span>
+        <button type="button" class="hex-exe-little-btn" hex-tipactive exerciseid="{{ExerciseId}}" mark="1"><b
+                hex-tipcount>{{Tips.length}}</b></button>
+        <hr size=1>
+    </div>
+    <div class="hex-exe-hint" hex-tipinfo>
+        <div ms-repeat="Tips"><span>{{Tips[$index].TipName}}：</span>{{el.Content}}</div>
+    </div>
+</div>
+</body>
+</html>

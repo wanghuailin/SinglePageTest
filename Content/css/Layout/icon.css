@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* v 1.0.0 */
+/* 修改内容： */
+/* 1. */
+/* line 50, ../../sass/_function.sass */
+.thom_picture {
+  background-image: url("/image/thom.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.jonny_picture {
+  background-image: url("/image/jonny.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.colin_picture {
+  background-image: url("/image/colin.jpg");
+}
+
+/* line 50, ../../sass/_function.sass */
+.phil_picture {
+  background-image: url("/image/phil.jpg");
+}
+
+/* easy-animation.scss */
+/* line 11, ../../sass/Layout/icon.sass */
+.hex-iconBack {
+  background-image: url("../../images/icon/back_w.png");
+}
+
+/* line 14, ../../sass/Layout/icon.sass */
+.hex-iconAdd {
+  background-image: url("../../images/icon/add_w.png");
+}

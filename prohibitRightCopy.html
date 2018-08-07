@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>禁止鼠标右键和ctrl+c复制</title>
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+    <style>
+        article {
+            border: 1px #47a447 dashed;
+        }
+
+        article > br {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<article id="prohibitcontent">
+    这篇文字写出来可能有点得罪朋友，毕竟费尽心机把自己打扮成时尚博主、彩妆教主或天才文学少女，想收获的不只是男生追捧和女生羡慕，还能收获让人梦寐以求的高薪工作和不菲广告费用，以及出书上电视机会。
+    <br>
+    但这几天看多了这类文章和回答，不吐不快。
+    <br>
+    有智商，有人脉，有操纵人心的能力，是好事。可是把自己的天赋用来写毒鸡汤蛊惑年轻的女孩，告诉他们在最美好的年纪消费富豪阶层的化妆品、旅游产品和奢侈品，是理所应当的、天经地义的，并且暗示他们如果不这样做，就得不到爱情、嫁给好男人的机会、进入上层社会的可能，也得不到同龄同圈人的尊敬——这种鸡汤文，赚钱快、文字出彩，能涨粉，粉丝还追捧，端的好喝，但我必须说，这是在作恶，在下毒。
+    <br>
+    对谁作恶？头脑简单的年轻女孩子。她们哪有切实的分析能力，漂亮聪明的同龄佼佼者这么说了，这碗毒鸡汤当然要一饮而尽。
+    <br>
+    于是，节衣缩食攒半年工资买一只奢侈品包包；隔三差五找男朋友要求送昂贵的礼物以测试心意；理直气壮花掉收入的大部分去保养皮肤和买化妆品；工作只要不开心了就辞职，来一场潇洒的说走就走的旅行；用“别人都有我没有很失落”来要挟另一半给自己买远超收入的衣服鞋子……
+    <br>
+    这些事，做一次，给自己放开一切的愉悦，未尝不可，也许还会成为人生的转机；但所有转折都有一个前提，就是已经做了足够的准备，只欠这临门一脚的推动。全面落后的话，花多少钱装门面也装不像样。
+    <br>
+    为什么商人们需要雇佣这些达人大V鼓吹针对年轻女孩子的消费主义？因为消费必须是配套的。
+    <br>
+    价值两万的大牌包包拎上公交车，配上五百块的大衣，谁会认为是真货？
+    <br>
+    已经买了四位数的面霜，配上五千块一套的化妆品，脸蛋儿娇艳欲滴，还能觉着拿着工薪的男朋友配得上自己吗？
+    <br>
+    吃过三千块一位的料理，再吃十五块的盒饭，住合租房，受得了这股寒酸气吗？
+    <br>
+    自然而然，消费欲望像野火一样熊熊燃烧起来了，商人们和时尚达人们也赚得钵满盆溢了。但是年轻女孩子的收入也能这么容易上升吗？
+    <br>
+    就我接触到的现实来说，当然不容易。全面提高自己的能力和收入，需要的根本不是消费品的刺激，而是节制、审视、计划方法，是持续调用理性来管理自己的思维方式、时间精力、交际与金钱，是不断的试错和调整，让自己的素质持续优化，然后静候风口的机会——想刷一下卡就高端了受尊敬了被圈里人看得起了，您做什么春秋大梦呐？
+    <br>
+    做梦不要紧，就怕凑巧还有机会出卖点什么换钱，被这股欲望一刺激，本来不想卖的，算算账，点头了。回头再怎么痛悔，商人们和达人们可不会觉得跟自己有什么关系，那不全都是因为你自己蠢嘛？
+</article>
+<script type="application/javascript">
+    document.getElementById("prohibitcontent").oncontextmenu = function(){
+        alert("禁止右键");
+        return false;
+    }
+    document.getElementById("prohibitcontent").onselectstart = function(){
+//        alert("禁止选中文本");
+//        return false;
+    }
+    document.getElementById("prohibitcontent").onkeydown = function(){
+        if (event.ctrlKey && window.event.keyCode==67){
+            alert("禁止ctrl+C");
+            return false;
+        }
+    }
+    document.getElementById("prohibitcontent").oncopy = function (){
+        alert("禁止复制");
+        return false;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>将没有p标签的元素补充</title>
+</head>
+<body>
+<textarea id="text" style="width: 600px;height: 300px">
+    "如果1.9×<i>a</i>＝<i>b</i>－1.9(<i>a</i>＞0，<i>b</i>＞0)，那么（  ）。"
+    123213<p>123123213232323</p>
+</textarea>
+<button id="jiaoyao">校验</button>
+<p id="content"></p>
+</body>
+<script src="./Script/jquery-1.10.2.js"></script>
+<script>
+    $("#jiaoyao").click(function () {
+        $("#content").text(GetNopContent($("#text").val()));
+    })
+    function GetNopContent(str) {
+        var rdiv = $('<div></div>');
+        rdiv.html(str);
+        var numbers = rdiv.children();
+        //里面没有p标签，只有文字,需要返回p包裹的内容
+        if (numbers.length === 0 && rdiv.text().length > 0) {
+            var rp = "<p>" + rdiv.text() + "</p>";
+            return rp;
+        }
+        //外层没有p，里面有html标签，需要返回被p包裹的html
+        if (numbers.length > 0) {
+            if (rdiv.find("p").length > 0) {
+                //按照<p></p>划分，没有的补充p
+                var childNodes = rdiv.get(0).childNodes;
+                var newhtml = $('<div></div>');
+                for (var i = 0; i < childNodes.length; i++) {
+                    var newElement = document.createElement('p');
+                    while (i < childNodes.length && childNodes[i].tagName != "P" && childNodes[i].tagName != "DIV" && childNodes[i].tagName != "IMG") {
+                        if (childNodes[i].nodeName == "#text") {
+                            newElement.innerHTML += childNodes[i].nodeValue;
+                        } else {
+                            newElement.innerHTML += childNodes[i].outerHTML;
+                        }
+                        i++;
+                    }
+                    if (newElement.innerHTML.length > 0) {
+                        newhtml.append(newElement);
+                    } else {
+                        newhtml.append(childNodes[i]);
+                    }
+                    //i--不仅是因为i++数值变大，而且由于append导致childNodes减少
+                    i--;
+                }
+                console.log(newhtml.html());
+                numbers = newhtml.children();
+                str = newhtml.html();
+            } else {
+                var rp = "<p>" + str + "</p>";
+                return rp;
+            }
+        }
+
+        var lastdata = new Array();
+        for (var i = 0; i < numbers.length; i++) {
+            //判断是否是p标签
+            if (numbers[i].tagName == "P") {
+                var rdiv3 = $('<div></div>');
+                $(numbers[i]).appendTo(rdiv3);
+                if (jugdePContent(rdiv3.html()) == 0) {
+                    lastdata.push(i);
+                }
+            }
+            if (numbers[i].tagName == "DIV") {
+                lastdata.push(i);
+            }
+            if (numbers[i].tagName == "IMG") {
+                lastdata.push(i);
+            }
+        }
+        var str2 = str;
+        var rdiv2 = $('<div></div>');
+        var rdiv4 = $('<div></div>');
+        rdiv2.html(str2);
+        var inputs2 = rdiv2.children();
+        for (var i = 0; i < inputs2.length; i++) {
+            for (var j = 0; j < lastdata.length; j++) {
+                if (i == lastdata[j]) {
+                    $(inputs2[i]).appendTo(rdiv4);
+                }
+            }
+        }
+        return rdiv4.html();
+    }
+    //判断富文本编辑器中标签是否有效
+    function jugdePContent(data1) {
+        var lastdata = new Array();
+        //匹配图片
+        var reg1 = /<img/g;
+        //匹配数字，小写字母，大写字母
+        var reg2 = /[0-9a-zA-Z]+/g;
+        //匹配所有中文汉字
+        var reg3 = /[\u4E00-\u9FA5]+/g;
+        //匹配空格 换行
+        var reg4 = /[ \r\n]/g;
+        //匹配公式
+        var reg10 = /mathrc mce/g;
+        //匹配省略号......
+        var reg11 = /……/g;
+        //定义判断p是否有效的变量
+        var rdiv = $('<div></div>');
+        rdiv.html(data1);
+        if (rdiv.find("div").length > 0) {
+            return 0;
+        }
+        if (rdiv.find("p").length > 1) {
+            return 0;
+        }
+        if (rdiv.find("img").length > 0) {
+            return 0;
+        }
+        var ptemp = rdiv.find("p")[0];
+        var flag = 0;
+        if (ptemp.innerText != "") {
+            var sadfads = ptemp.innerText;
+            //判断是否有中文
+            if (sadfads.match(reg3)) {
+                flag = 1;
+            }
+            //判断是否有数字，小写字母，大写字母
+            if (sadfads.match(reg2)) {
+                flag = 1;
+            }
+            var sadfads2 = $(ptemp).html();
+            //判断是否有图片
+            if (sadfads2.match(reg1)) {
+                flag = 1;
+            }
+            //判断是否有公式
+            if (sadfads2.match(reg10)) {
+                flag = 1;
+            }
+            //判断是否有省略号
+            if (sadfads2.match(reg11)) {
+                flag = 1;
+            }
+        }
+        //删除所有<span>,<br> "\r\n "标签
+//        $(ptemp).find("span").remove();
+        $(ptemp).find("br").remove();
+        var sadfads3 = $(ptemp).html();
+        //判断是否有换行
+        sadfads3 = sadfads3.replace(reg4, "");
+        if (sadfads3 != "") {
+            flag = 1;
+        }
+        if (flag == 1) {
+            return 0;
+        }
+        return 1;
+    }
+</script>
+</html>

@@ -1,0 +1,101 @@
+/* v 1.0.0 */
+/* 修改内容： */
+/* 1. */
+@import "../import"
+////生成雪碧图
+//$images-spacing: 10
+//$images-clean-up: true
+//@import "compass/utilities/sprites"
+//@import "images/*.png"
+// -----------------------------   K12首页   -----------------------------
+// ============================== 共同 ==============================
+// ============================== 样式 ==============================
+.hex-k12-index
+  width: 1180px
+  margin: 120-30px auto 0
+  > div
+    > .title
+      height: 16px
+      > i
+        height: 16px
+        width: 5px
+        display: block
+        background-color: #60d7da
+        border-radius: 5px
+        float: left
+      > h2
+        font-size: 16px
+        line-height: 16px
+        color: $font_gray
+        padding-left: 15px
+    &.logo
+      width: 240px
+      height: 130px
+      margin: 0 auto
+      background-color: black
+      > img
+        max-width: 100%
+        max-height: 100%
+    &.search
+      height: 130-40px
+      width: 740px
+      padding-top: 40px
+      margin: 0 auto
+    &.grade
+      overflow: hidden
+      width: 1110px
+      margin: 0 auto 220px
+      > .list
+        width: 954px
+        margin: 0 auto
+    &.mycourse
+      width: 1110px
+      margin: 0 auto
+body.bg
+  background-image: url("../../../bg.jpg")
+  background-size: cover
+  background-position: center
+  background-repeat: no-repeat
+  > .bgcolor
+    position: fixed
+    height: 100%
+    width: 100%
+    top: 0
+    left: 0
+    //background-color: rgba(255,255,255,0.2)
+    //z-index: -1
+  .hex-cmpnt-Header
+    .right
+      > div
+        > a
+          color: #ffffff
+          &:hover
+            color: $font_light_gray_h
+  .hex-cmpnt-Footer
+    span ,a
+      color: #ffffff !important
+  .hex-cmpnt-CourseList
+    > .title
+      > .left
+        > h2
+          color: #FFFFFF
+      > .right
+        > a
+          color: #FFFFFF
+          &:hover
+            color: $font_light_gray_h
+    > .list
+      background-color: rgba(255,255,255,0.5)
+  .grade
+    > .title
+      > h2
+        color: #FFFFFF
+  .hex-cmpnt-Drop-downMenu
+    background-image: url("../../../Components/Drop_downMenu/img/arrow_w.png")
+    &:hover
+      background-image: url("../../../Components/Drop_downMenu/img/arrow_h.png")
+  .mobile
+    > a
+      background-image: url("../../../Components/Header/img/phone_w.png") !important
+      &:hover
+        background-image: url("../../../Components/Header/img/phone_h.png") !important

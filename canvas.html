@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 画板</title>
+    <style type="text/css">
+        #_canvas {
+            background-color: rgb(240, 240, 240);
+        }
+
+        .row {
+            width: 100%;
+            height: 100px;;
+        }
+
+        .row > div {
+            width: 50%;
+            float: left;
+        }
+
+        .row > div > ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .row > div > ul > li {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+        }
+
+        .lineWidth > li {
+            margin: 0 5px;
+            border: 1px solid #000000;
+        }
+
+        .lineWidth > li > div {
+            width: 40px;
+            height: 2px;
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div class="row">
+    <div>
+        <p>笔触颜色</p>
+        <ul class="strokeStyle">
+            <li style="background-color: red"></li>
+            <li style="background-color: blue"></li>
+            <li style="background-color: orange"></li>
+        </ul>
+    </div>
+    <div>
+        <p>笔触粗细</p>
+        <ul class="lineWidth">
+            <li>
+                <div style="height: 2px"></div>
+            </li>
+            <li>
+                <div style="height: 4px"></div>
+            </li>
+            <li>
+                <div style="height: 6px"></div>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <button type="button" id="clearrect">橡皮擦</button>
+    </div>
+</div>
+<canvas id="_canvas">
+
+</canvas>
+<!--<script>-->
+<!--var c=document.getElementById("_canvas");-->
+<!--var ctx=c.getContext("2d");-->
+<!--ctx.beginPath();-->
+<!--ctx.moveTo(20,20);-->
+<!--ctx.lineTo(20,100);-->
+<!--ctx.lineTo(70,100);-->
+<!--ctx.closePath();-->
+<!--ctx.stroke();-->
+<!--</script>-->
+
+<!--设置笔触-->
+<script>
+    $(function () {
+        //设置笔触颜色
+        $(".strokeStyle li").click(function () {
+            var style = $(this).css("background-color");
+
+            var context = canvas_.getContext("2d");
+            context.strokeStyle = style;
+        });
+
+        //设置笔触颜色
+        $(".lineWidth li").click(function () {
+            var Width = $(this).children("div").css("height");
+
+            var context = canvas_.getContext("2d");
+            context.lineWidth = Width.replace("px", "");
+        });
+    })
+</script>
+<script type="text/javascript">
+    var canvas_ = document.getElementById("_canvas");
+
+    //全屏
+    canvas_.setAttribute("width", screen.width);
+    canvas_.setAttribute("height", screen.height);
+
+    var context = canvas_.getContext("2d");
+    context.strokeStyle = "red";//设置笔触颜色
+    context.lineWidth = 4;//设置线条粗细
+
+    var array_paint = [];
+    var current_y = 0;
+    var current_x = 0;
+    //判断鼠标是否按下
+    var m_down = false;
+
+    //画线
+    function paint() {
+        context.beginPath();//清空子路径
+        context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
+        if (array_paint.length == 1)
+            context.lineTo(array_paint[0][0] + 1, array_paint[0][1] + 1);//从画笔位置到x1,y1画一条线
+        else {
+            var i = 1;
+            for (i in array_paint) {
+                context.lineTo(array_paint[i][0], array_paint[i][1]);
+                context.moveTo(array_paint[i][0], array_paint[i][1]);
+            }
+
+        }
+        context.closePath();//闭合路径
+        context.stroke();//画线框
+    }
+
+    var IsPaint = true;
+    $("#clearrect").click(function () {
+        IsPaint = !IsPaint;
+    })
+    //橡皮擦
+    function clearRect() {
+        context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
+        if (array_paint.length == 1)
+            context.clearRect(array_paint[0][0] + 1, array_paint[0][1] + 1, 20, 20);//从画笔位置到x1,y1画一条线
+        else {
+            var i = 1;
+            for (i in array_paint) {
+                context.clearRect(array_paint[i][0], array_paint[i][1], 20, 20);
+                context.moveTo(array_paint[i][0], array_paint[i][1]);
+            }
+        }
+    }
+
+    //按下鼠标
+    canvas_.onmousedown = function (event) {
+        m_down = true;
+        current_x = event.offsetX;
+        current_y = event.offsetY;
+        array_paint.push([current_x, current_y]);
+        if (IsPaint) {
+            paint();
+        } else {
+            clearRect();
+        }
+    }
+
+    //鼠标松开,清空数据
+    canvas_.onmouseup = function (event) {
+        m_down = false;
+        array_paint = [];
+    }
+
+    //鼠标按下后拖动
+    canvas_.onmousemove = function (event) {
+        if (m_down) {
+            current_x = event.offsetX;
+            current_y = event.offsetY;
+            array_paint.push([current_x, current_y]);
+            if (IsPaint) {
+                paint();
+            } else {
+                clearRect();
+            }
+        }
+    }
+</script>
+</body>
+</html>

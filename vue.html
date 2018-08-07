@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Script/jquery-1.10.2.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+<div id="SchoolEdition">
+    <span v-text="name"></span>
+    <div id="app"></div>
+    <div id="app2"></div>
+    <hr>
+    <div id="components-demo">
+        <button-counter></button-counter>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#SchoolEdition',
+        data: {
+            name: "SchoolEdition"
+        }
+    })
+
+    const app = Vue.extend({
+        template: "<p>extend的内容{{name}}</p>",
+        data: function () {
+            return {
+                name: "构造器"
+            }
+        }
+    })
+    new app().$mount("#app");
+
+    const app2 = Vue.extend({
+        template: "<p>extend的内容{{name}}</p>",
+        props: ['name'],
+        data: function () {
+            return {}
+        }
+    })
+    new app2({propsData: {name: "传入的值"}}).$mount("#app2")
+    //-------------------------------------------------------------//
+    Vue.component("button-counter", {
+        template: "<p>component的内容{{count}}</p>",
+        data: function () {
+            return {
+                count: 0
+            }
+        }
+    })
+    new Vue({el: '#components-demo'})
+</script>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>有道词典API</title>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="YOUDAO_SELECTOR_WRAPPER" style="display:none; margin:0; border:0; padding:0; width:320px; height:240px;"></div>
+<input type="text" id="txt" value="hello world"/>
+<script>
+    $(function () {
+        $.ajax({
+            url: "http://fanyi.youdao.com/openapi.do?type=data&doctype=jsonp&version=1.1&relatedUrl=http://fanyi.youdao.com/openapi?path=data-mode&keyfrom=test&key=null&callback=YoudaoSelector.Instance.update&q=" + $("#txt").val() + "",
+            success: function (data) {
+                alert(data);
+            }
+        })
+    })
+</script>
+</body>
+</html>

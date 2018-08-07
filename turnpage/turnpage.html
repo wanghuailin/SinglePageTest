@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>翻页效果</title>
+    <style>
+        #flipbook {
+            box-sizing: border-box;
+        }
+        #flipbook > div {
+            background-color: #FFFFFF;
+            border: 1px solid #cacaca;
+        }
+        .hard{
+            background-color: #cacaca;
+        }
+    </style>
+    <script src="../Script/jquery-1.10.2.js"></script>
+    <script src="./turn.js"></script>
+</head>
+<body>
+<div id="flipbook">
+    <div class="hard"> Turn.js</div>
+    <div> Page 1</div>
+    <div> Page 2</div>
+    <div> Page 3</div>
+    <div> Page 4</div>
+    <div class="hard">完结！</div>
+</div>
+</body>
+<script type="text/javascript">
+    $("#flipbook").turn({
+        width: 400,
+        height: 300,
+        autoCenter: true,
+        shadows: $.isTouch,
+        acceleration: $.isTouch
+    });
+</script>
+</html>

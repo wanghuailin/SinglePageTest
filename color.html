@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渐变色</title>
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .col-md-2 {
+            display: inline-block;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .color-palette {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .color-palette > span {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="box-body">
+    <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Primary</h4>
+            <div class="color-palette-set">
+                <div class="bg-light-blue disabled color-palette" style="background-color: #80B5D3"><span>#80B5D3</span>
+                </div>
+                <div class="bg-light-blue color-palette" style="background-color: #3c8dbc"><span>#3c8dbc</span></div>
+                <div class="bg-light-blue-active color-palette" style="background-color: #357CA5"><span>#357CA5</span>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Info</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-aqua disabled color-palette" style="background-color: #59D6F5"><span>#59D6F5</span></div>
+                <div class="bg-aqua color-palette" style="background-color: #00c0ef"><span>#00c0ef</span></div>
+                <div class="bg-aqua-active color-palette" style="background-color: #00A7D0"><span>#00A7D0</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Success</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-green disabled color-palette" style="background-color: #59C594"><span>#59C594</span>
+                </div>
+                <div class="bg-green color-palette" style="background-color: #00a65a"><span>#00a65a</span></div>
+                <div class="bg-green-active color-palette" style="background-color: #008D4C"><span>#008D4C</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Warning</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-yellow disabled color-palette" style="background-color: #F7BF65"><span>#F7BF65</span>
+                </div>
+                <div class="bg-yellow color-palette" style="background-color: #f39c12"><span>#f39c12</span></div>
+                <div class="bg-yellow-active color-palette" style="background-color: #DB8B0B"><span>#DB8B0B</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Danger</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-red disabled color-palette" style="background-color: #E98A7E"><span>#E98A7E</span></div>
+                <div class="bg-red color-palette" style="background-color: #f56954"><span>#f56954</span></div>
+                <div class="bg-red-active color-palette" style="background-color: #D33724"><span>#D33724</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Gray</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-gray disabled color-palette" style="background-color: #E2E4EA"><span>#E2E4EA</span></div>
+                <div class="bg-gray color-palette" style="background-color: #d2d6de"><span>#d2d6de</span></div>
+                <div class="bg-gray-active color-palette" style="background-color: #B5BBC8"><span>#B5BBC8</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Navy</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-navy disabled color-palette" style="background-color: #5C758E"><span>#5C758E</span></div>
+                <div class="bg-navy color-palette" style="background-color: #042b51"><span>#042b51</span></div>
+                <div class="bg-navy-active color-palette" style="background-color: #001A35"><span>#001A35</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Teal</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-teal disabled color-palette" style="background-color: #7EDEDE"><span>#7EDEDE</span></div>
+                <div class="bg-teal color-palette" style="background-color: #39CCCC"><span>#39CCCC</span></div>
+                <div class="bg-teal-active color-palette" style="background-color: #30BBBB"><span>#30BBBB</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Purple</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-purple disabled color-palette" style="background-color: #9895C6"><span>#9895C6</span>
+                </div>
+                <div class="bg-purple color-palette" style="background-color: #605ca8"><span>#605ca8</span></div>
+                <div class="bg-purple-active color-palette" style="background-color: #555299"><span>#555299</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Orange</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-orange disabled color-palette" style="background-color: #FFB06B"><span>#FFB06B</span>
+                </div>
+                <div class="bg-orange color-palette" style="background-color: #ff851b"><span>#ff851b</span></div>
+                <div class="bg-orange-active color-palette" style="background-color: #FF7701"><span>#FF7701</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Maroon</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-maroon disabled color-palette" style="background-color: #E66B98"><span>#E66B98</span>
+                </div>
+                <div class="bg-maroon color-palette" style="background-color: #D81B60"><span>#D81B60</span></div>
+                <div class="bg-maroon-active color-palette" style="background-color: #CA195A"><span>#CA195A</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 col-md-2">
+            <h4 class="text-center">Black</h4>
+
+            <div class="color-palette-set">
+                <div class="bg-black disabled color-palette" style="background-color: #7A7A7A"><span>#7A7A7A</span>
+                </div>
+                <div class="bg-black color-palette" style="background-color: #333333"><span>#333333</span></div>
+                <div class="bg-black-active color-palette" style="background-color: #000000"><span>#000000</span></div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+</body>
+</html>

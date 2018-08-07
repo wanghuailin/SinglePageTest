@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>划重点简易版</title>
+    <link href="//static.hexfuture.net/Content/css/bootstrap.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//reader.hexfuture.net/Content/css/hex-cwshow.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/plugins/hexformula/css/formulaMath.min.css" rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/plugins/hexformula/css/hexformula_size1-regular.min.css"
+          rel="stylesheet">
+    <link href="//editorstyle.hexfuture.net/Editor/full/iframe/iframe.min.css" rel="stylesheet">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .js-underline {
+            border-bottom: 3px solid #fc7039;
+        }
+    </style>
+</head>
+<body>
+<div id="pagecontent">
+
+</div>
+</body>
+<script src="../Script/jquery-1.10.2.js"></script>
+<script>
+    //获取数据（数学/语文）
+    var url = [{secId: "863289044970", ebookId: "863288436234"}, {secId: "863297004164", ebookId: "863296993893"}, {secId: "863289045076", ebookId: "863288436234"}];
+    $.ajax({
+        url: "//api.hexfuture.com/Ebook/PageContent?ssotoken=6FD835BB7E9016171CFED5C73888933950412D8C73C69DB3E5E7BAD4A06CEFB4123824DCB4E624E348848484CD0DF96984D2423CA59A8C9528F5E0E86B32F521B1F054BBA6478199F5AD490440C7FBEA5A98687E12DAEA9B5A339C8F7CD07E1801D8DF7BA727AFCFB3553D400291FE1AE4620AC66C41629D",
+        method: "GET",
+        data: {secId: url[1].secId, ebookId: url[1].ebookId},
+        success: function (data, s, xhr) {
+            $("#pagecontent").html(data);
+            imgOnError();
+        }
+    });
+
+    function imgOnError(img) {
+        //渲染图片
+        $.each($("#pagecontent").find('img'), function (i, el) {
+            $(el).attr('src', "//reader.hexfuture.net" + $(el).attr('src'));
+        })
+    }
+</script>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            //当松开鼠标按钮时
+            $("#pagecontent").on("mouseup", function (e) {
+                e.stopPropagation();
+                var txt = window.getSelection ? window.getSelection() : document.selection.createRange().text;
+                var range = window.getSelection().getRangeAt(0);
+                sendRangeData(range);
+            });
+        })
+
+        function sendRangeData(range) {
+            if (range == null || typeof range !== "object") return;
+            var objRectList = getRects(range);
+            var rects = new Array();
+            $.each(objRectList, function (k) {
+                var rect = {};
+                rect.top = this.top + $(document).scrollTop();
+                rect.left = this.left;
+                rect.height = this.height;
+                rect.width = this.width;
+                //过滤包含重叠部分rect
+                if (k >= 1) {
+                    var left = objRectList[k - 1].left + objRectList[k - 1].width;
+                    if (!(objRectList[k - 1].top == this.top && left > this.left)) {
+                        rects.push(rect);
+                    }
+                } else {
+                    rects.push(rect);
+                }
+            });
+            randerUnderline(rects);
+        };
+        //获取选中框的矩形位置
+        function getRects(range) {
+            var rectList = [];
+            if (range.startContainer != range.endContainer && range.getClientRects().length > 1) {
+                //跨段且里面有多个html标签
+                //1、将range.getClientRects()按照宽高合并，将多段拆分为一行一个数组
+                //2、将矩形合并为一行，计算出一行的矩形位置宽高
+                rectList = range.getClientRects();
+                var rectBoundingClient = range.getBoundingClientRect();//获取选取整块数据
+                //1
+                var newlist = [];
+                var temp1 = [];
+                temp1.push(rectList[0]);
+                newlist.push(temp1);
+                for (var i = 1; i < rectList.length; i++) {
+                    //去除选中的为一行长度的数据
+                    if (rectList[i].width == rectBoundingClient.width) {
+                        //不是数组不能使用删除,DOMRect又是只读类型，只能强制另起一行
+                        newlist.push([]);
+                        continue;
+                    }
+                    //将数值分段，左下的新起一行
+                    if (rectList[i].left < rectList[i - 1].left && rectList[i].top > rectList[i - 1].top) {
+                        var temp = [];
+                        temp.push(rectList[i]);
+                        newlist.push(temp);
+                    } else {
+                        newlist[newlist.length - 1].push(rectList[i]);
+                    }
+                }
+                //2
+                rectList = [];
+                newlist.forEach(function (item) {
+                    var x = item[0].x, y = item[0].y, width = 0, height = item[0].height;
+                    var left = -Infinity;
+                    var right = -Infinity;
+                    var rect = Infinity;
+                    var top = -Infinity;
+                    item.forEach(function (tt) {
+                        //排除重复的left项，且矩形在前一个的右下边
+                        if (parseInt(tt.left) != parseInt(left) && tt.right > right && tt.top + tt.height > top) {
+                            width += tt.width;
+                            left = tt.left;
+                            right = tt.right;
+                            top = tt.top;
+                            //有margion的问题，margion的距离没有在矩形里
+                            if (tt.left > rect) {
+                                width += tt.left - rect;
+                            }
+                            rect = tt.left + tt.width;
+                        }
+                        if (tt.height > height) {
+                            height = tt.height;
+                        }
+                    })
+                    var myDOMRect = new DOMRect(x, y, width, height);
+                    rectList.push(myDOMRect);
+                })
+            } else if (range.endContainer != range.commonAncestorContainer && range.endOffset != range.endContainer.length && range.endOffset > 0) {
+                //如果最后一个节点多次渲染,当文本中有html标签时，选中会重置endContainer节点，以标签当前位置计零重算
+                //commonAncestorContainer:范围的开始点和结束点的（即它们的祖先节点）
+                //range.endOffset != range.endContainer.length：结束点位置和结束点节点内文字长度不一致，即最后选择多了一个空格？
+                var endRange = document.createRange();
+                endRange.setStart(range.endContainer, range.endOffset);
+                endRange.setEnd(range.endContainer, range.endOffset);
+                //Element.getClientRects() 方法返回一个指向客户端中每一个盒子的边界矩形的矩形集合。
+                var rect = endRange.getClientRects()[0];
+                $.each(range.getClientRects(), function () {
+                    if (this.top < rect.top && this.bottom < rect.bottom + 20
+                            || (this.top == rect.top && this.right <= rect.left
+                                    || this.top < rect.top + (this.bottom - this.top) / 2 && this.right <= rect.left
+                            )) {
+                        rectList.push(this);
+                    }
+                });
+            }
+            else {
+                rectList = range.getClientRects();
+                //rectList.push(range.getBoundingClientRect());
+            }
+            return getOrder(rectList);
+        }
+
+        //RectList排序(从上下，左右)
+        function getOrder(objRectList) {
+            if (objRectList.length == 1) return objRectList;
+            var objRecArry = [];
+            $.each(objRectList, function (i) {
+                objRecArry[i] = objRectList[i];
+            });
+            return objRecArry.sort(compact);
+        }
+
+        function compact(v1, v2) {
+            if (v1.top - v2.top == 0) {
+                return v1.left - v2.left;
+            }
+            return v1.top - v2.top;
+        }
+
+        //划重点
+        function randerUnderline(Rects) {
+            var iframe = document.getElementById("pagecontent");
+            var pos = getAbsPoint(iframe);
+
+            $.each(Rects, function () {
+                //window.ActiveXObject：区别IE与其他浏览器 !!window.ActiveXObject=>IE浏览器
+                if (!!window.ActiveXObject || "ActiveXObject" in window) {
+                    var reviseheight = data.Fontsize + 2;
+                    var revisetop = (this.height - reviseheight) / 2 - 1;//-1为校正实际显示效果
+                    var newDiv = $('<div class="js-underline" style="position:absolute;top:' + (this.top + pos.y + revisetop) + 'px;left:' + (this.left + pos.x) + 'px;height:' + (reviseheight) + 'px;width: ' + this.width + 'px;' + '"></div>');
+                    $(document.body).append(newDiv);
+                } else {
+                    var newDiv = $('<div class="js-underline" style="position:absolute;top:' + (this.top + pos.y) + 'px;left:' + (this.left + pos.x) + 'px;height:' + this.height + 'px;width: ' + this.width + 'px;' + '"></div>');
+                    $(document.body).append(newDiv);
+                }
+            });
+        };
+
+        //获取元素距离页面左上角距离
+        function getAbsPoint(e) {
+            var x = e.offsetLeft;
+            var y = e.offsetTop;
+            while (e = e.offsetParent) {
+                x += e.offsetLeft;
+                y += e.offsetTop;
+            }
+            return {'x': x, 'y': y};
+        }
+    })
+</script>
+</html>

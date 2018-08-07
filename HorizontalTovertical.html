@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>水平数据变成垂直数据</title>
+</head>
+<body>
+<div id="main" style="width: 100%;height:400px;background-color: #cacaca"></div>
+</body>
+<script src="./Echarts/echarts.min.js"></script>
+<script>
+    //erchart渲染
+    var datalist = [
+        {
+            name: "直接访问",
+            data: [320, 302, 301, 334, 390, 330, 320]
+        },
+        {
+            name: "邮件营销",
+            data: [120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name: "联盟广告",
+            data: [220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name: "视频广告",
+            data: [150, 212, 201, 154, 190, 330, 410]
+        },
+        {
+            name: "搜索引擎",
+            data: [820, 832, 901, 934, 1290, 1330, 1320]
+        }
+    ];
+
+
+    var app = echarts.init(document.getElementById('main'));
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        legend: {
+            data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value'
+        },
+        yAxis: {
+            type: 'category',
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        series: function () {
+            var serie = [];
+            for (var i = 0; i < datalist.length; i++) {
+                var item = {
+                    name: datalist[i].name,
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'insideRight'
+                        }
+                    },
+                    data: datalist[i].data
+                }
+                serie.push(item);
+            }
+            return serie;
+        }()
+    };
+    app.setOption(option);
+</script>
+<script>
+    //数据转变
+    var originaldatalist = [
+        {
+            name: "周一",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 320
+                },
+                {
+                    name: "邮件营销",
+                    data: 120
+                },
+                {
+                    name: "联盟广告",
+                    data: 220
+                },
+                {
+                    name: "视频广告",
+                    data: 150
+                },
+                {
+                    name: "搜索引擎",
+                    data: 820
+                }
+            ]
+        },
+        {
+            name: "周二",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 302
+                },
+                {
+                    name: "邮件营销",
+                    data: 132
+                },
+                {
+                    name: "联盟广告",
+                    data: 182
+                },
+                {
+                    name: "视频广告",
+                    data: 212
+                },
+                {
+                    name: "搜索引擎",
+                    data: 832
+                }
+            ]
+        },
+        {
+            name: "周三",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 301
+                },
+                {
+                    name: "邮件营销",
+                    data: 101
+                },
+                {
+                    name: "联盟广告",
+                    data: 191
+                },
+                {
+                    name: "视频广告",
+                    data: 201
+                },
+                {
+                    name: "搜索引擎",
+                    data: 901
+                }
+            ]
+        }
+    ]
+
+    //1、使用三层循环
+    var yAxis = [];
+    var datalist = [];
+    for (var i = 0; i < originaldatalist.length; i++) {
+        yAxis.push(originaldatalist[i].name);
+        for (var j = 0; j < originaldatalist[i].data.length; j++) {
+            //判断是否有值
+            var tempk = -1;
+            for (var k = 0; k < datalist.length; k++) {
+                if (datalist[k].name == originaldatalist[i].data[j].name) {
+                    tempk = k;
+                }
+            }
+            //有值添加无值新建
+            if (tempk >= 0) {
+                datalist[tempk].data.push(originaldatalist[i].data[j].data);
+            } else {
+                var temp = {
+                    name: originaldatalist[i].data[j].name,
+                    data: [originaldatalist[i].data[j].data]
+                }
+                datalist.push(temp);
+            }
+        }
+    }
+    //2、先使用concat扁平化为一个数组，再使用双循环合并同类项
+    var yAxis = [];
+    var datalist = [];
+    for (var i = 0; i < originaldatalist.length; i++) {
+        yAxis = yAxis.concat(originaldatalist[i].name);
+        datalist = datalist.concat(originaldatalist[i].data);
+    }
+    for (var i = 0; i < datalist.length; i++) {
+        var listtemp = [datalist[i].data];
+        for (var j = i + 1; j < datalist.length; j++) {
+            if (datalist[i].name == datalist[j].name) {
+                listtemp.push(datalist[j].data);
+                datalist.splice(j, 1);
+                j--;
+            }
+        }
+        datalist[i].data = listtemp;
+    }
+    //3、先使用concat扁平化，再使用reduce合并同类项
+    var originaldatalist = [
+        {
+            name: "周一",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 320
+                },
+                {
+                    name: "邮件营销",
+                    data: 120
+                },
+                {
+                    name: "联盟广告",
+                    data: 220
+                },
+                {
+                    name: "视频广告",
+                    data: 150
+                },
+                {
+                    name: "搜索引擎",
+                    data: 820
+                }
+            ]
+        },
+        {
+            name: "周二",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 302
+                },
+                {
+                    name: "邮件营销",
+                    data: 132
+                },
+                {
+                    name: "联盟广告",
+                    data: 182
+                },
+                {
+                    name: "视频广告",
+                    data: 212
+                },
+                {
+                    name: "搜索引擎",
+                    data: 832
+                }
+            ]
+        },
+        {
+            name: "周三",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 301
+                },
+                {
+                    name: "邮件营销",
+                    data: 101
+                },
+                {
+                    name: "联盟广告",
+                    data: 191
+                },
+                {
+                    name: "视频广告",
+                    data: 201
+                },
+                {
+                    name: "搜索引擎",
+                    data: 901
+                }
+            ]
+        }
+    ]
+
+    var yAxis = [];
+    var datalist = [];
+    for (var i = 0; i < originaldatalist.length; i++) {
+        yAxis = yAxis.concat(originaldatalist[i].name);
+        datalist = datalist.concat(originaldatalist[i].data);
+    }
+    var xx = datalist.reduce(function (res, item) {
+        //findIndex: 传入一个测试条件（函数）符合条件的数组第一个元素位置。
+        var index = res.findIndex(function (v) {
+            return v.name == item.name;
+        });
+        if (index > -1) {
+            if (Array.isArray(res[index].data)) {
+                res[index].data.push(item.data);
+            } else {
+                var listtemp = [res[index].data];
+                listtemp.push(item.data);
+                res[index].data = listtemp;
+            }
+        } else {
+            res.push(item);
+        }
+        return res;
+    }, []);
+    datalist = xx;
+
+    //4、先扁平化，后使用哈希（hash）来合并同类项
+    var originaldatalist = [
+        {
+            name: "周一",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 320
+                },
+                {
+                    name: "邮件营销",
+                    data: 120
+                },
+                {
+                    name: "联盟广告",
+                    data: 220
+                },
+                {
+                    name: "视频广告",
+                    data: 150
+                },
+                {
+                    name: "搜索引擎",
+                    data: 820
+                }
+            ]
+        },
+        {
+            name: "周二",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 302
+                },
+                {
+                    name: "邮件营销",
+                    data: 132
+                },
+                {
+                    name: "联盟广告",
+                    data: 182
+                },
+                {
+                    name: "视频广告",
+                    data: 212
+                },
+                {
+                    name: "搜索引擎",
+                    data: 832
+                }
+            ]
+        },
+        {
+            name: "周三",
+            data: [
+                {
+                    name: "直接访问",
+                    data: 301
+                },
+                {
+                    name: "邮件营销",
+                    data: 101
+                },
+                {
+                    name: "联盟广告",
+                    data: 191
+                },
+                {
+                    name: "视频广告",
+                    data: 201
+                },
+                {
+                    name: "搜索引擎",
+                    data: 901
+                }
+            ]
+        }
+    ]
+
+    var yAxis = [];
+    var datalist = [];
+    for (var i = 0; i < originaldatalist.length; i++) {
+        yAxis = yAxis.concat(originaldatalist[i].name);
+        datalist = datalist.concat(originaldatalist[i].data);
+    }
+
+    //用个hash表存一下name在结果里对应的位置，就能将时间复杂度从幂函数降低到线性的时间复杂度
+    var hashTable = {};
+    var datalist = datalist.reduce(function (result, _ref) {
+        var name = _ref.name, data = _ref.data;
+        hashTable[name] !== undefined ? result[hashTable[name]].data.push(data) : hashTable[name] = result.push({
+                    name: name,
+                    data: [data]
+                }) - 1;
+        return result;
+    }, []);
+    console.log(yAxis.join(","));
+    console.log(datalist);
+</script>
+<script>
+    //数组扁平化方法
+    //方法一：循环递归
+    var complexdatalist = [1, [2, 3], [4, 5], [6, [7, 8]], [9, [10, [11, 12]]]]
+    function myconcat(complexdatalist) {
+        var simpledatalist = [];
+        for (var i = 0; i < complexdatalist.length; i++) {
+            if (Array.isArray(complexdatalist[i])) {
+                simpledatalist = simpledatalist.concat(myconcat(complexdatalist[i]));
+            } else {
+                simpledatalist = simpledatalist.concat(complexdatalist[i]);
+            }
+        }
+        return simpledatalist
+    }
+
+    console.log(myconcat(complexdatalist));
+
+    //方法2：reduce累加器
+    var complexdatalist = [1, [2, 3], [4, 5], [6, [7, 8]], [9, [10, [11, 12]]]]
+    function flatten(arr) {
+        return arr.reduce(function (prev, item) {
+            return prev.concat(Array.isArray(item) ? flatten(item) : item);
+        }, []);
+    }
+    console.log(flatten(complexdatalist));
+</script>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>去除空格和html</title>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<input type="text" id="show" value="">
+<button id="showbtn">显示</button>
+<script>
+    $(function () {
+        $("#showbtn").click(function () {
+            var string = $("#show").val();
+            alert(string.trim().replace(/[ ]/g,""));
+            alert(string.trim().replace(/[\r\n]/g,""));
+        })
+    })
+</script>
+</body>
+</html>

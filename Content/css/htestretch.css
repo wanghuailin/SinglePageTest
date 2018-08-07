@@ -1,0 +1,93 @@
+﻿/*伸展效果*/
+.hex-stretch {
+    width: 66.7%;
+    animation-name: stretch;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes stretch {
+    0% {
+        width: 33.3%;
+    }
+
+    25% {
+        width: 41.6%;
+    }
+
+    50% {
+        width: 50.0%;
+    }
+
+    75% {
+        width: 58.3%;
+    }
+
+    100% {
+        width: 66.7%;
+    }
+}
+
+/*收缩效果*/
+.hex-shrink {
+    width: 25%;
+    animation-name: shrink;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes shrink {
+    0% {
+        width: 58.3%;
+    }
+
+    25% {
+        width: 50.0%;
+    }
+
+    50% {
+        width: 41.6%;
+    }
+
+    75% {
+        width: 33.3%;
+    }
+
+    100% {
+        width: 25.0%;
+    }
+}
+/*遮罩层收缩效果*/
+.hex-masklayer {
+    margin-left: 66.7%;
+    position: absolute;
+    width: 100%;
+    animation-name: masklayer;
+    animation-duration: 600ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes masklayer {
+    0% {
+        margin-left: 33.3%;
+    }
+
+    25% {
+        margin-left: 41.6%;
+    }
+
+    50% {
+        margin-left: 50.0%;
+    }
+
+    75% {
+        margin-left: 58.3%;
+    }
+
+    100% {
+        margin-left: 66.7%;
+    }
+}

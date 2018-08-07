@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取选中区域文本</title>
+</head>
+<body>
+<div class="table-box heading2" hexid="5e262ff5ad38c4508e72803517b639ab" element-type="Table">
+    <table class="table table-bordered" style="border-color: rgb(255, 255, 255);">
+        <tbody>
+        <tr>
+            <td style="border-color: rgb(255, 255, 255);">
+                <div style="text-align: center;"><span
+                        style="background-color: transparent; font-family: 楷体, 楷体_GB2312, SimKai; font-size: 2rem;">上学歌</span>
+                </div>
+                <br><br><span style="font-weight: normal; font-family: 楷体, 楷体_GB2312, SimKai;">太阳当空照，<br>花儿对我笑。<br>小鸟说：“早，早，早，<br>你为什么背上小书包？”<br>我去上学校，<br>天天不迟到。<br>爱学习，爱劳动，<br>长大要为祖国立功劳。</span><br><br><br><br><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>测试文字内有标签的<span style="margin: 0 5px">getClientRects</span>矩形框</p>
+</div>
+<button id="get">获取</button>
+<button id="set">取消</button>
+<ul id="drawmenu">
+    <li>操作一</li>
+    <li>操作二</li>
+</ul>
+</body>
+<script>
+    //获取选中的文字
+    document.getElementById("get").onclick = function () {
+        var txt = window.getSelection ? window.getSelection() : document.selection.createRange().text;
+        alert(txt);//alert默认调用了toString()
+        var range = window.getSelection().getRangeAt(0);
+        console.log(range);
+        console.log(range.getClientRects());
+        console.log(range.getBoundingClientRect());
+    }
+    //清除选中的文字
+    document.getElementById("set").onclick = function () {
+        window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+    }
+</script>
+<script>
+    //显示文本框
+</script>
+</html>

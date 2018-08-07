@@ -1,0 +1,89 @@
+// 加入课程
+   Created by Jason on 16/3/8.
+doctype html
+html(lang="zh-cmn-Hans")
+    head
+        include ../../Components/Meta&Script/head
+        include ../../WebConfig
+        title 搜索课程
+        include ../../Components/tools-pkgCode/pkgCode
+        +pkgCodeCSS(isPkg,"../../","","index.html")
+            link(rel="stylesheet" href="../../Content/css/Module/Course.css")
+            //头
+            link(rel="stylesheet" href="../../Components/Header/Header.css")
+            link(rel="stylesheet" href="../../Components/Header/K12.css")
+            //下拉菜单
+            link(rel="stylesheet" href="../../Components/Drop_downMenu/Drop_downMenu.css")
+            link(rel="stylesheet" href="../../Components/Drop_downMenu/K12.css")
+            //下拉菜单用户
+            link(rel="stylesheet" href="../../Components/Drop_downUserInfo/Drop_downUserInfo.css")
+            link(rel="stylesheet" href="../../Components/Drop_downUserInfo/K12.css")
+            //底部
+            link(rel="stylesheet" href="../../Components/Footer/Footer.css")
+            link(rel="stylesheet" href="../../Components/Footer/K12.css")
+    body
+        include ../../Components/Header/Header
+        include ../../Components/Drop_downMenu/Drop_downMenu
+        include ../../Components/Drop_downUserInfo/Drop_downUserInfo
+        +Header("noLogo","")
+            //- 关注HexStudy
+            .weiXin
+                a 关注HexStudy
+            //-手机学习
+            .mobile
+                a 手机学习
+            //-我的订单
+            .order
+                a 我的订单
+            //-我的学习中心
+            .myStudy
+                +Drop-downMenu("","我的学习中心")
+                    li
+                        i.triangle
+                    li
+                        a 报名上课
+                    li
+                        a 我学的课程
+                    li
+                        a 我的教材
+                    li
+                        a 我的题库
+            //-教师中心
+            .teacher
+                +Drop-downMenu("","教师中心")
+                    li
+                        i.triangle
+                    li
+                        a 建立课程
+                    li
+                        a 我教的课程
+                    li
+                        a 我的教材
+                    li
+                        a 我的题库
+            //-登录
+            .signin(style="display: none")
+                a 登录
+            //用户
+            .userInfo
+                +Drop-downUserInfo("")
+        .main_div.hex-k12-Course
+        include ../../Components/Footer/Footer
+        +Footer("")
+            div.line1
+                span ©HexStudy
+            div.line2
+                div
+                    div
+                        a 帮助中心
+                    div
+                        a 产品&服务
+                    div
+                        a 关于我们
+                    div
+                        a 客户服务
+        //效果js
+        +pkgCodeJS(isPkg,"","index.html")
+            script(src="../../Scripts/Course/index.js")
+            script(src="../../Scripts/publice.js")
+            script(src="../../Components/Header/Header.js")

@@ -1,0 +1,139 @@
+
+html { font-size: 16px; }
+
+/*分栏*/
+[class*="col-"] { border-radius: 5px; }
+
+/*标题段落*/
+.paragraph1 {
+    font-family: 宋体, SimSun, sans-serif;
+    font-size: 1.2em;
+    color: black;
+}
+.paragraph2 {
+    font-family: 仿宋, FangSong, sans-serif;
+    font-size: 1.2em;
+    color: black;
+}
+.paragraph3 {
+    font-family: 楷体, 楷体_GB2312, SimKai, sans-serif;
+    font-size: 1.2em;
+    color: black;
+}
+.heading1 {
+    font-family: 宋体, SimSun, sans-serif;
+    font-size: 2.0em;
+    font-weight: bold;
+    color: black;
+}
+.heading2 {
+    font-family: 宋体, SimSun, sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: black;
+}
+.heading3 {
+    font-family: 宋体, SimSun, sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: black;
+}
+
+/*注释*/
+.note, .note-sup {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-modify: read-only;
+    -moz-user-modify: read-only;
+    color: #136ec2;
+}
+.note{ cursor: pointer;}
+
+/*表格*/
+.table{
+    margin-bottom:5px;
+}
+.table>caption{
+    text-align:center;
+}
+.table>tbody>tr>td{
+    vertical-align: middle;
+}
+
+.table-bordered {
+    border: 1px solid #000;
+}
+.table-bordered>tbody>tr>td {
+    border: 1px solid #000;
+}
+.table-bordered-dashed {
+    border-top: 1px dashed #000;
+}
+.table-bordered-dashed>tbody>tr>td{
+    border: 1px dashed #000;
+    border-top: none;
+}
+
+.horizontal-bordered {
+    border-bottom: 1px solid #000;
+}
+.horizontal-bordered>tbody>tr>td {
+    border-top: 1px solid #000;
+}
+.horizontal-bordered-dashed {
+    border-bottom: 1px dashed #000;
+}
+.horizontal-bordered-dashed>tbody>tr>td{
+    border-top: 1px dashed #000;
+}
+
+.part-bordered>tbody>tr>td{
+    border: 1px solid #000;
+    border-left: none;
+}
+.part-bordered>tbody>tr>td:last-child{
+    border-right: none;
+}
+.part-bordered-dashed>tbody>tr>td{
+    border: 1px dashed #000;
+    border-left: none;
+}
+.part-bordered-dashed>tbody>tr>td:last-child{
+    border-right: none;
+}
+
+.bold-bordered{
+    border: 3px solid #000;
+}
+.bold-bordered>tbody>tr>td{
+    border: 1px solid #000;
+}
+.bold-bordered-dashed{
+    border: 3px solid #000;
+}
+.bold-bordered-dashed>tbody>tr>td{
+    border: 1px dashed #000;
+    border-top: none;
+    border-left: none;
+}
+
+/*图片*/
+img{
+    max-width: 100%;
+}
+
+.img-box{
+    position:relative;
+}
+.img-head{
+    font-family: 'times new roman', 宋体, SimSun, sans-serif;
+    font-size: 1.2em;
+    color: black;
+}
+.img-head-right{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top:-10px;
+} 

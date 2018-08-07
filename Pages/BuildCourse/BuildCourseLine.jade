@@ -1,0 +1,128 @@
+// 新建课程主线
+   Created by Jason on 16/3/9.
+doctype html
+html(lang="zh-cmn-Hans")
+    head
+        include ../../Components/Meta&Script/head
+        include ../../WebConfig
+        title 新建课程主线
+        include ../../Components/tools-pkgCode/pkgCode
+        +pkgCodeCSS(isPkg,"../../","","index.html")
+            link(rel="stylesheet" href="../../Content/css/Module/BuildCourse.css")
+            //头
+            link(rel="stylesheet" href="../../Components/Header/Header.css")
+            link(rel="stylesheet" href="../../Components/Header/K12.css")
+            //下拉菜单
+            link(rel="stylesheet" href="../../Components/Drop_downMenu/Drop_downMenu.css")
+            link(rel="stylesheet" href="../../Components/Drop_downMenu/K12.css")
+            //下拉菜单用户
+            link(rel="stylesheet" href="../../Components/Drop_downUserInfo/Drop_downUserInfo.css")
+            link(rel="stylesheet" href="../../Components/Drop_downUserInfo/K12.css")
+            //底部
+            link(rel="stylesheet" href="../../Components/Footer/Footer.css")
+            link(rel="stylesheet" href="../../Components/Footer/K12.css")
+            //步骤
+            link(rel="stylesheet" href="../../Components/Step/Step.css")
+            //左侧导航
+            link(rel="stylesheet" href="../../Components/LinkList/LinkList.css")
+            //面包屑导航
+            link(rel="stylesheet" href="../../Components/LinkLine/LinkLine.css")
+            //课程主线
+            link(rel="stylesheet" href="../../Components/Courseline/Courseline.css")
+
+    body
+        include ../../Components/LinkList/LinkList
+        include ../../Components/LinkLine/LinkLine
+        include ../../Components/Step/Step
+        include ../../Components/Courseline/Courseline
+        //include ../Components/Header/Header
+        //include ../Components/Drop_downMenu/Drop_downMenu
+        //include ../Components/Drop_downUserInfo/Drop_downUserInfo
+        //+Header("noLogo","")
+        //    //- 关注HexStudy
+        //    .weiXin
+        //        a 关注HexStudy
+        //    //-手机学习
+        //    .mobile
+        //        a 手机学习
+        //    //-我的订单
+        //    .order
+        //        a 我的订单
+        //    //-我的学习中心
+        //    .myStudy
+        //        +Drop-downMenu("","我的学习中心")
+        //            li
+        //                i.triangle
+        //            li
+        //                a 报名上课
+        //            li
+        //                a 我学的课程
+        //            li
+        //                a 我的教材
+        //            li
+        //                a 我的题库
+        //    //-教师中心
+        //    .teacher
+        //        +Drop-downMenu("","教师中心")
+        //            li
+        //                i.triangle
+        //            li
+        //                a 建立课程
+        //            li
+        //                a 我教的课程
+        //            li
+        //                a 我的教材
+        //            li
+        //                a 我的题库
+        //    //-登录
+        //    .signin(style="display: none")
+        //        a 登录
+        //    //用户
+        //    .userInfo
+        //        +Drop-downUserInfo("")
+        .main_div.hex-k12-BuildCourseLine
+            //270
+            .left
+                +LinkList("", ["课程信息", "课程模板管理"],["#", "#"], "1")
+            .content
+                .nav
+                    +LinkLine("", ["课程信息", "新建课程模板"],["#", "#"], "2")
+                .step
+                    +Step("5","4",["1.设置基本信息", "2.配置资源", "3.设置课程价格", "4.新建课程主线", "完成"])
+                .Courseline
+                    .btn
+                        .left
+                            h2 课程模板
+                            button.hex-imgBtn.hex-blueBtn
+                                i.hex-iconBack
+                                span 返回上一级
+                        .right
+                            button.hex-imgBtn.hex-blueBtn
+                                i.hex-iconAdd
+                                span 章节
+                    .content
+                        +Courseline("")
+                    .save
+                        button.hex-normalBtn.hex-blueBtn 保存
+                        button.hex-normalBtn.hex-redBtn 保存并发布
+        include ../../Components/Footer/Footer
+        +Footer("")
+            div.line1
+                span ©HexStudy
+            div.line2
+                div
+                    div
+                        a 帮助中心
+                    div
+                        a 产品&服务
+                    div
+                        a 关于我们
+                    div
+                        a 客户服务
+        //效果js
+        +pkgCodeJS(isPkg,"","index.html")
+            script(src="../../Scripts/Course/index.js")
+            script(src="../../Scripts/publice.js")
+            script(src="../../Scripts/Location.js")
+            script(src="../../Components/Header/Header.js")
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成二维码</title>
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+    <script type="application/javascript" src="Script/jquery-qrcode/qrcode.js"></script>
+    <script type="application/javascript" src="Script/jquery-qrcode/jquery.qrcode.js"></script>
+</head>
+<body>
+<textarea id="content" value=""></textarea>
+<button id="btn">点击生成二维码</button>
+<div id="code">
+
+</div>
+<script>
+    $(function () {
+        $("#btn").click(function () {
+            var content = utf16to8($("#content").val());
+            JqueryQrcode(content);
+        })
+    })
+
+    //生成二维码
+    function JqueryQrcode(content) {
+        $("#code").html("");
+        //默认是时间
+        if (content.length <= 0) {
+            content = GetDateTime();
+        }
+        $('#code').qrcode({
+            text: content,
+            render: "canvas",//设置渲染方式
+            width: 200,     //设置宽度
+            height: 200,     //设置高度
+            typeNumber: -1,      //计算模式
+            correctLevel: QRErrorCorrectLevel.H,//纠错等级
+            background: "#ffffff",//背景颜色
+            foreground: "#000000" //前景颜色
+        });
+    }
+
+    //默认不支持中文,在二维码编码前把字符串转换成UTF-8
+    function utf16to8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }
+
+    //获取当前时间
+    function GetDateTime() {
+        var datatime = "";
+        var mydate = new Date();
+        //mydate.getMonth(); //获取当前月份(0-11,0代表1月)
+        datatime = mydate.getFullYear().toString() + (mydate.getMonth() + 1).toString() + mydate.getDate().toString();
+        datatime += mydate.getHours().toString() + mydate.getMinutes().toString() + mydate.getSeconds().toString() + mydate.getMilliseconds().toString();
+        return datatime;
+    }
+</script>
+</body>
+</html>

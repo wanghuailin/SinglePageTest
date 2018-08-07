@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Template</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+    <script type="application/javascript" src="js/bootstrap.js"></script>
+    <style>
+        .content {
+            width: 60%;
+            margin: 10px auto;
+        }
+
+        .spanh3 {
+            font-size: 24px;
+        }
+
+        .panelblock {
+            background-color: #ddd;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            padding: 10px 0px;
+            text-align: center;
+        }
+
+        .panelblock span {
+            font-size: 18px;
+        }
+
+        select {
+            width: 100px;
+        }
+
+        .tabletop {
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        .tablethead{
+            background-color: #337ab7;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <span class="spanh3">课程信息</span>
+    <button type="button" class="btn btn-lg btn-danger pull-right">新建课程模板</button>
+    <hr>
+    <div class="row panelblock">
+        <div class="col-md-3">
+            <span>一级学科</span>
+            <select>
+                <option>全部</option>
+                <option>数学</option>
+                <option>语文</option>
+                <option>英语</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <span>二级学科</span>
+            <select>
+                <option>全部</option>
+                <option>数学</option>
+                <option>语文</option>
+                <option>英语</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <span>资源包</span>
+            <select>
+                <option>全部</option>
+                <option>数学</option>
+                <option>语文</option>
+                <option>英语</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="text" placeholder="课程模板名称/编辑">
+            <button type="button" class="btn btn-success">搜索</button>
+        </div>
+    </div>
+    <table class="table table-striped tabletop">
+        <thead class="tablethead">
+        <tr>
+            <td>模板名称</td>
+            <td>
+                <select>
+                    <option>发布状态</option>
+                </select>
+            </td>
+            <td>
+                <select>
+                    <option>编辑人</option>
+                </select>
+            </td>
+            <td>编辑</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>初中物理基础</td>
+            <td>未发布</td>
+            <td>宋东东</td>
+            <td><a href="#">编辑</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
