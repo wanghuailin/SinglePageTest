@@ -36,7 +36,7 @@
     $.ajax({
         url: "//api.hexfuture.com/Ebook/PageContent?ssotoken=6FD835BB7E9016171CFED5C73888933950412D8C73C69DB3E5E7BAD4A06CEFB4123824DCB4E624E348848484CD0DF96984D2423CA59A8C9528F5E0E86B32F521B1F054BBA6478199F5AD490440C7FBEA5A98687E12DAEA9B5A339C8F7CD07E1801D8DF7BA727AFCFB3553D400291FE1AE4620AC66C41629D",
         method: "GET",
-        data: {secId: url[0].secId, ebookId: url[0].ebookId},
+        data: {secId: url[1].secId, ebookId: url[1].ebookId},
         success: function (data, s, xhr) {
             $("#pagecontent").html(data);
             imgOnError();
@@ -89,6 +89,7 @@
             var rectList = [];
             if (range.startContainer != range.endContainer && range.getClientRects().length > 1) {
                 //跨段且里面有多个html标签
+                //看选取是否跨行，不跨段直接获取一行选取，跨段使用range所有选区。优点：兼容浏览器，缺点：不能处理一段文字换行的情况
                 //1、将选区按段划分，--按p元素划分
                 //2、一行的使用getBoundingClientRect获取选取位置
                 //3、 todo 有一段p标签多行的情况，需要将一段文字选区划分成多行文字选区

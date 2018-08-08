@@ -86,6 +86,7 @@
             var rectList = [];
             if (range.startContainer != range.endContainer && range.getClientRects().length > 1) {
                 //跨段且里面有多个html标签
+                //将选区内的Rect按照位置划分成行，每行的rect合并生成一个整体的rect。优点：可以清晰的划分成行。缺点：49版本浏览器不支持DOMRect方法
                 //1、将range.getClientRects()按照宽高合并，将多段拆分为一行一个数组
                 //2、将矩形合并为一行，计算出一行的矩形位置宽高
                 rectList = range.getClientRects();
