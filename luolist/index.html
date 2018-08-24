@@ -19,6 +19,11 @@
 
                 </option>
             </select>
+            <select id="distributeCategory">
+                <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
+
+                </option>
+            </select>
             <input type="text" class="form-control" style="width: auto;flex: 1" id="createcontent">
             <button type="button" class="btn btn-primary pull-right" id="create">
                 <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -28,6 +33,7 @@
             <li class="list-group-item clearfix" v-for="el in list">
                 <a v-bind:href="'content.html?id='+el.ActivityModuleId" v-text="el.Name"></a>
                 <span class="label label-info">{{el.DataSourceType|DataSourceType}}</span>
+                <span class="label label-info">{{el.DistributeCategory|DistributeCategory}}</span>
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" v-bind:ModuleId="el.ActivityModuleId"
                             v-bind:name="el.Name" hex-edit="">
@@ -56,6 +62,11 @@
 
                     </option>
                 </select>
+                <select id="distributeCategory2" class="form-control" style="width: 150px">
+                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
+
+                    </option>
+                </select>
                 <input type="text" class="form-control" id="editcontent">
             </div>
             <div class="modal-footer">
@@ -72,6 +83,7 @@
 <script src="base.js"></script>
 <script>
     var dataSourceType = ["行为", "业务"];
+    var distributeCategory = ["日统计项", "总统计项"];
 
     var scoreListData = new Vue({
         el: '#scoreList',
@@ -81,6 +93,9 @@
         filters: {
             DataSourceType: function (value) {
                 return dataSourceType[parseInt(value - 1)] == undefined ? "未知" : dataSourceType[parseInt(value - 1)];
+            },
+            DistributeCategory: function (value) {
+                return distributeCategory[parseInt(value - 1)] == undefined ? "未知" : distributeCategory[parseInt(value - 1)];
             }
         }
     })
@@ -99,19 +114,33 @@
         }
     })
 
+    //统计类型
+    new Vue({
+        el: "#distributeCategory",
+        data: {
+            list: distributeCategory
+        }
+    })
+    new Vue({
+        el: "#distributeCategory2",
+        data: {
+            list: distributeCategory
+        }
+    })
+
     var token = Config.getToken();
     var xx = function () {
         (function () {
             GetInit();
             $(document.body).on("click", "#create", function () {
-                Create($("#createcontent").val(), $("#dataSourceType").val());
+                Create($("#createcontent").val(), $("#dataSourceType").val(), $("#distributeCategory").val());
             })
             $(document.body).on("click", "[hex-edit]", function () {
                 $('#myModal').modal('show');
                 $("#editcontent").val($(this).attr("name")).attr("mid", $(this).attr("ModuleId"));
             })
             $(document.body).on("click", "#edittextbtn", function () {
-                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val());
+                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val(), $("#distributeCategory2").val());
                 $('#myModal').modal('hide');
             })
             $(document.body).on("click", "[hex-remove]", function () {
@@ -130,22 +159,22 @@
             });
         }
 
-        function Create(name, dst) {
+        function Create(name, dst, dc) {
             $.ajax({
-                url: Config._webApi + "/ActivityModule/Create?name=" + name + "&dataSourceType=" + dst + "&ssotoken=" + token,
+                url: Config._webApi + "/ActivityModule/Create2?ssotoken=" + token,
                 method: "POST",
-                data: {"name": name, "dataSourceType": dst},
+                data: {"Name": name, "DataSourceType": dst, "DistributeCategory": dc},
                 success: function (data) {
                     GetInit();
                 }
             });
         }
 
-        function Modify(mid, name, dst) {
+        function Modify(mid, name, dst, dc) {
             $.ajax({
-                url: Config._webApi + "/ActivityModule/Modify?activityModuleId=" + mid + "&name=" + name + "&dataSourceType=" + dst + "&ssotoken=" + token,
+                url: Config._webApi + "/ActivityModule/Modify2?ssotoken=" + token,
                 method: "POST",
-                data: {"activityModuleId": mid, "name": name, "dataSourceType": dst},
+                data: {"ActivityModuleId": mid, "Name": name, "DataSourceType": dst, "DistributeCategory": dc},
                 success: function (data) {
                     GetInit();
                 }
