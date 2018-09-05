@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iframe加载voide</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../Script/jquery-1.10.2.js"></script>
+    <script src="../js/bootstrap.js"></script>
+</head>
+<body>
+<div>
+    <div>
+        <div>
+            <iframe id="page" name="page" frameborder="0" onload=""
+                    src="https://reader.hexfuture.net/Read/PageContent/863334906758?ebookId=863334904050&chapterId=863334906562&keypoint=&paragraphId="
+                    width="100%" height="10428" style="min-height: 180px; height: 9238px;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="iframecwplayer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true"
+     style="overflow: hidden; display: block;background-color: rgba(0, 0, 0, 0.5);margin: 0;top: 0;z-index: 11;">
+    <div class="modal-dialog" id="showCw" style="width: calc(100% - 250px);height: calc(100% - 60px);">
+        <a id="cwclose"
+           style="width: 30px;height: 30px;display: block;position: absolute;right: -40px;top: 0;background-color: #ffffff;border-radius: 5px;background-repeat: no-repeat;background-position: center;background-image: url( + url + )"></a>
+        <iframe class="" id="cwplayer" src="" frameborder="0" scrolling="auto"
+                style="background-color:white;border: 1px #C7C7C7 solid;width:100%;height:100%;-webkit-box-shadow: 3px 4px 10px #999; -moz-box-shadow: 3px 4px 10px #999;box-shadow: 3px 4px 10px #999;"></iframe>
+    </div>
+</div>
+<script>
+    (function () {
+        $("html,body").animate({scrollTop: 5001}, 1000);
+        playoutbook("https://reader.hexfuture.net/FileProgress/CoursewarePlay/2576980438398");
+
+        function playoutbook(url) {
+            $("body").css("overflow-y", "hidden");
+
+            //设置iframe尺寸
+            iframeresize(1, $('#showCw'));
+
+            //赋值iframe
+            $('#cwplayer').attr('src', url);
+
+            //打开模态框
+            $("#iframecwplayer").modal({keyboard: false, backdrop: false});
+
+            //iframe隐藏后
+            $("#iframecwplayer").on("hide.bs.modal", function (e) {
+                $("body").css("overflow-y", "auto");
+                $("#cwplayer").attr("src", "");
+            });
+
+            //关闭事件---------
+            $('#cwclose').click(function () {
+                $("#iframecwplayer").modal('hide');
+                $(window.parent.document.getElementsByClassName("CanvasAndPen-List")).fadeOut();
+            })
+        }
+
+        //赋值iframe尺寸
+        function iframeresize(etype, diviframe) {
+            var full_width = 'calc(100% - 250px)';
+            var full_height = 'calc(100% - 60px)';
+            //根据类型控制尺寸
+            switch (parseInt(etype)) {
+                case 1:
+                    //视频
+                    diviframe.css("width", full_width).css("height", full_height);
+                    break;
+            }
+        }
+    })()
+</script>
+</body>
+</html>
