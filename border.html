@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标准盒模型</title>
+    <style>
+        body {
+            background-color: #99FFFF;
+        }
+
+        #border {
+            width: 200px;
+            height: 200px;
+            padding: 10px;
+            background-color: #FFFFFF;
+            border: 10px solid #33FFFF;
+            margin: 10px;
+        }
+
+        #border div {
+            width: 100%;
+            height: 100%;
+            background-color: #CCCCCC;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="border">
+    <div>
+        200 * 200
+    </div>
+</div>
+<div>
+    <p>border元素width：200; height: 200px; padding: 10px; border: 10px; margin: 10px;</p>
+    <div>
+        <h3>js获取元素宽高</h3>
+        <div style="padding-left: 10px;font-size: 14px">
+            <p>document.getElementById("border").style.width="" <i>//js原生.style.width或者.width取不到值
+                1.元素未设置宽度值。
+                2.元素设置了宽度值，但设置在内联或外联样式表中，而非内嵌式的</i></p>
+            <p>document.getElementById("border").clientWidth=220 <i>//获取content+padding的宽度</i></p>
+            <p>document.getElementById("border").offsetWidth=240 <i>//获取content+padding+border的宽度</i></p>
+        </div>
+    </div>
+    <div>
+        <h3>jquery获取元素宽高</h3>
+        <div style="padding-left: 10px;font-size: 14px">
+            <p>$("#border").width()=200 <i>//只是获取content宽度</i></p>
+            <p>$("#border").innerWidth()=220 <i>//获取content+padding的宽度</i></p>
+            <p>$("#border").outerWidth()=240 <i>//获取content+padding+border的宽度</i></p>
+            <p>$("#border").outerWidth(true)=260 <i>//获取content+padding+border+margin的宽度</i></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
