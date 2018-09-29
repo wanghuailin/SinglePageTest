@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #ele {
+            color: #00a65a;
+        }
+    </style>
+</head>
+<body>
+
+<div id="ele" style="font-size: 12px">
+    <p>青青子衿，悠悠我心</p>
+</div>
+</body>
+<script>
+    var div = document.getElementById("ele");
+    console.log(div.style.fontFamily);
+    console.log(div.style.color);
+    console.log(div.style.fontSize);
+    console.log("-----------------------------")
+    console.log(window.getComputedStyle(div, null).fontFamily);
+    console.log(window.getComputedStyle(div, null).color);
+    console.log(window.getComputedStyle(div, null).fontSize);
+</script>
+</html>
