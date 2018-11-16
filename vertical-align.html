@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .vertical-align > div {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 1px solid red;
+        }
+
+        .vertical-align > div:nth-of-type(2) {
+            vertical-align: middle;
+        }
+
+        .vertical-align > div:nth-of-type(3) {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="vertical-align">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+</body>
+</html>
