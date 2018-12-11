@@ -19,7 +19,7 @@
 
                 </option>
             </select>
-            <select id="distributeCategory">
+            <select id="distributeCategory" hidden="hidden">
                 <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
 
                 </option>
@@ -34,7 +34,8 @@
                 <a v-bind:href="'content.html?id='+el.ActivityModuleId" v-text="el.Name"></a>
                 <span class="label label-info">{{el.DataSourceType|DataSourceType}}</span>
                 <!--<span class="label label-info">{{el.DistributeCategory|DistributeCategory}}</span>-->
-                <span class="label label-success">{{el.IsIntoHeadmasterReport|IntoHeadmasterReport}}</span>
+                <span class="label label-success" v-if="el.IsIntoHeadmasterReport">{{el.IsIntoHeadmasterReport|IntoHeadmasterReport}}</span>
+                <span class="label label-danger" v-else="">{{el.IsIntoHeadmasterReport|IntoHeadmasterReport}}</span>
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" v-bind:ModuleId="el.ActivityModuleId"
                             v-bind:name="el.Name" hex-edit="">
@@ -63,7 +64,7 @@
 
                     </option>
                 </select>
-                <select id="distributeCategory2" class="form-control" style="width: 150px">
+                <select id="distributeCategory2" class="form-control" style="width: 150px;display: none">
                     <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
 
                     </option>
