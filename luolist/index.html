@@ -33,7 +33,8 @@
             <li class="list-group-item clearfix" v-for="el in list">
                 <a v-bind:href="'content.html?id='+el.ActivityModuleId" v-text="el.Name"></a>
                 <span class="label label-info">{{el.DataSourceType|DataSourceType}}</span>
-                <span class="label label-info">{{el.DistributeCategory|DistributeCategory}}</span>
+                <!--<span class="label label-info">{{el.DistributeCategory|DistributeCategory}}</span>-->
+                <span class="label label-success">{{el.IsIntoHeadmasterReport|IntoHeadmasterReport}}</span>
                 <div class="pull-right">
                     <button type="button" class="btn btn-success" v-bind:ModuleId="el.ActivityModuleId"
                             v-bind:name="el.Name" hex-edit="">
@@ -67,6 +68,11 @@
 
                     </option>
                 </select>
+                <select id="intoHeadmasterReport2" class="form-control" style="width: 150px">
+                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
+
+                    </option>
+                </select>
                 <input type="text" class="form-control" id="editcontent">
             </div>
             <div class="modal-footer">
@@ -84,6 +90,7 @@
 <script>
     var dataSourceType = ["行为", "业务"];
     var distributeCategory = ["日统计项", "总统计项"];
+    var intoHeadmasterReport = ["加入统计", "忽略数据"];
 
     var scoreListData = new Vue({
         el: '#scoreList',
@@ -96,6 +103,13 @@
             },
             DistributeCategory: function (value) {
                 return distributeCategory[parseInt(value - 1)] == undefined ? "未知" : distributeCategory[parseInt(value - 1)];
+            },
+            IntoHeadmasterReport: function (value) {
+                if (value) {
+                    return intoHeadmasterReport[0];
+                } else {
+                    return intoHeadmasterReport[1];
+                }
             }
         }
     })
@@ -128,6 +142,15 @@
         }
     })
 
+
+    //加入统计
+    new Vue({
+        el: "#intoHeadmasterReport2",
+        data: {
+            list: intoHeadmasterReport
+        }
+    })
+
     var token = Config.getToken();
     var xx = function () {
         (function () {
@@ -140,7 +163,15 @@
                 $("#editcontent").val($(this).attr("name")).attr("mid", $(this).attr("ModuleId"));
             })
             $(document.body).on("click", "#edittextbtn", function () {
-                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val(), $("#distributeCategory2").val());
+                var isReport = parseInt($("#intoHeadmasterReport2").val());
+                if (isReport == 1) {
+                    isReport = true;
+                } else if (isReport == 2) {
+                    isReport = false;
+                } else {
+                    isReport = true;
+                }
+                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val(), $("#distributeCategory2").val(), isReport);
                 $('#myModal').modal('hide');
             })
             $(document.body).on("click", "[hex-remove]", function () {
@@ -170,11 +201,17 @@
             });
         }
 
-        function Modify(mid, name, dst, dc) {
+        function Modify(mid, name, dst, dc, isReport) {
             $.ajax({
                 url: Config._webApi + "/ActivityModule/Modify2?ssotoken=" + token,
                 method: "POST",
-                data: {"ActivityModuleId": mid, "Name": name, "DataSourceType": dst, "DistributeCategory": dc},
+                data: {
+                    "ActivityModuleId": mid,
+                    "Name": name,
+                    "DataSourceType": dst,
+                    "DistributeCategory": dc,
+                    "IsIntoHeadmasterReport": isReport
+                },
                 success: function (data) {
                     GetInit();
                 }
