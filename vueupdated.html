@@ -18,17 +18,23 @@
         data: {
             src: "",
         },
+        watch: {
+            src: function () {
+                this.$nextTick(function () {
+                    console.log("watched");
+                    $("#imgupdated").find("img").attr("src", "//cms1003.hexfuture.net/FileProgress/Download2/2576982726039");
+                })
+            }
+        },
         updated: function () {
             console.log("updated");
-            setTimeout(function () {
-                $("#imgupdated").find("img").attr("src", "//cms1003.hexfuture.net/FileProgress/Download2/2576982726039");
-            }, 10000)
+            $("#imgupdated").find("img").attr("src", "//cms1003.hexfuture.net/FileProgress/Download2/2576982726039");
         }
     })
 
     setTimeout(function () {
         imgupdated.src = "/FileProgress/Download2/2576982726039";
-        console.log("src");
+        console.log("src有值");
     }, 10000)
 </script>
 </html>
