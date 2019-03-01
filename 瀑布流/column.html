@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>column实现瀑布流</title>
+    <script type="application/javascript" src="../Script/jquery-1.10.2.js"></script>
+    <style>
+        #pubu {
+            width: 100%;
+            column-width: 200px;
+            column-gap: 0;
+        }
+
+        .item {
+            width: 200px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .item > span {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="pubu">
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+</div>
+</body>
+<script>
+    var colorList = ['#fcbf66', '#51adf7', '#f6e764', '#80d784', '#55daea', '#b8e18a', '#8e67d3', '#c36ad2', '#f37875', '#C242B4', '#3EC1F4'];
+    $("#pubu>.item").each(function (index) {
+        var random = parseInt(Math.random() * 5) + 1;  //1-5;
+        $(this).css("height", random * 100).css("line-height", random * 100+"px").css("background-color", colorList[index])
+        $(this).append("<span>" + (index + 1) + "</span>")
+    })
+
+</script>
+</html>
