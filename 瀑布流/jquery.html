@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery实现瀑布流</title>
+    <script type="application/javascript" src="../Script/jquery-1.10.2.js"></script>
+    <style>
+        #pubu {
+            width: 100%;
+            position: relative;
+        }
+
+        .item {
+            width: 200px;
+            float: left;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .item > span {
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="pubu">
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+    <div class="item">
+    </div>
+</div>
+</body>
+<script>
+    /*
+     * https://www.jianshu.com/p/d4ca937c6f96?from=jiantop.com
+     * */
+
+    var colorList = ['#fcbf66', '#51adf7', '#f6e764', '#80d784', '#55daea', '#b8e18a', '#8e67d3', '#c36ad2', '#f37875', '#C242B4', '#3EC1F4'];
+    $("#pubu>.item").each(function (index) {
+        var random = parseInt(Math.random() * 5) + 1;  //1-5;
+        $(this).css("height", random * 100).css("line-height", random * 100 + "px").css("background-color", colorList[index])
+        $(this).append("<span>" + (index + 1) + "</span>")
+    })
+
+    waterfall();
+
+    function waterfall() {
+        var screenWidth = document.body.offsetWidth;
+        var boxWidth = $("#pubu>.item").eq(0).outerWidth();
+        var cols = Math.floor(screenWidth / boxWidth);
+
+        var heightArr = [];
+        $.each($("#pubu>.item"), function (index, value) {
+            var boxHeight = $(value).outerHeight();
+            if (index < cols) {
+                heightArr[index] = boxHeight;
+            } else {
+                var minColsHeight = Math.min.apply(null, heightArr);
+                var minColsIndex = $.inArray(minColsHeight, heightArr);
+                $(value).css({
+                    "position": "absolute",
+                    "top": minColsHeight + "px",
+                    "left": minColsIndex * boxWidth + "px"
+                })
+                heightArr[minColsIndex] += boxHeight;
+            }
+        })
+    }
+</script>
+</html>
