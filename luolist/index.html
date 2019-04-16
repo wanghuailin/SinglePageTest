@@ -32,6 +32,7 @@
         <ul class="list-group" id="scoreList">
             <li class="list-group-item clearfix" v-for="el in list">
                 <a v-bind:href="'content.html?id='+el.ActivityModuleId" v-text="el.Name"></a>
+                <span class="label label-info">{{el.PlatformTypeSource|PlatformTypeSource}}</span>
                 <span class="label label-info">{{el.DataSourceType|DataSourceType}}</span>
                 <!--<span class="label label-info">{{el.DistributeCategory|DistributeCategory}}</span>-->
                 <span class="label label-success" v-if="el.IsIntoHeadmasterReport">{{el.IsIntoHeadmasterReport|IntoHeadmasterReport}}</span>
@@ -59,6 +60,11 @@
                 <h4 class="modal-title" id="myModalLabel">修改名称</h4>
             </div>
             <div class="modal-body" style="display: flex">
+                <select id="PlatformTypeSource2">
+                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
+
+                    </option>
+                </select>
                 <select id="dataSourceType2" class="form-control" style="width: 150px">
                     <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
 
@@ -70,11 +76,6 @@
                     </option>
                 </select>
                 <select id="intoHeadmasterReport2" class="form-control" style="width: 150px">
-                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
-
-                    </option>
-                </select>
-                <select id="PlatformTypeSource2">
                     <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
 
                     </option>
