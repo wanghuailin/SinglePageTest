@@ -74,6 +74,11 @@
 
                     </option>
                 </select>
+                <select id="PlatformTypeSource2">
+                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
+
+                    </option>
+                </select>
                 <input type="text" class="form-control" id="editcontent">
             </div>
             <div class="modal-footer">
@@ -92,6 +97,7 @@
     var dataSourceType = ["行为", "业务"];
     var distributeCategory = ["日统计项", "总统计项"];
     var intoHeadmasterReport = ["加入校长报告", "不加入校长报告"];
+    var PlatformTypeSource = Config.PlatformTypeSource;
 
     var scoreListData = new Vue({
         el: '#scoreList',
@@ -111,7 +117,10 @@
                 } else {
                     return intoHeadmasterReport[1];
                 }
-            }
+            },
+            PlatformTypeSource: function (value) {
+                return PlatformTypeSource[parseInt(value - 1)] == undefined ? "未知" : PlatformTypeSource[parseInt(value - 1)];
+            },
         }
     })
 
@@ -152,6 +161,15 @@
         }
     })
 
+
+    //平台类型
+    new Vue({
+        el: "#PlatformTypeSource2",
+        data: {
+            list: PlatformTypeSource
+        }
+    })
+
     var token = Config.getToken();
     var xx = function () {
         (function () {
@@ -172,7 +190,7 @@
                 } else {
                     isReport = true;
                 }
-                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val(), $("#distributeCategory2").val(), isReport);
+                Modify($("#editcontent").attr("mid"), $("#editcontent").val(), $("#dataSourceType2").val(), $("#distributeCategory2").val(), isReport, $("#PlatformTypeSource2").val());
                 $('#myModal').modal('hide');
             })
             $(document.body).on("click", "[hex-remove]", function () {
@@ -202,7 +220,7 @@
             });
         }
 
-        function Modify(mid, name, dst, dc, isReport) {
+        function Modify(mid, name, dst, dc, isReport, type) {
             $.ajax({
                 url: Config._webApi + "/ActivityModule/Modify2?ssotoken=" + token,
                 method: "POST",
@@ -211,7 +229,8 @@
                     "Name": name,
                     "DataSourceType": dst,
                     "DistributeCategory": dc,
-                    "IsIntoHeadmasterReport": isReport
+                    "IsIntoHeadmasterReport": isReport,
+                    "PlatformTypeSource": type
                 },
                 success: function (data) {
                     GetInit();
