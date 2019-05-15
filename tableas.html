@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟table</title>
+    <style>
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            height: 300px;
+            border: 1px solid #333333;
+        }
+
+        .thead {
+            background-color: #3DA0DB;
+            height: 30px;
+            width: 100%;
+        }
+
+        .tbody {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tbody > div.left {
+            display: inline-block;
+            width: 100px;
+            height: 500px;
+            background-color: #00a65a;
+            vertical-align: text-top;
+        }
+
+        .tbody > div.right {
+            display: inline-block;
+            width: calc(100% - 120px);
+            height: 500px;
+            vertical-align: text-top;
+            overflow: hidden;
+        }
+
+        .tbody > div.right > div {
+            width: 1200px;
+            position: relative;
+        }
+
+        #Scroll {
+            width: 400px;
+            height: 20px;
+            position: relative;
+            left: 100px;
+            overflow: auto;
+        }
+
+        #Scroll > .content {
+            height: 20px;
+            width: 1200px;
+        }
+    </style>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div class="table">
+    <div class="thead">
+        <div class="left">
+        </div>
+        <div class="right">
+
+        </div>
+    </div>
+    <div class="tbody">
+        <div class="left">
+        </div>
+        <div class="right">
+            <div>
+                这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容这是超过宽高的内容
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Scroll">
+    <div class="content"></div>
+</div>
+<script src="./Script/jquery-1.10.2.js"></script>
+<script>
+    $("#Scroll").scroll(function () {
+        var scrollLeft = $(this).scrollLeft();
+        $(".tbody>.right>div").css({"left": -scrollLeft + "px"});
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .content {
+            display: flex;
+            width: 500px;
+            border: 1px solid #333333;
+        }
+
+        .content > .left {
+            width: 200px;
+            border: 1px solid #333333;
+        }
+
+        .content > .right {
+            flex: 1;
+            overflow: auto;
+            border: 1px solid #3DA0DB;
+        }
+
+        #testDivTable {
+            display: table;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="left">
+        模块
+    </div>
+    <div class="right">
+        <div id=testDivTable>
+            <div style="display: table-header-group;">
+                <div style="display: table-cell">万千气象</div>
+                <div style="display: table-cell">万紫千红</div>
+                <div style="display: table-cell">万万没想到</div>
+                <div style="display: table-cell">万人空巷</div>
+                <div style="display: table-cell">万千阡陌</div>
+            </div>
+            <div style="display: table-row-group;">
+                <div style="display: table-row;">
+                    <div style="display: table-cell">100</div>
+                    <div style="display: table-cell">28</div>
+                    <div style="display: table-cell">28</div>
+                    <div style="display: table-cell">28</div>
+                    <div style="display: table-cell">28</div>
+                </div>
+                <div style="display: table-row;">
+                    <div style="display: table-cell">123</div>
+                    <div style="display: table-cell">1</div>
+                    <div style="display: table-cell">1</div>
+                    <div style="display: table-cell">1</div>
+                    <div style="display: table-cell">1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
