@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据列表</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/DatetimePicker/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/DatetimePicker/bootstrap-datetimepicker.min.css" type="text/css"/>
+    <style>
+        body {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .search > .time {
+            margin: 0 10px;
+        }
+
+        .search > .time > div > input {
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .search > span {
+            line-height: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="search">
+    <div class="time">
+        <div data-date="" data-link-field="StartTime" class="input-group date form_datetime_tostarttime">
+            <input id="StartTime" readonly="readonly" class="hex-datetimepicker">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+    <span>至</span>
+    <div class="time">
+        <div data-date="" data-link-field="EndTime" class="input-group date form_datetime_toendtime">
+            <input id="EndTime" readonly="readonly" class="hex-datetimepicker">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success btn-sm" id="todoTime">搜索</button>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="jquery-1.10.2.js"></script>
+<script src="vue.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/DatetimePicker/bootstrap-datetimepicker.js"></script>
+<script src="js/DatetimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="base.js"></script>
+<script>
+    (function () {
+        var startTime = new Date();
+        var endTime = new Date();
+        startTime.setDate(endTime.getDate() - 7);
+
+        $('.form_datetime_tostarttime').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            minuteStep: 10,
+            maxView: 3,
+            minView: 2,
+            format: 'yyyy/mm/dd',
+            linkFormat: "yyyy/mm/dd",
+            startDate: startTime,
+            initialDate: startTime
+        });
+
+        $('.form_datetime_toendtime').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: true,
+            autoclose: true,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            minuteStep: 10,
+            maxView: 3,
+            minView: 2,
+            format: 'yyyy/mm/dd',
+            linkFormat: "yyyy/mm/dd",
+            startDate: startTime,
+            initialDate: endTime
+        });
+
+        $("#todoTime").click(function () {
+            var starttime = $("#StartTime").val();
+            var endTime = $("#EndTime").val();
+            console.log(starttime + "-- " + endTime);
+        })
+    })()
+</script>
+</html>
