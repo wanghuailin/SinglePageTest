@@ -81,6 +81,15 @@
     </tr>
     </tbody>
 </table>
+<div class="pull-right">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="datePage">
+            <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            <li v-for="el in list" v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a></li>
+            <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        </ul>
+    </nav>
+</div>
 </body>
 <script src="jquery-1.10.2.js"></script>
 <script src="vue.min.js"></script>
@@ -89,54 +98,89 @@
 <script src="js/DatetimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="base.js"></script>
 <script>
+    var vm_datePage = new Vue({
+        el: "#datePage",
+        data: {
+            activePage: 1,
+            list: [1, 2, 3, 4, 5] //页码
+        }
+    });
+
     (function () {
-        var startTime = new Date();
-        var endTime = new Date();
-        startTime.setDate(endTime.getDate() - 7);
-
-        $('.form_datetime_tostarttime').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: true,
-            autoclose: true,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            minuteStep: 10,
-            maxView: 3,
-            minView: 2,
-            format: 'yyyy/mm/dd',
-            linkFormat: "yyyy/mm/dd",
-            initialDate: startTime
-        });
-        $("#StartTime").val(Config.Datetimeformat(startTime).split(" ")[0]);
-
-        $('.form_datetime_toendtime').datetimepicker({
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: true,
-            autoclose: true,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1,
-            minuteStep: 10,
-            maxView: 3,
-            minView: 2,
-            format: 'yyyy/mm/dd',
-            linkFormat: "yyyy/mm/dd",
-            initialDate: endTime
-        });
-        $("#EndTime").val(Config.Datetimeformat(endTime).split(" ")[0]);
-
         var token = Config.getToken();
 
-        $("#todoTime").click(function () {
-            var starttime = $("#StartTime").val();
-            var endTime = $("#EndTime").val();
-            console.log(starttime + "-- " + endTime);
-        })
+        (function () {
+            initSetTime();
+            changeTime();
+            changePage();
+        })()
+
+        function initSetTime() {
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setDate(endTime.getDate() - 7);
+
+            $('.form_datetime_tostarttime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: true,
+                autoclose: true,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                minuteStep: 10,
+                maxView: 3,
+                minView: 2,
+                format: 'yyyy/mm/dd',
+                linkFormat: "yyyy/mm/dd",
+                initialDate: startTime
+            });
+            $("#StartTime").val(Config.Datetimeformat(startTime).split(" ")[0]);
+
+            $('.form_datetime_toendtime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: true,
+                autoclose: true,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                minuteStep: 10,
+                maxView: 3,
+                minView: 2,
+                format: 'yyyy/mm/dd',
+                linkFormat: "yyyy/mm/dd",
+                initialDate: endTime
+            });
+            $("#EndTime").val(Config.Datetimeformat(endTime).split(" ")[0]);
+
+        }
+
+        function changeTime() {
+            $("#todoTime").click(function () {
+                var starttime = $("#StartTime").val();
+                var endTime = $("#EndTime").val();
+                console.log(starttime + "-- " + endTime);
+            })
+        }
+
+        function changePage() {
+            $("#datePage [aria-label='Previous']").click(function () {
+                if (vm_datePage.activePage > 1) {
+                    vm_datePage.activePage--;
+                }
+            })
+            $("#datePage [aria-label='Next']").click(function () {
+                if (vm_datePage.activePage < vm_datePage.list[vm_datePage.list.length - 1]) {
+                    vm_datePage.activePage++;
+                }
+            })
+            $("#datePage a:not([aria-label])").click(function () {
+                vm_datePage.activePage = parseInt($(this).text());
+            })
+        }
     })()
 </script>
 </html>
