@@ -52,7 +52,7 @@ var Config = function () {
         var h = date.getHours();
         var minute = date.getMinutes();
         minute = minute < 10 ? ('0' + minute) : minute;
-        return y + '.' + m + '.' + d + ' ' + h + ':' + minute;
+        return y + '/' + m + '/' + d + ' ' + h + ':' + minute;
     }
 
     //平台类型

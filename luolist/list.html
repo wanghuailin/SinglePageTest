@@ -108,9 +108,9 @@
             minView: 2,
             format: 'yyyy/mm/dd',
             linkFormat: "yyyy/mm/dd",
-            startDate: startTime,
             initialDate: startTime
         });
+        $("#StartTime").val(Config.Datetimeformat(startTime).split(" ")[0]);
 
         $('.form_datetime_toendtime').datetimepicker({
             language: 'zh-CN',
@@ -126,9 +126,11 @@
             minView: 2,
             format: 'yyyy/mm/dd',
             linkFormat: "yyyy/mm/dd",
-            startDate: startTime,
             initialDate: endTime
         });
+        $("#EndTime").val(Config.Datetimeformat(endTime).split(" ")[0]);
+
+        var token = Config.getToken();
 
         $("#todoTime").click(function () {
             var starttime = $("#StartTime").val();
