@@ -26,6 +26,7 @@
             width: 150px;
             height: 30px;
             line-height: 30px;
+            padding-left: 5px;
         }
 
         .search > span {
@@ -55,29 +56,17 @@
     <thead>
     <tr>
         <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
+        <th>姓名</th>
+        <th>所用模块</th>
+        <th>时间</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+    <tbody id="listDate">
+    <tr v-for="(el,index) in list">
+        <th scope="row" v-text="(index+1)"></th>
+        <td v-text="el.UserId"></td>
+        <td v-text="el.OperationModuleName"></td>
+        <td v-text="el.Time"></td>
     </tr>
     </tbody>
 </table>
@@ -98,6 +87,12 @@
 <script src="js/DatetimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="base.js"></script>
 <script>
+    var vm_listdate = new Vue({
+        el: "#listDate",
+        data: {
+            list: []
+        }
+    });
     var vm_datePage = new Vue({
         el: "#datePage",
         data: {
@@ -136,7 +131,7 @@
                 linkFormat: "yyyy/mm/dd",
                 initialDate: startTime
             });
-            $("#StartTime").val(Config.Datetimeformat(startTime).split(" ")[0]);
+            $("#StartTime").val(Config.Datetimeformat2(startTime));
 
             $('.form_datetime_toendtime').datetimepicker({
                 language: 'zh-CN',
@@ -154,8 +149,24 @@
                 linkFormat: "yyyy/mm/dd",
                 initialDate: endTime
             });
-            $("#EndTime").val(Config.Datetimeformat(endTime).split(" ")[0]);
+            $("#EndTime").val(Config.Datetimeformat2(endTime));
 
+//            GetDate(Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime));
+            GetDate("2019/04/01", "2019/05/01");
+        }
+
+        function GetDate(StartTime, EndTime) {
+            $.ajax({
+                url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
+                method: "POST",
+                data: {"StartTime": StartTime, "EndTime": EndTime, "LastNum": 1000},
+                success: function (data) {
+                    data.forEach(function (item) {
+                        item.Time = Config.Datetimeformat(new Date(item.Time));
+                    })
+                    vm_listdate.list = data;
+                }
+            });
         }
 
         function changeTime() {

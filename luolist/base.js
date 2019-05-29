@@ -22,7 +22,7 @@ var Config = function () {
     (function () {
     })();
 
-    var _webApi = "https://lmsapi.hexfuture.com/";//api地址
+    var _webApi = "https://tmsapi.hexfuture.com/";//api地址
 
     //获取token
     function getToken() {
@@ -55,6 +55,18 @@ var Config = function () {
         return y + '/' + m + '/' + d + ' ' + h + ':' + minute;
     }
 
+    function Datetimeformat2(date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        var minute = date.getMinutes();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        return y + '/' + m + '/' + d;
+    }
+
     //平台类型
     var PlatformTypeSource = ["家庭端App", "教师端App", "上课web端", "备课web端", "魔方", , , , , "未知"];
 
@@ -63,6 +75,7 @@ var Config = function () {
         getToken: getToken,
         GetTimeByTimeStr: GetTimeByTimeStr,
         Datetimeformat: Datetimeformat,
+        Datetimeformat2: Datetimeformat2,
         PlatformTypeSource: PlatformTypeSource
     }
 }();
