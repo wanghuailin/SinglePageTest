@@ -66,6 +66,7 @@
         <th>#</th>
         <th>用户姓名</th>
         <th>用户ID</th>
+        <th>所在学校</th>
         <th>操作内容</th>
         <th>操作时间</th>
     </tr>
@@ -75,11 +76,13 @@
         <th scope="row" v-text="(index+1)"></th>
         <td v-text="el.RealName"></td>
         <td v-text="el.UserId"></td>
+        <td v-text="el.SchoolName"></td>
         <td v-text="el.OperationModuleName"></td>
         <td v-text="el.Time"></td>
     </tr>
     <tr v-if="isLoading">
         <th scope="row"></th>
+        <td></td>
         <td></td>
         <td>数据加载中……</td>
         <td></td>
