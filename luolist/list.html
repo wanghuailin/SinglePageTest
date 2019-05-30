@@ -221,13 +221,13 @@
         }
 
         function changePage() {
-            $("#datePage [aria-label='Previous']").click(function () {
+            $(document.body).on("click", "#datePage [aria-label='Previous']", function () {
                 if (vm_datePage.activePage > 1) {
                     vm_datePage.activePage--;
                     GetDateCommon();
                 }
             })
-            $("#datePage [aria-label='Next']").click(function () {
+            $(document.body).on("click", "#datePage [aria-label='Next']", function () {
                 if (vm_datePage.activePage < vm_datePage.list[vm_datePage.list.length - 1]) {
                     vm_datePage.activePage++;
                     GetDateCommon();
