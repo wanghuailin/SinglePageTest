@@ -22,7 +22,7 @@ var Config = function () {
     (function () {
     })();
 
-    var _webApi = "https://tmsapi.hexfuture.com/";//api地址
+    var _webApi = "https://tmsapi.hexfuture.net/";//api地址
 
     //获取token
     function getToken() {
