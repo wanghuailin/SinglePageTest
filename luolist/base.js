@@ -52,7 +52,8 @@ var Config = function () {
         var h = date.getHours();
         var minute = date.getMinutes();
         minute = minute < 10 ? ('0' + minute) : minute;
-        return y + '/' + m + '/' + d + ' ' + h + ':' + minute;
+        var second = date.getSeconds();
+        return y + '/' + m + '/' + d + ' ' + h + ':' + minute + ":" + second;
     }
 
     function Datetimeformat2(date) {

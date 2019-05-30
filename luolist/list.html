@@ -171,9 +171,10 @@
 
         function changeTime() {
             $("#todoTime").click(function () {
-                var starttime = $("#StartTime").val();
+                var startTime = $("#StartTime").val();
                 var endTime = $("#EndTime").val();
-                console.log(starttime + "-- " + endTime);
+                console.log(startTime + "-- " + endTime);
+                GetDate(startTime, endTime);
             })
         }
 
