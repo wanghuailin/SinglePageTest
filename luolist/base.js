@@ -68,6 +68,22 @@ var Config = function () {
         return y + '/' + m + '/' + d;
     }
 
+    function setCookie(name, value) {
+        //获取当前时间
+        var exdate = new Date();
+        var expireDays = 365 * 3;
+        exdate.setDate(exdate.getDate() + expireDays);
+        var href = window.location.href.substr(8);
+        var domain = href.substr(href.indexOf('.'), href.indexOf('/') - href.indexOf('.'));
+        //如果本地调试
+        if (window.location.href.indexOf("localhost") > 0) {
+            domain = "localhost";
+        }
+        // document.cookie = name + "=" + value + ";domain=" + domain + ";path=/;expires=" + exdate.toGMTString();
+        //不在保持登录状态，缓存随浏览器关闭而消失
+        document.cookie = name + "=" + value + ";domain=" + domain + ";path=/;expires=";
+    }
+
     //平台类型
     var PlatformTypeSource = ["家庭端App", "教师端App", "上课web端", "备课web端", "魔方", , , , , "未知"];
 
@@ -77,6 +93,7 @@ var Config = function () {
         GetTimeByTimeStr: GetTimeByTimeStr,
         Datetimeformat: Datetimeformat,
         Datetimeformat2: Datetimeformat2,
-        PlatformTypeSource: PlatformTypeSource
+        PlatformTypeSource: PlatformTypeSource,
+        setCookie: setCookie
     }
 }();
