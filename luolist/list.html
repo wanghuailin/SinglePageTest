@@ -33,6 +33,9 @@
             line-height: 30px;
         }
 
+        table > tbody > tr:hover {
+            background-color: #dff0d8;
+        }
     </style>
 </head>
 <body>
@@ -50,13 +53,19 @@
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
     </div>
-    <button type="button" class="btn btn-success btn-sm" id="todoTime">搜索</button>
+    <button type="button" class="btn btn-success btn-sm" id="todoTime" data-loading-text="Loading...">搜索</button>
+</div>
+<div>
+    <span>共 </span>
+    <span id="TotalRowsCount" class="text-info"></span>
+    <span> 条数据</span>
 </div>
 <table class="table table-striped">
     <thead>
     <tr>
         <th>#</th>
-        <th>姓名</th>
+        <th>用户姓名</th>
+        <th>用户ID</th>
         <th>所用模块</th>
         <th>时间</th>
     </tr>
@@ -64,6 +73,7 @@
     <tbody id="listDate">
     <tr v-for="(el,index) in list">
         <th scope="row" v-text="(index+1)"></th>
+        <td v-text="el.RealName"></td>
         <td v-text="el.UserId"></td>
         <td v-text="el.OperationModuleName"></td>
         <td v-text="el.Time"></td>
@@ -71,10 +81,22 @@
     </tbody>
 </table>
 <div class="pull-right">
-    <nav aria-label="Page navigation">
-        <ul class="pagination" id="datePage">
+    <nav aria-label="Page navigation" id="datePage">
+        <ul class="pagination" v-if="activePage<=5 || activePage>list.length-6">
             <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-            <li v-for="el in list" v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a></li>
+            <li v-for="el in list" v-if="el<=5 || el>list.length-6"
+                v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a>
+            </li>
+            <li v-else-if="el==6"><a href="#">...</a></li>
+            <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        </ul>
+        <ul class="pagination" v-else="">
+            <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            <li><a href="#">...</a></li>
+            <li v-for="el in list" v-if="el>activePage-4&& el<activePage+4"
+                v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a>
+            </li>
+            <li><a href="#">...</a></li>
             <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
         </ul>
     </nav>
@@ -97,7 +119,7 @@
         el: "#datePage",
         data: {
             activePage: 1,
-            list: [1, 2, 3, 4, 5] //页码
+            list: 10//页码总数
         }
     });
 
@@ -151,30 +173,40 @@
             });
             $("#EndTime").val(Config.Datetimeformat2(endTime));
 
-//            GetDate(Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime));
-            GetDate("2019/04/01", "2019/05/01");
+            GetDate(Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
         }
 
-        function GetDate(StartTime, EndTime) {
+        function GetDate(StartTime, EndTime, activePage) {
+            var $btn = $("#todoTime").button('loading');
             $.ajax({
                 url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
                 method: "POST",
-                data: {"StartTime": StartTime, "EndTime": EndTime, "LastNum": 1000},
+                data: {"StartTime": StartTime, "EndTime": EndTime, "PageNum": activePage, "RowCount": 200},
                 success: function (data) {
-                    data.forEach(function (item) {
+                    data.UserTrajectoryList.forEach(function (item) {
                         item.Time = Config.Datetimeformat(new Date(item.Time));
                     })
-                    vm_listdate.list = data;
+                    vm_listdate.list = data.UserTrajectoryList;
+                    vm_datePage.list = Array.apply(null, Array(data.Pagination.TotalPagesCount)).map(function (item, i) {
+                        return i + 1
+                    });
+                    $("#TotalRowsCount").text(data.Pagination.TotalRowsCount);
+                    $btn.button('reset');
                 }
             });
         }
 
+        function GetDateCommon() {
+            var startTime = $("#StartTime").val();
+            var endTime = $("#EndTime").val();
+            console.log(startTime + "-- " + endTime);
+            GetDate(startTime, endTime, vm_datePage.activePage);
+        }
+
         function changeTime() {
             $("#todoTime").click(function () {
-                var startTime = $("#StartTime").val();
-                var endTime = $("#EndTime").val();
-                console.log(startTime + "-- " + endTime);
-                GetDate(startTime, endTime);
+                vm_datePage.activePage = 1;
+                GetDateCommon();
             })
         }
 
@@ -182,15 +214,21 @@
             $("#datePage [aria-label='Previous']").click(function () {
                 if (vm_datePage.activePage > 1) {
                     vm_datePage.activePage--;
+                    GetDateCommon();
                 }
             })
             $("#datePage [aria-label='Next']").click(function () {
                 if (vm_datePage.activePage < vm_datePage.list[vm_datePage.list.length - 1]) {
                     vm_datePage.activePage++;
+                    GetDateCommon();
                 }
             })
-            $("#datePage a:not([aria-label])").click(function () {
+            $(document.body).on("click", "#datePage a:not([aria-label])", function () {
+                if (isNaN(parseInt($(this).text()))) {
+                    return false;
+                }
                 vm_datePage.activePage = parseInt($(this).text());
+                GetDateCommon();
             })
         }
     })()
