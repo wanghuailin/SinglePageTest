@@ -71,17 +71,24 @@
     </tr>
     </thead>
     <tbody id="listDate">
-    <tr v-for="(el,index) in list">
+    <tr v-if="isLoading==false" v-for="(el,index) in list">
         <th scope="row" v-text="(index+1)"></th>
         <td v-text="el.RealName"></td>
         <td v-text="el.UserId"></td>
         <td v-text="el.OperationModuleName"></td>
         <td v-text="el.Time"></td>
     </tr>
+    <tr v-if="isLoading">
+        <th scope="row"></th>
+        <td></td>
+        <td>数据加载中……</td>
+        <td></td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 <div class="pull-right">
-    <nav aria-label="Page navigation" id="datePage">
+    <nav aria-label="Page navigation" id="datePage" v-if="list.length>0">
         <ul class="pagination" v-if="activePage<=5 || activePage>list.length-6">
             <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
             <li v-for="el in list" v-if="el<=5 || el>list.length-6"
@@ -112,6 +119,7 @@
     var vm_listdate = new Vue({
         el: "#listDate",
         data: {
+            isLoading: false,
             list: []
         }
     });
@@ -178,11 +186,13 @@
 
         function GetDate(StartTime, EndTime, activePage) {
             var $btn = $("#todoTime").button('loading');
+            vm_listdate.isLoading = true;
             $.ajax({
                 url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
                 method: "POST",
                 data: {"StartTime": StartTime, "EndTime": EndTime, "PageNum": activePage, "RowCount": 200},
                 success: function (data) {
+                    vm_listdate.isLoading = false;
                     data.UserTrajectoryList.forEach(function (item) {
                         item.Time = Config.Datetimeformat(new Date(item.Time));
                     })
