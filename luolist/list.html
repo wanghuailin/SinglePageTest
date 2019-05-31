@@ -18,7 +18,7 @@
             margin: 10px;
         }
 
-        .search > .time {
+        .search > div {
             margin: 0 10px;
         }
 
@@ -31,6 +31,15 @@
 
         .search > span {
             line-height: 30px;
+        }
+
+        .search .form-group {
+            margin-bottom: 0px;
+        }
+
+        .search .form-group > input {
+            display: inline-block;
+            width: auto;
         }
 
         #date > tbody > tr:hover > td, #date > tbody > tr:hover > th {
@@ -52,6 +61,10 @@
             <input id="EndTime" readonly="readonly" class="hex-datetimepicker">
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="UserId">用户ID：</label>
+        <input type="text" class="form-control" id="UserId" placeholder="请输入用户ID">
     </div>
     <button type="button" class="btn btn-success btn-sm" id="todoTime" data-loading-text="Loading...">搜索</button>
 </div>
@@ -211,16 +224,22 @@
             });
             $("#EndTime").val(Config.Datetimeformat2(endTime));
 
-            GetDate(Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
+            GetDate("", Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
         }
 
-        function GetDate(StartTime, EndTime, activePage) {
+        function GetDate(UserId, StartTime, EndTime, activePage) {
             var $btn = $("#todoTime").button('loading');
             vm_listdate.isLoading = true;
             $.ajax({
                 url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
                 method: "POST",
-                data: {"StartTime": StartTime, "EndTime": EndTime, "PageNum": activePage, "RowCount": 200},
+                data: {
+                    "UserId": UserId,
+                    "StartTime": StartTime,
+                    "EndTime": EndTime,
+                    "PageNum": activePage,
+                    "RowCount": 200
+                },
                 success: function (data) {
                     vm_listdate.isLoading = false;
                     data.UserTrajectoryList.forEach(function (item) {
@@ -237,10 +256,11 @@
         }
 
         function GetDateCommon() {
+            var userId = $("#UserId").val();
             var startTime = $("#StartTime").val();
             var endTime = $("#EndTime").val();
             console.log(startTime + "-- " + endTime);
-            GetDate(startTime, endTime, vm_datePage.activePage);
+            GetDate(userId, startTime, endTime, vm_datePage.activePage);
         }
 
         function changeTime() {
