@@ -84,16 +84,12 @@ var Config = function () {
         document.cookie = name + "=" + value + ";domain=" + domain + ";path=/;expires=";
     }
 
-    //平台类型
-    var PlatformTypeSource = ["家庭端App", "教师端App", "上课web端", "备课web端", "魔方", , , , , "未知"];
-
     return {
         _webApi: _webApi,
         getToken: getToken,
         GetTimeByTimeStr: GetTimeByTimeStr,
         Datetimeformat: Datetimeformat,
         Datetimeformat2: Datetimeformat2,
-        PlatformTypeSource: PlatformTypeSource,
         setCookie: setCookie
     }
 }();
