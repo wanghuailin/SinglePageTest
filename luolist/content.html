@@ -12,8 +12,7 @@
         <div class="list-group-item clearfix" style="display: flex">
             <span>添加一个新地址</span>
             <select id="platformType">
-                <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
-
+                <option v-for="(el,index) in list" v-text="el.Name" v-bind:value="el.ModelId">
                 </option>
             </select>
             <input type="text" class="form-control" style="width: auto;flex: 1" id="createcontent">
@@ -49,8 +48,7 @@
             </div>
             <div class="modal-body" style="display: flex">
                 <select id="platformType2" class="form-control" style="width: 150px">
-                    <option v-for="(el,index) in list" v-if="el" v-text="el" v-bind:value="(index+1)">
-
+                    <option v-for="(el,index) in list" v-text="el.Name" v-bind:value="el.ModelId">
                     </option>
                 </select>
                 <input type="text" class="form-control" id="editcontent">
@@ -68,6 +66,7 @@
 <script src="js/bootstrap.js"></script>
 <script src="base.js"></script>
 <script>
+    var PlatformTypeSource = [];
     var scoreListData = new Vue({
         el: '#scoreList',
         data: {
@@ -76,22 +75,29 @@
         filters: {
             //过滤器
             PlatformTypeSource: function (value) {
-                return Config.PlatformTypeSource[parseInt(value - 1)] == undefined ? "未知" : Config.PlatformTypeSource[parseInt(value - 1)];
+                var item = PlatformTypeSource.filter(function (temp) {
+                    return temp.ModelId == value
+                })[0]
+                if (item) {
+                    return item.Name;
+                } else {
+                    return "未设置";
+                }
             }
         }
     })
 
     //平台类型
-    new Vue({
+    var platformType = new Vue({
         el: "#platformType",
         data: {
-            list: Config.PlatformTypeSource
+            list: []
         }
     })
-    new Vue({
+    var platformType2 = new Vue({
         el: "#platformType2",
         data: {
-            list: Config.PlatformTypeSource
+            list: []
         }
     })
 
@@ -118,12 +124,24 @@
         })()
 
         function GetInit() {
+            //获取列表数据
             $.ajax({
                 url: Config._webApi + "/AnalysisUrl/SearchByActivityModule?ssotoken=" + token,
                 method: "get",
                 data: {"activityModuleId": mid},
                 success: function (data) {
                     scoreListData.list = data;
+                }
+            });
+            //获取平台类型
+            $.ajax({
+                url: Config._webApi + "/ActivityModule/FindAllPlatformTypeSource?ssotoken=" + token,
+                method: "Post",
+                data: "",
+                success: function (data) {
+                    PlatformTypeSource = data;
+                    platformType.list = data;
+                    platformType2.list = data;
                 }
             });
         }

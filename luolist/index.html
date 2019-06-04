@@ -207,7 +207,7 @@
         })()
 
         function GetInit() {
-            //获取平台类型
+            //获取已有数据
             $.ajax({
                 url: Config._webApi + "/ActivityModule/FindAll?ssotoken=" + token,
                 method: "GET",
@@ -216,7 +216,7 @@
                     scoreListData.list = data;
                 }
             });
-            //获取已有数据
+            //获取平台类型
             $.ajax({
                 url: Config._webApi + "/ActivityModule/FindAllPlatformTypeSource?ssotoken=" + token,
                 method: "Post",
