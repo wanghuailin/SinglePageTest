@@ -4,7 +4,7 @@
 var fs = require("fs");
 
 fs.readFile("input.txt", function (error, date) {
-    if (error) return console.error(error.stack);
+    if (error) return console.log(error.stack);
 
     console.log(date.toString());
 })

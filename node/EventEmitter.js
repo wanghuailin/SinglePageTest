@@ -23,14 +23,11 @@ eventsEmitter.addListener("connection", listener1);
 eventsEmitter.on("connection", listener2);
 
 //统计监视器数目
-eventsEmitter.on("eventListeners", function () {
-    var count = require("events").EventEmitter.listenerCount(eventsEmitter, "connection");
-    console.log(count + "个监听器监听连接事件");
-})
+var eventListeners = eventsEmitter.listenerCount('connection');
+console.log(eventListeners + " 个监听器监听连接事件。");
+
 // 触发 connection 事件
 eventsEmitter.emit("connection");
-
-eventsEmitter.emit("eventListeners");
 
 // 移除监绑定的 listener1 函数
 eventsEmitter.removeListener("connection", listener1);
@@ -39,6 +36,7 @@ console.log("listener1 不再受监听。");
 // 触发 connection 事件
 eventsEmitter.emit("connection");
 
-eventsEmitter.emit("eventListeners");
+var eventListeners = eventsEmitter.listenerCount('connection');
+console.log(eventListeners + " 个监听器监听连接事件。");
 
 console.log("程序执行完毕。");
