@@ -2,6 +2,7 @@
  * Created by Wang on 2019/6/11.
  */
 
+//数据库层
 var sql = require('mssql');
 
 const config = {
