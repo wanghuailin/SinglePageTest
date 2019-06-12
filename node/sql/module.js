@@ -16,6 +16,11 @@ function dateCRUD() {
             callback(date)
         });
     }
+    this.Delete = function (num, callback) {
+        sqlCrud.Delete(num, function (date) {
+            callback(date)
+        });
+    }
 }
 module.exports = dateCRUD;
 

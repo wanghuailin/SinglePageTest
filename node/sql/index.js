@@ -22,6 +22,7 @@ $(function () {
         })
     }
 
+    //添加
     $(document.body).on("click", "#add", function () {
         var num = $("#num").val();
         var name = $("#name").val();
@@ -31,6 +32,22 @@ $(function () {
             type: "get",
             url: "http://localhost:8081/app/add",
             data: {"num": num, "name": name, "count": count},
+            success: function (date) {
+                if (date) {
+                    getDate();
+                }
+            }
+        })
+    })
+
+    //删除
+    $(document.body).on("click", "[hex-del]", function () {
+        var num = $(this).parents("tr").attr("id");
+        //添加
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8081/app/delete",
+            data: {"num": num},
             success: function (date) {
                 if (date) {
                     getDate();

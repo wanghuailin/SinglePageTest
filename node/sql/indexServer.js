@@ -44,6 +44,14 @@ app.get("/app/add", function (req, res) {
     });
 })
 
+app.get("/app/delete", function (req, res) {
+    dateCRUD.Delete(req.query.num, function (date) {
+        res.json({
+            data: date
+        })
+    });
+})
+
 var server = app.listen(8081, function () {
     var host = server.address().address;
     var port = server.address().port;

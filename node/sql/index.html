@@ -14,16 +14,20 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>序号：</th>
-            <th>姓名：</th>
-            <th>数量：</th>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>数量</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="el in list">
+        <tr v-for="el in list" v-bind:id="el.num">
             <td v-text="el.num"></td>
             <td v-text="el.name"></td>
             <td v-text="el.count"></td>
+            <td>
+                <button type="button" class="btn btn btn-danger btn-sm" hex-del="">删除</button>
+            </td>
         </tr>
         </tbody>
     </table>

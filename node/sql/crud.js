@@ -59,13 +59,14 @@ function SqlCRUD() {
         });
     }
 
-    this.Delete = function () {
+    this.Delete = function (num, callback) {
         sql.close();
         sql.connect(config).then(function () {
             //改
-            var updateSql = "UPDATE test SET name= '小' WHERE num=4";
+            var updateSql = "DELETE FROM test WHERE num=" + num;
             new sql.Request().query(updateSql).then(function (result) {
-                console.log('UPDATE affectedRows', result);
+                // console.log('DELETE affectedRows', result);
+                callback(true)
             }).catch(function (err) {
                 console.log(err);
             });
