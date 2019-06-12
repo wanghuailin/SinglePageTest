@@ -2,6 +2,9 @@
  * Created by Wang on 2019/6/12.
  */
 
+var dateCRUD = require("./module");
+dateCRUD = new dateCRUD();
+
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
@@ -9,19 +12,13 @@ var bodyParser = require('body-parser');
 // 创建 application/x-www-form-urlencoded 编码解析
 var urlencodedParser = bodyParser.urlencoded({extended: false})
 
-app.get("/index.html", function (req, res) {
-    console.log(__dirname);
-    res.sendFile(__dirname + "/" + "index.html");
-})
-
-app.post("/process_post", urlencodedParser, function (req, res) {
-    // 输出 JSON 格式
-    var response = {
-        first_name: req.body.first_name,
-        second_name: req.body.second_name,
-    }
-    console.log(response);
-    res.end(JSON.stringify(response));
+app.get("/app/select", function (req, res) {
+    dateCRUD.Select(function (date) {
+        console.log(date);
+        res.json({
+            data: date
+        })
+    });
 })
 
 var server = app.listen(8081, function () {

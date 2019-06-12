@@ -6,9 +6,9 @@ var SqlCRUD = require("./crud");
 sqlCrud = new SqlCRUD();
 
 function dateCRUD() {
-    this.Select = function () {
+    this.Select = function (callback) {
         sqlCrud.Select(function (date) {
-            console.log(date.recordset);
+            callback(date.recordset)
         });
     }
 }
