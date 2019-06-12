@@ -1,5 +1,5 @@
 /**
- * Created by Wang on 2016/12/9.
+ * Created by Wang on 2019/6/12.
  */
 
 var express = require("express");
@@ -9,9 +9,9 @@ var bodyParser = require('body-parser');
 // 创建 application/x-www-form-urlencoded 编码解析
 var urlencodedParser = bodyParser.urlencoded({extended: false})
 
-app.get("/post.html", function (req, res) {
+app.get("/index.html", function (req, res) {
     console.log(__dirname);
-    res.sendFile(__dirname + "/" + "post.html");
+    res.sendFile(__dirname + "/" + "index.html");
 })
 
 app.post("/process_post", urlencodedParser, function (req, res) {

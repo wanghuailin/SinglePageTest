@@ -4,10 +4,13 @@
 
 var SqlCRUD = require("./crud");
 sqlCrud = new SqlCRUD();
-sqlCrud.Select(function (date) {
-    console.log(date.recordset);
-    console.log("--------------");
-    console.log(date.recordset[0].num);
-});
 
+function dateCRUD() {
+    this.Select = function () {
+        sqlCrud.Select(function (date) {
+            console.log(date.recordset);
+        });
+    }
+}
+module.exports = dateCRUD;
 
