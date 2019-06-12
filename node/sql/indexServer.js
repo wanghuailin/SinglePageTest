@@ -46,8 +46,8 @@ app.get("/app/add", function (req, res) {
     });
 })
 
-app.get("/app/delete", function (req, res) {
-    dateCRUD.Delete(req.query.num, function (date) {
+app.post("/app/delete", urlencodedParser, function (req, res) {
+    dateCRUD.Delete(req.body.num, function (date) {
         res.json({
             data: date
         })

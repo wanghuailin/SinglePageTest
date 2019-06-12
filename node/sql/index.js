@@ -45,7 +45,7 @@ $(function () {
         var num = $(this).parents("tr").attr("id");
         //添加
         $.ajax({
-            type: "get",
+            type: "Post",
             url: "http://localhost:8081/app/delete",
             data: {"num": num},
             success: function (date) {
