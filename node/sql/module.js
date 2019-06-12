@@ -8,7 +8,7 @@ sqlCrud = new SqlCRUD();
 function dateCRUD() {
     this.Select = function (callback) {
         sqlCrud.Select(function (date) {
-            callback(date.recordset)
+            callback(date)
         });
     }
 }

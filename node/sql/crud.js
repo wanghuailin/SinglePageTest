@@ -19,7 +19,7 @@ function SqlCRUD() {
             //查
             new sql.Request().query('select * from test').then(function (recordset) {
                 // console.log(recordset);
-                callback(recordset)
+                callback(recordset.recordset)
             }).catch(function (err) {
                 console.log(err);
             });
