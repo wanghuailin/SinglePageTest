@@ -26,28 +26,49 @@
             <td v-text="el.name"></td>
             <td v-text="el.count"></td>
             <td>
-                <button type="button" class="btn btn btn-danger btn-sm" hex-del="">删除</button>
+                <button type="button" class="btn btn-success btn-sm" hex-update="">修改</button>
+                <button type="button" class="btn btn-danger btn-sm" hex-del="">删除</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">添加数据</div>
-    <div class="panel-body">
-        <div class="form-group">
-            <label for="num">序号</label>
-            <input type="text" class="form-control" id="num">
+<div class="row">
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading">添加数据</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="num">序号</label>
+                <input type="text" class="form-control" id="num">
+            </div>
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class=" form-group">
+                <label for="count">数量</label>
+                <input type="text" class="form-control" id="count">
+            </div>
+            <button class=" btn btn-default" type="submit" id="add">确定</button>
         </div>
-        <div class="form-group">
-            <label for="name">姓名</label>
-            <input type="text" class="form-control" id="name">
+    </div>
+    <div class="panel panel-default col-md-6">
+        <div class="panel-heading">修改数据</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="num">序号</label>
+                <input type="text" class="form-control" id="num2">
+            </div>
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" class="form-control" id="name2">
+            </div>
+            <div class=" form-group">
+                <label for="count">数量</label>
+                <input type="text" class="form-control" id="count2">
+            </div>
+            <button class=" btn btn-default" type="submit" id="update">确定</button>
         </div>
-        <div class=" form-group">
-            <label for="count">数量</label>
-            <input type="text" class="form-control" id="count">
-        </div>
-        <button class=" btn btn-default" type="submit" id="add">确定</button>
     </div>
 </div>
 </body>

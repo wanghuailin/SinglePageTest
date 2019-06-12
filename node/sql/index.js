@@ -55,4 +55,31 @@ $(function () {
             }
         })
     })
+
+    //修改
+    $(document.body).on("click", "[hex-update]", function () {
+        var num = $(this).parents("tr").attr("id");
+        var updatedate = vm_date.list.filter(function (item) {
+            return item.num == num;
+        })[0]
+        $("#num2").val(updatedate.num);
+        $("#name2").val(updatedate.name);
+        $("#count2").val(updatedate.count);
+    })
+    $(document.body).on("click", "#update", function () {
+        var num = $("#num2").val();
+        var name = $("#name2").val();
+        var count = $("#count2").val();
+        //添加
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8081/app/update",
+            data: {"num": num, "name": name, "count": count},
+            success: function (date) {
+                if (date) {
+                    getDate();
+                }
+            }
+        })
+    })
 })

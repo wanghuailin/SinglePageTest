@@ -44,13 +44,14 @@ function SqlCRUD() {
         });
     }
 
-    this.Update = function () {
+    this.Update = function (num, name, count, callback) {
         sql.close();
         sql.connect(config).then(function () {
             //改
-            var updateSql = "UPDATE test SET name= '小' WHERE num=4";
+            var updateSql = "UPDATE test SET name= '" + name + "',count=" + count + " WHERE num=" + num;
             new sql.Request().query(updateSql).then(function (result) {
-                console.log('UPDATE affectedRows', result);
+                // console.log('UPDATE affectedRows', result);
+                callback(true)
             }).catch(function (err) {
                 console.log(err);
             });

@@ -21,6 +21,11 @@ function dateCRUD() {
             callback(date)
         });
     }
+    this.Update = function (num, name, count, callback) {
+        sqlCrud.Update(num, name, count, function (date) {
+            callback(date)
+        });
+    }
 }
 module.exports = dateCRUD;
 
