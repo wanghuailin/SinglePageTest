@@ -28,13 +28,14 @@ function SqlCRUD() {
         });
     }
 
-    this.Add = function () {
+    this.Add = function (num, name, count, callback) {
         sql.close();
         sql.connect(config).then(function () {
             //增
-            var addSql = "INSERT INTO test(num,name,count) VALUES(4,'李',4)";
+            var addSql = "INSERT INTO test(num,name,count) VALUES(" + num + ",'" + name + "'," + count + ")";
             new sql.Request().query(addSql).then(function (result) {
-                console.log('INSERT ID:', result);
+                // console.log('INSERT ID:', result);
+                callback(true)
             }).catch(function (err) {
                 console.log(err);
             });
