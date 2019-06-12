@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>配合数据库CRUD</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" type="text/css"/>
     <script src="../../Script/jquery-1.10.2.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="../../js/vue.min.js"></script>
 </head>
 <body>
-    <h1>获取数据</h1>
-    <div>
-
-    </div>
+<h1>获取数据</h1>
+<div id="vm_date">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>序号：</th>
+            <th>姓名：</th>
+            <th>数量：</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="el in list">
+            <td v-text="el.num"></td>
+            <td v-text="el.name"></td>
+            <td v-text="el.count"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 <script src="index.js"></script>
 </html>
