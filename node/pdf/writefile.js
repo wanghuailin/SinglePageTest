@@ -16,7 +16,7 @@ phantom.create().then(function (ph) {
                 //进行pdf生成,加页面返回的status判断,确保页面正常打开.
                 // 给一个定时让要被捕捉的页面的html和js加载完成,否则可能页面会没有加载完就执行了生成pdf操作内容确实
                 setTimeout(function () {
-                    page.render(__dirname + 'example.png');
+                    page.render(__dirname + '/example.png');
                     page.render(__dirname + '/output.pdf').then(function () {
                         console.log('Page rendered');
                         // page.close();
