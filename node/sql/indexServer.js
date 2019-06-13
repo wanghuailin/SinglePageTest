@@ -4,8 +4,8 @@
 
 //路由处理层
 
-var dateCRUD = require("./module");
-dateCRUD = new dateCRUD();
+var DateCRUD = require("./module");
+dateCRUD = new DateCRUD();
 
 var express = require("express");
 var app = express();
