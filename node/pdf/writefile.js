@@ -2,16 +2,27 @@
  * Created by Wang on 2016/12/8.
  */
 
-const phantom = require('phantom');
+//https://tmshexcube.hexfuture.net/pages/index3.html
+var phantom = require('phantom');//需要引入phantom模块
 
 phantom.create().then(function (ph) {
     ph.createPage().then(function (page) {
-        page.open(__dirname + "/index.html").then(function (status) {
-            // page.property('viewportSize', {width: 10000, height: 500});
-            page.render(__dirname + '/output.pdf').then(function () {
-                console.log('Page rendered');
-                ph.exit();
-            });
-        });
-    });
-});
+        page.open("https://tmshexcube.hexfuture.net/pages/index3.html").then(function (status) { //status有success和fail
+            if (status === 'fail') {
+                console.log('open page fail!');
+            } else {
+                //进行pdf生成,加页面返回的status判断,确保页面正常打开.
+                // 给一个定时让要被捕捉的页面的html和js加载完成,否则可能页面会没有加载完就执行了生成pdf操作内容确实
+                console.log(status);
+                setTimeout(function () {
+                    page.property('viewportSize', {width: 700, height: 1010});
+                    page.render(__dirname + '/output.pdf').then(function () {
+                        console.log('Page rendered');
+                        // page.close();
+                        ph.exit();
+                    });
+                }, 10000)
+            }
+        })
+    })
+})
