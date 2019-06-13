@@ -2,10 +2,16 @@
  * Created by Wang on 2016/12/8.
  */
 
-var fs = require("fs");
+const phantom = require('phantom');
 
-console.log("准备写入文件！");
-fs.writeFile(__dirname + "/output.txt", "青青子衿，悠悠我心", function (error) {
-    if (error) return console.error(error.stack);
-    console.log("写入文件成功！");
+phantom.create().then(function (ph) {
+    ph.createPage().then(function (page) {
+        page.open(__dirname + "/index.html").then(function (status) {
+            // page.property('viewportSize', {width: 10000, height: 500});
+            page.render(__dirname + '/output.pdf').then(function () {
+                console.log('Page rendered');
+                ph.exit();
+            });
+        });
+    });
 });
