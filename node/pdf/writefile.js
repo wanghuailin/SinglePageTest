@@ -12,11 +12,8 @@ phantom.create().then(function (ph) {
         //clipRect 是裁切矩形的大小，需要四个参数，前两个是基准点，后两个参数是宽高。
         // page.property('viewportSize', {width: 712, height: 1010});
         // page.property('clipRect', {top: 0, left: 0, width: 712, height: 1010});
-        page.property('paperSize', {
-            format: 'A4',
-            // orientation: 'portrait',
-            // border: '1cm'
-        });
+        //paperSize与clipRect类似，但采用真正的纸张尺寸，如A4
+        page.property('paperSize', {format: 'A4'});
         page.open("http://lmsbeike.hexfuture.net//Pages/index3.html").then(function (status) { //status有success和fail
             if (status === 'fail') {
                 console.log('open page fail!');
