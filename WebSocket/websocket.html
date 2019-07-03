@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+
+    <script type="text/javascript">
+        var readeState = [
+            "0 - 表示连接尚未建立。",
+            "1 - 表示连接已建立，可以进行通信。",
+            "2 - 表示连接正在进行关闭。",
+            "3 - 表示连接已经关闭或者连接不能打开。"
+        ]
+        function WebSocketTest() {
+            if ("WebSocket" in window) {
+                alert("您的浏览器支持 WebSocket!");
+
+                // 打开一个 web socket
+                var ws = new WebSocket('ws://localhost:8082/', 'echo-protocol');
+
+                console.log("链接状态：" + readeState[ws.readyState]);
+                ws.onopen = function () {
+                    // Web Socket 已连接上，使用 send() 方法发送数据
+                    ws.send("web发送数据");
+                    console.log("链接状态：" + readeState[ws.readyState]);
+                    alert("数据发送中...，数据为：web发送数据");
+                };
+
+                ws.onmessage = function (evt) {
+                    var received_msg = evt.data;
+                    console.log("链接状态：" + readeState[ws.readyState]);
+                    alert("数据已接收...，数据为：" + received_msg);
+                };
+
+                ws.onclose = function () {
+                    // 关闭 websocket
+                    console.log("链接状态：" + readeState[ws.readyState]);
+                    alert("连接已关闭...");
+                };
+
+                ws.onerror = function () {
+                    console.log('Connection Error');
+                };
+            }
+
+            else {
+                // 浏览器不支持 WebSocket
+                alert("您的浏览器不支持 WebSocket!");
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="sse">
+    <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+</div>
+
+</body>
+</html>
