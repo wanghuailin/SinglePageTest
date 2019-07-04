@@ -32,24 +32,34 @@
     $(function () {
         $(".up").click(function () {
             var that = $(this).parents("div");
-            MoveExerciseAnimation(that, $(that).prev(), function () {
+            MoveExerciseAnimation(that, $(that).prev(), "up", function () {
                 $(that).insertBefore($(that).prev());
             })
         })
         $(".down").click(function () {
             var that = $(this).parents("div");
-            MoveExerciseAnimation(that, $(that).next(), function () {
+            MoveExerciseAnimation(that, $(that).next(), "down", function () {
                 $(that).insertAfter($(that).next());
             })
         })
-        function MoveExerciseAnimation(that, todothat, callback) {
+        function MoveExerciseAnimation(that, todothat, direction, callback) {
             var imgTop = that.offset().top;
             var todoTop = todothat.offset().top;
+            if (direction == "down") {
+                todothat.animate({"margin-bottom": (that.height()) + "px"}, 1000, "linear", function () {
+                    todothat.css({"margin-top": "", "margin-bottom": ""})
+                })
+            } else if (direction == "up") {
+                todothat.animate({"margin-top": (that.height()) + "px"}, 1000, "linear", function () {
+                    todothat.css({"margin-top": "", "margin-bottom": ""})
+                })
+            }
 
             that.css({"position": "fixed", "z-index": "9999", "left": that.offset().left + "px", "top": imgTop + "px"})
             that.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
                 that.css({"position": "", "z-index": "", "left": "", "top": ""});
-//                callback();
+                todothat.css({"margin-top": "", "margin-bottom": ""})
+                callback();
             })
         }
     });
