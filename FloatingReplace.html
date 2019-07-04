@@ -45,21 +45,26 @@
         function MoveExerciseAnimation(that, todothat, direction, callback) {
             var imgTop = that.offset().top;
             var todoTop = todothat.offset().top;
-            if (direction == "down") {
-                todothat.animate({"margin-bottom": (that.height()) + "px"}, 1000, "linear", function () {
-                    todothat.css({"margin-top": "", "margin-bottom": ""})
-                })
-            } else if (direction == "up") {
-                todothat.animate({"margin-top": (that.height()) + "px"}, 1000, "linear", function () {
-                    todothat.css({"margin-top": "", "margin-bottom": ""})
-                })
-            }
 
-            that.css({"position": "fixed", "z-index": "9999", "left": that.offset().left + "px", "top": imgTop + "px"})
+            that.css({
+                "position": "fixed",
+                "z-index": "9999",
+                "left": that.offset().left + "px",
+                "top": that.offset().top + "px"
+            })
             that.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
                 that.css({"position": "", "z-index": "", "left": "", "top": ""});
-                todothat.css({"margin-top": "", "margin-bottom": ""})
                 callback();
+            })
+
+            todothat.css({
+                "position": "fixed",
+                "z-index": "9999",
+                "left": todothat.offset().left + "px",
+                "top": todothat.offset().top + "px"
+            })
+            todothat.animate({top: (imgTop) + "px"}, 1000, "linear", function () {
+                todothat.css({"position": "", "z-index": "", "left": "", "top": ""});
             })
         }
     });
