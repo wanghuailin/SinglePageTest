@@ -45,27 +45,39 @@
         function MoveExerciseAnimation(that, todothat, direction, callback) {
             var imgTop = that.offset().top;
             var todoTop = todothat.offset().top;
-
-            that.css({
+            //动一
+            var thattemp = $(that).clone();
+            $(thattemp).insertAfter($(that));
+            thattemp.css({
                 "position": "fixed",
-                "z-index": "9999",
+                "z-index": "999",
                 "left": that.offset().left + "px",
                 "top": that.offset().top + "px"
-            })
-            that.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
-                that.css({"position": "", "z-index": "", "left": "", "top": ""});
-                callback();
+            }).css("width", that.width());
+            $(that).css("visibility", "hidden");
+            thattemp.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
+                $(thattemp).remove();
+                $(that).css("visibility", "visible");
             })
 
-            todothat.css({
+            //动二
+            var todothattemp = $(todothat).clone();
+            $(todothattemp).insertAfter($(todothat));
+            todothattemp.css({
                 "position": "fixed",
-                "z-index": "9999",
+                "z-index": "888",
                 "left": todothat.offset().left + "px",
                 "top": todothat.offset().top + "px"
+            }).css("width", todothat.width());
+            $(todothat).css("visibility", "hidden");
+            todothattemp.animate({top: (imgTop) + "px"}, 1000, "linear", function () {
+                $(todothattemp).remove();
+                $(todothat).css("visibility", "visible");
             })
-            todothat.animate({top: (imgTop) + "px"}, 1000, "linear", function () {
-                todothat.css({"position": "", "z-index": "", "left": "", "top": ""});
-            })
+
+            setTimeout(function () {
+                callback();
+            }, 1000)
         }
     });
 </script>
