@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用两个三角形画出箭头</title>
+    <style>
+        .border-up-empty {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid #333;
+            position: relative;
+            margin: 50px auto;
+        }
+
+        .border-up-empty span {
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 28px solid transparent;
+            border-right: 28px solid transparent;
+            border-bottom: 28px solid #ffffff;
+            position: absolute;
+            left: -28px;
+            top: 2px;
+        }
+    </style>
+</head>
+<body>
+<!--空心的三角形-->
+<!--向上的三角形-->
+
+<div class="border-up-empty">
+    <span></span>
+</div>
+
+</body>
+</html>
