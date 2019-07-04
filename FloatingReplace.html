@@ -18,7 +18,7 @@
     <span>第一块</span>
     <a href="javascript:void(0)" class="down">向下</a>
 </div>
-<div style="background-color: #3DA0DB;">
+<div style="background-color: #3DA0DB;height: 400px">
     <span>第二块</span>
     <a href="javascript:void(0)" class="up">向上</a>
     <a href="javascript:void(0)" class="down">向下</a>
@@ -32,19 +32,19 @@
     $(function () {
         $(".up").click(function () {
             var that = $(this).parents("div");
-            MoveExerciseAnimation(that, $(that).prev(), "up", function () {
+            MoveExerciseAnimation($(that).prev(), that, function () {
                 $(that).insertBefore($(that).prev());
             })
         })
         $(".down").click(function () {
             var that = $(this).parents("div");
-            MoveExerciseAnimation(that, $(that).next(), "down", function () {
+            MoveExerciseAnimation(that, $(that).next(), function () {
                 $(that).insertAfter($(that).next());
             })
         })
-        function MoveExerciseAnimation(that, todothat, direction, callback) {
+        function MoveExerciseAnimation(that, todothat, callback) {
             var imgTop = that.offset().top - $("html,body").scrollTop();
-            var todoTop = todothat.offset().top - $("html,body").scrollTop();
+            var todoTop = that.offset().top - $("html,body").scrollTop() + todothat.innerHeight();
             //动一
             var thattemp = $(that).clone();
             $(thattemp).insertAfter($(that));
@@ -53,7 +53,7 @@
                 "z-index": "999",
                 "left": that.offset().left + "px",
                 "top": that.offset().top - $("html,body").scrollTop() + "px"
-            }).css("width", that.width());
+            }).css("width", that.innerWidth());
             $(that).css("visibility", "hidden");
             thattemp.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
                 $(thattemp).remove();
@@ -68,7 +68,7 @@
                 "z-index": "888",
                 "left": todothat.offset().left + "px",
                 "top": todothat.offset().top - $("html,body").scrollTop() + "px"
-            }).css("width", todothat.width());
+            }).css("width", todothat.innerWidth());
             $(todothat).css("visibility", "hidden");
             todothattemp.animate({top: (imgTop) + "px"}, 1000, "linear", function () {
                 $(todothattemp).remove();
