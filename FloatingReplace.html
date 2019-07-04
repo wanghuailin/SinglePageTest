@@ -43,8 +43,8 @@
             })
         })
         function MoveExerciseAnimation(that, todothat, direction, callback) {
-            var imgTop = that.offset().top;
-            var todoTop = todothat.offset().top;
+            var imgTop = that.offset().top - $("html,body").scrollTop();
+            var todoTop = todothat.offset().top - $("html,body").scrollTop();
             //动一
             var thattemp = $(that).clone();
             $(thattemp).insertAfter($(that));
@@ -52,7 +52,7 @@
                 "position": "fixed",
                 "z-index": "999",
                 "left": that.offset().left + "px",
-                "top": that.offset().top + "px"
+                "top": that.offset().top - $("html,body").scrollTop() + "px"
             }).css("width", that.width());
             $(that).css("visibility", "hidden");
             thattemp.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
@@ -67,7 +67,7 @@
                 "position": "fixed",
                 "z-index": "888",
                 "left": todothat.offset().left + "px",
-                "top": todothat.offset().top + "px"
+                "top": todothat.offset().top - $("html,body").scrollTop() + "px"
             }).css("width", todothat.width());
             $(todothat).css("visibility", "hidden");
             todothattemp.animate({top: (imgTop) + "px"}, 1000, "linear", function () {
