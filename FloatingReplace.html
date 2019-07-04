@@ -32,12 +32,26 @@
     $(function () {
         $(".up").click(function () {
             var that = $(this).parents("div");
-            $(that).insertBefore($(that).prev());
+            MoveExerciseAnimation(that, $(that).prev(), function () {
+                $(that).insertBefore($(that).prev());
+            })
         })
         $(".down").click(function () {
             var that = $(this).parents("div");
-            $(that).insertAfter($(that).next());
+            MoveExerciseAnimation(that, $(that).next(), function () {
+                $(that).insertAfter($(that).next());
+            })
         })
+        function MoveExerciseAnimation(that, todothat, callback) {
+            var imgTop = that.offset().top;
+            var todoTop = todothat.offset().top;
+
+            that.css({"position": "fixed", "z-index": "9999", "left": that.offset().left + "px", "top": imgTop + "px"})
+            that.animate({top: (todoTop) + "px"}, 1000, "linear", function () {
+                that.css({"position": "", "z-index": "", "left": "", "top": ""});
+//                callback();
+            })
+        }
     });
 </script>
 </html>
