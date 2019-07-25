@@ -306,7 +306,7 @@
                     alert("请输入密码");
                 } else {
                     $.ajax({
-                        url: Config._webApi + "User/Login",
+                        url: Config._webApi + "/User/Login",
                         method: "POST",
                         data: {"UserName": loginName, "PassWord": password},
                         success: function (data) {
