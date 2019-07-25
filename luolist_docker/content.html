@@ -125,7 +125,7 @@
 
         function GetInit() {
             //获取列表数据
-            Config.ajaxRequests("ActivityModule/SearchByActivityModule", "GET", {"activityModuleId": mid}, true, function (data) {
+            Config.ajaxRequests("AnalysisUrl/SearchByActivityModule", "GET", {"activityModuleId": mid}, true, function (data) {
                 scoreListData.list = data;
             })
             //获取平台类型
