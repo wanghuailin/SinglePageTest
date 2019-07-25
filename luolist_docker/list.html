@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作日志</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/DatetimePicker/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/DatetimePicker/bootstrap-datetimepicker.min.css" type="text/css"/>
+    <style>
+        body {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .search > div {
+            margin: 0 10px;
+        }
+
+        .search > .time > div > input {
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 5px;
+        }
+
+        .search > span {
+            line-height: 30px;
+        }
+
+        .search .form-group {
+            margin-bottom: 0px;
+        }
+
+        .search .form-group > input {
+            display: inline-block;
+            width: auto;
+        }
+
+        #date > tbody > tr:hover > td, #date > tbody > tr:hover > th {
+            background-color: #dff0d8;
+        }
+    </style>
+</head>
+<body>
+<div class="search">
+    <div class="time">
+        <div data-date="" data-link-field="StartTime" class="input-group date form_datetime_tostarttime">
+            <input id="StartTime" readonly="readonly" class="hex-datetimepicker">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+    <span>至</span>
+    <div class="time">
+        <div data-date="" data-link-field="EndTime" class="input-group date form_datetime_toendtime">
+            <input id="EndTime" readonly="readonly" class="hex-datetimepicker">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="UserId">用户ID：</label>
+        <input type="text" class="form-control" id="UserId" placeholder="请输入用户ID">
+    </div>
+    <button type="button" class="btn btn-success btn-sm" id="todoTime" data-loading-text="Loading...">搜索</button>
+</div>
+<div>
+    <span>共 </span>
+    <span id="TotalRowsCount" class="text-info"></span>
+    <span> 条数据</span>
+</div>
+<table id="date" class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>用户姓名</th>
+        <th>用户ID</th>
+        <th>所在学校</th>
+        <th>操作内容</th>
+        <th>操作时间</th>
+    </tr>
+    </thead>
+    <tbody id="listDate">
+    <tr v-if="isLoading==false" v-for="(el,index) in list">
+        <th scope="row" v-text="(index+1)"></th>
+        <td v-text="el.RealName"></td>
+        <td v-text="el.UserId"></td>
+        <td v-text="el.SchoolName"></td>
+        <td v-text="el.OperationModuleName"></td>
+        <td v-text="el.Time"></td>
+    </tr>
+    <tr v-if="isLoading">
+        <th scope="row"></th>
+        <td></td>
+        <td></td>
+        <td>数据加载中……</td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<div class="pull-right">
+    <nav aria-label="Page navigation" id="datePage" v-if="list.length>0">
+        <ul class="pagination" v-if="activePage<=5 || activePage>list.length-6">
+            <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            <li v-for="el in list" v-if="el<=5 || el>list.length-6"
+                v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a>
+            </li>
+            <li v-else-if="el==6"><a href="#">...</a></li>
+            <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        </ul>
+        <ul class="pagination" v-else="">
+            <li><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            <li><a href="#">...</a></li>
+            <li v-for="el in list" v-if="el>activePage-4&& el<activePage+4"
+                v-bind:class="{'active':el==activePage}"><a href="#" v-text="el"></a>
+            </li>
+            <li><a href="#">...</a></li>
+            <li><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        </ul>
+    </nav>
+</div>
+
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">登录</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="username">账号：</label>
+                    <input type="text" class="form-control" id="username" placeholder="请输入账号！">
+                </div>
+                <div class="form-group">
+                    <label for="userpw">密码：</label>
+                    <input type="password" class="form-control" id="userpw" placeholder="请输入密码！">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="loginBtn">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery-1.10.2.js"></script>
+<script src="vue.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/DatetimePicker/bootstrap-datetimepicker.js"></script>
+<script src="js/DatetimePicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="base.js"></script>
+<script>
+    var vm_listdate = new Vue({
+        el: "#listDate",
+        data: {
+            isLoading: false,
+            list: []
+        }
+    });
+    var vm_datePage = new Vue({
+        el: "#datePage",
+        data: {
+            activePage: 1,
+            list: 10//页码总数
+        }
+    });
+
+    (function () {
+        var token = Config.getToken();
+
+        (function () {
+            if (token) {
+                initSetTime();
+                changeTime();
+                changePage();
+            } else {
+                initLogin();
+            }
+        })()
+
+        function initSetTime() {
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setDate(endTime.getDate() - 7);
+
+            $('.form_datetime_tostarttime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: true,
+                autoclose: true,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                minuteStep: 10,
+                maxView: 3,
+                minView: 2,
+                format: 'yyyy/mm/dd',
+                linkFormat: "yyyy/mm/dd",
+                initialDate: startTime
+            });
+            $("#StartTime").val(Config.Datetimeformat2(startTime));
+
+            $('.form_datetime_toendtime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: true,
+                autoclose: true,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                minuteStep: 10,
+                maxView: 3,
+                minView: 2,
+                format: 'yyyy/mm/dd',
+                linkFormat: "yyyy/mm/dd",
+                initialDate: endTime
+            });
+            $("#EndTime").val(Config.Datetimeformat2(endTime));
+
+            GetDate("", Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
+        }
+
+        function GetDate(UserId, StartTime, EndTime, activePage) {
+            var $btn = $("#todoTime").button('loading');
+            vm_listdate.isLoading = true;
+            Config.ajaxRequests("UserTrajectory/SearchByTimeRange", "POST", {
+                "UserId": UserId,
+                "StartTime": StartTime,
+                "EndTime": EndTime,
+                "PageNum": activePage,
+                "RowCount": 200
+            }, true, function (data) {
+                vm_listdate.isLoading = false;
+                data.UserTrajectoryList.forEach(function (item) {
+                    item.Time = Config.Datetimeformat(new Date(item.Time));
+                })
+                vm_listdate.list = data.UserTrajectoryList;
+                vm_datePage.list = Array.apply(null, Array(data.Pagination.TotalPagesCount)).map(function (item, i) {
+                    return i + 1
+                });
+                $("#TotalRowsCount").text(data.Pagination.TotalRowsCount);
+                $btn.button('reset');
+            })
+        }
+
+        function GetDateCommon() {
+            var userId = $("#UserId").val();
+            var startTime = $("#StartTime").val();
+            var endTime = $("#EndTime").val();
+            console.log(startTime + "-- " + endTime);
+            GetDate(userId, startTime, endTime, vm_datePage.activePage);
+        }
+
+        function changeTime() {
+            $("#todoTime").click(function () {
+                vm_datePage.activePage = 1;
+                GetDateCommon();
+            })
+        }
+
+        function changePage() {
+            $(document.body).on("click", "#datePage [aria-label='Previous']", function () {
+                if (vm_datePage.activePage > 1) {
+                    vm_datePage.activePage--;
+                    GetDateCommon();
+                }
+            })
+            $(document.body).on("click", "#datePage [aria-label='Next']", function () {
+                if (vm_datePage.activePage < vm_datePage.list[vm_datePage.list.length - 1]) {
+                    vm_datePage.activePage++;
+                    GetDateCommon();
+                }
+            })
+            $(document.body).on("click", "#datePage a:not([aria-label])", function () {
+                if (isNaN(parseInt($(this).text()))) {
+                    return false;
+                }
+                vm_datePage.activePage = parseInt($(this).text());
+                GetDateCommon();
+            })
+        }
+
+        //============登录===============//
+        function initLogin() {
+            $('#loginModal').modal('show');
+
+            $("#loginBtn").click(function () {
+                var loginName = $("#username").val().trim();
+                var password = $("#userpw").val();
+                if (loginName === '') {
+                    alert("请输入手机号");
+                }
+                else if (password === '') {
+                    alert("请输入密码");
+                } else {
+                    Config.ajaxRequests("User/Login", "POST", {
+                        "UserName": loginName,
+                        "PassWord": password
+                    }, true, function (data) {
+                        if (data != null && data.ErrorCode != undefined && data.ErrorCode != 0) {
+                            alert(data.ErrorMessage);
+                            return false;
+                        }
+                        Config.setCookie('localtoken', data.ssotoken);
+                        window.location.reload();
+                    })
+                }
+            })
+        }
+    })()
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>权重列表</title>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+</head>
+<body>
+<div class="center-block" style="width: 80%;margin-top: 20px">
+    <div class="panel panel-default">
+        <div class="panel-heading">权重列表</div>
+        <div class="list-group-item clearfix" style="display: flex" id="scoreList" v-if="list.length>0">
+            <span>关联一个新权重</span>
+            <select id="activityModuleType">
+                <option v-for="(el,index) in list" v-text="el.Name" v-bind:value="el.ActivityModuleId">
+
+                </option>
+            </select>
+            <input type="number" min="0" class="form-control" placeholder="请填写权重值" style="width: auto;flex: 1"
+                   id="createcontent">
+            <button type="button" class="btn btn-primary pull-right" id="create">
+                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+        <ul class="list-group" id="weightList">
+            <li class="list-group-item clearfix" v-for="el in list">
+                <span v-text="el.ActivityModuleName"></span>
+                <div class="pull-right" style="display: flex; width:20%;">
+                    <div class="input-group">
+                        <input type="number" min="0" class="form-control" placeholder="请填写权重值"
+                               v-bind:value="el.Fraction">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success" v-bind:WeightId="el.ModuleWeightId"
+                                    v-bind:name="el.Name" hex-edit="">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <button type="button" class="btn btn-danger" v-bind:WeightId="el.ModuleWeightId"
+                            hex-remove="" style="margin-left: 5px">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script src="jquery-1.10.2.js"></script>
+<script src="vue.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="base.js"></script>
+<script>
+    var weightListData = new Vue({
+        el: '#weightList',
+        data: {
+            list: []
+        }
+    })
+
+    var scoreListData = new Vue({
+        el: '#scoreList',
+        data: {
+            list: []
+        }
+    })
+
+    var token = Config.getToken();
+    var xx = function () {
+        (function () {
+            GetInit();
+            $(document.body).on("click", "#create", function () {
+                Create($("#activityModuleType").val(), $("#createcontent").val());
+            })
+            $(document.body).on("click", "[hex-edit]", function () {
+                Modify($(this).attr("WeightId"), $(this).parent().prev().val());
+            })
+            $(document.body).on("click", "[hex-remove]", function () {
+                Remove($(this).attr("WeightId"));
+            })
+        })()
+
+        function GetInit() {
+            Config.ajaxRequests("ModuleWeight/FindAllSystemModWeight", "GET", "", true, function (data) {
+                weightListData.list = data;
+                GetInit2();
+            })
+        }
+
+        function GetInit2() {
+            Config.ajaxRequests("ModuleWeight/AddSystemModWeight", "GET", "", true, function (data) {
+                //查找没设置权重的项
+                scoreListData.list = data.filter(function (item) {
+                    return weightListData.list.filter(function (temp) {
+                                return temp.ActivityModuleId == item.ActivityModuleId
+                            }).length <= 0
+                })
+            })
+        }
+
+        function Create(mid, score) {
+            Config.ajaxRequests("ModuleWeight/AddSystemModWeight", "POST", {"activityModuleId": mid, "fraction": score}, true, function (data) {
+                GetInit();
+            })
+        }
+
+        function Modify(wid, score) {
+            Config.ajaxRequests("ModuleWeight/ModifySystemModWeight", "POST", {"moduleWeightId": wid, "fraction": score}, true, function (data) {
+                GetInit();
+            })
+        }
+
+        function Remove(wid) {
+            Config.ajaxRequests("ModuleWeight/RemoveSystemModWeight", "POST", {"moduleWeightId": wid}, true, function (data) {
+                GetInit();
+            })
+        }
+    }()
+</script>
+</html>
