@@ -212,7 +212,7 @@
                 scoreListData.list = data;
             })
             //获取平台类型
-            Config.ajaxRequests("ActivityModule/FindAllPlatformTypeSource", "POST", "", true, function (data) {
+            Config.ajaxRequests("ActivityModule/FindAllPlatformTypeSource", "GET", "", true, function (data) {
                 PlatformTypeSource = data;
                 PlatformTypeSource2.list = data;
             })
