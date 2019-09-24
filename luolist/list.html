@@ -232,7 +232,7 @@
             var $btn = $("#todoTime").button('loading');
             vm_listdate.isLoading = true;
             $.ajax({
-                url: Config._webApi + "UserTrajectory/SearchByTimeRange?ssotoken=" + token,
+                url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
                 method: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
@@ -311,7 +311,7 @@
                     alert("请输入密码");
                 } else {
                     $.ajax({
-                        url: Config._webApi + "User/Login",
+                        url: Config._webApi + "/User/Login",
                         method: "POST",
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify({"UserName": loginName, "PassWord": password}),
