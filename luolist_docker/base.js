@@ -140,6 +140,17 @@ var Config = function () {
         document.cookie = name + "=" + value + ";domain=" + domain + ";path=/;expires=";
     }
 
+    /**
+     * 获取cookie
+     */
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return decodeURIComponent(arr[2]);
+        else
+            return null;
+    }
+
     return {
         _webApi: _webApi,
         getToken: getToken,
@@ -147,6 +158,7 @@ var Config = function () {
         GetTimeByTimeStr: GetTimeByTimeStr,
         Datetimeformat: Datetimeformat,
         Datetimeformat2: Datetimeformat2,
-        setCookie: setCookie
+        setCookie: setCookie,
+        getCookie: getCookie
     }
 }();

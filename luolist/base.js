@@ -22,7 +22,7 @@ var Config = function () {
     (function () {
     })();
 
-    var _webApi = "https://tmsapi.hexfuture.net/";//api地址
+    var _webApi = "https://api.hexfuture.net/";//api地址
 
     //获取token
     function getToken() {
@@ -84,12 +84,24 @@ var Config = function () {
         document.cookie = name + "=" + value + ";domain=" + domain + ";path=/;expires=";
     }
 
+    /**
+     * 获取cookie
+     */
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return decodeURIComponent(arr[2]);
+        else
+            return null;
+    }
+
     return {
         _webApi: _webApi,
         getToken: getToken,
         GetTimeByTimeStr: GetTimeByTimeStr,
         Datetimeformat: Datetimeformat,
         Datetimeformat2: Datetimeformat2,
-        setCookie: setCookie
+        setCookie: setCookie,
+        getCookie: getCookie
     }
 }();

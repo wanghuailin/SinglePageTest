@@ -224,22 +224,24 @@
             });
             $("#EndTime").val(Config.Datetimeformat2(endTime));
 
-            GetDate("", Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
+            var UserId = Config.getCookie('UserId');
+            GetDate(UserId, Config.Datetimeformat2(startTime), Config.Datetimeformat2(endTime), vm_datePage.activePage);
         }
 
         function GetDate(UserId, StartTime, EndTime, activePage) {
             var $btn = $("#todoTime").button('loading');
             vm_listdate.isLoading = true;
             $.ajax({
-                url: Config._webApi + "/UserTrajectory/SearchByTimeRange?ssotoken=" + token,
+                url: Config._webApi + "UserTrajectory/SearchByTimeRange?ssotoken=" + token,
                 method: "POST",
-                data: {
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
                     "UserId": UserId,
                     "StartTime": StartTime,
                     "EndTime": EndTime,
                     "PageNum": activePage,
                     "RowCount": 200
-                },
+                }),
                 success: function (data) {
                     vm_listdate.isLoading = false;
                     data.UserTrajectoryList.forEach(function (item) {
@@ -257,6 +259,9 @@
 
         function GetDateCommon() {
             var userId = $("#UserId").val();
+            if (userId == "") {
+                userId = Config.getCookie('UserId');
+            }
             var startTime = $("#StartTime").val();
             var endTime = $("#EndTime").val();
             console.log(startTime + "-- " + endTime);
@@ -306,15 +311,17 @@
                     alert("请输入密码");
                 } else {
                     $.ajax({
-                        url: Config._webApi + "/User/Login",
+                        url: Config._webApi + "User/Login",
                         method: "POST",
-                        data: {"UserName": loginName, "PassWord": password},
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({"UserName": loginName, "PassWord": password}),
                         success: function (data) {
                             if (data != null && data.ErrorCode != undefined && data.ErrorCode != 0) {
                                 alert(data.ErrorMessage);
                                 return false;
                             }
                             Config.setCookie('localtoken', data.ssotoken);
+                            Config.setCookie('UserId', data.Key);
                             window.location.reload();
                         },
                         error: function (Request) {
