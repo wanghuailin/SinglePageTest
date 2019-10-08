@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动加载数据</title>
+    <script type="application/javascript" src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="loadingdata"
+     style="width: 500px;height: 350px;position: absolute;top: 100px;left: 200px;max-height: 350px;overflow: auto;">
+    <div style="height: 600px;background-color: #00a7d0">
+
+    </div>
+</div>
+</body>
+<script>
+    $("#loadingdata").scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var windowHeight = $(this).height();
+        var contentHeight = $(this).children("div").height();
+        if (scrollTop + windowHeight >= contentHeight) {
+            console.log("滚动加载数据");
+            $(this).children("div").height(contentHeight + 100);
+        }
+    });
+</script>
+</html>
