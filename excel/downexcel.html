@@ -10,31 +10,17 @@
 </body>
 <script>
     function downexcle() {
-        $.ajax({
-            method: 'get',
-            url: '//api.hexfuture.net/mvc/File/Download',
-            // 必须显式指明响应类型是一个Blob对象，这样生成二进制的数据，才能通过window.URL.createObjectURL进行创建成功
-            responseType: 'blob',
-            complete: function (XMLHttpRequest, textStatus) {
-                console.log("complete");
-                var data = XMLHttpRequest.responseText;
-                openDownloadDialog(blob(data), "Excel模版下载");
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', 'https://api.hexfuture.net/mvc/File/Download', true);
+        xhr.responseType = 'blob';
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.onload = function () {
+            if (this.status == 200) {
+                var blob = this.response;
+                openDownloadDialog(blob, "Excel模版下载.xlsx")
             }
-        });
-    }
-
-    // 将excel文件的blob对象，然后利用URL.createObjectURL下载
-    function blob(wbout) {
-        var blob = new Blob([s2ab(wbout)], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
-        // 字符串转ArrayBuffer
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
         }
-
-        return blob;
+        xhr.send()
     }
 
     /**
