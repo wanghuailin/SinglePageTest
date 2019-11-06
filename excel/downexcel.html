@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>尝试使用createObjectURL下载</title>
+    <script src="./jquery-1.10.2.js"></script>
+</head>
+<body>
+<a href="javascript:void(0);" onclick="downexcle()">点击下载文件</a>
+</body>
+<script>
+    function downexcle() {
+        $.ajax({
+            method: 'get',
+            url: '//api.hexfuture.net/mvc/File/Download',
+            // 必须显式指明响应类型是一个Blob对象，这样生成二进制的数据，才能通过window.URL.createObjectURL进行创建成功
+            responseType: 'blob',
+            complete: function (XMLHttpRequest, textStatus) {
+                console.log("complete");
+                var data = XMLHttpRequest.responseText;
+                openDownloadDialog(blob(data), "Excel模版下载");
+            }
+        });
+    }
+
+    // 将excel文件的blob对象，然后利用URL.createObjectURL下载
+    function blob(wbout) {
+        var blob = new Blob([s2ab(wbout)], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
+        // 字符串转ArrayBuffer
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        return blob;
+    }
+
+    /**
+     * 通用的打开下载对话框方法，没有测试过具体兼容性
+     * @param url 下载地址，也可以是一个blob对象，必选
+     * @param saveName 保存文件名，可选
+     */
+    function openDownloadDialog(url, saveName) {
+        if (typeof url == 'object' && url instanceof Blob) {
+            url = URL.createObjectURL(url); // 创建blob地址
+        }
+        var aLink = document.createElement('a');
+        aLink.href = url;
+        aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+        var event;
+        if (window.MouseEvent) event = new MouseEvent('click');
+        else {
+            event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        }
+        aLink.dispatchEvent(event);
+    }
+</script>
+</html>
