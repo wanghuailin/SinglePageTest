@@ -6,18 +6,21 @@
     <script src="./jquery-1.10.2.js"></script>
 </head>
 <body>
-<a href="javascript:void(0);" onclick="downexcle()">点击下载excel文件</a>
+<a href="javascript:void(0);" onclick="downexcle()">点击下载音频文件</a>
+<audio id="StuNameVoice"
+       src="http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3?Expires=1662526540&amp;OSSAccessKeyId=FDqNygK1Ac2KrCAU&amp;Signature=To%2B5Ew0jDB9aJI0SXWitfgcfMGs%3D"
+       controls="controls"></audio>
 </body>
 <script>
     function downexcle() {
         var xhr = new XMLHttpRequest();
-        xhr.open('get', 'https://api.hexfuture.net/mvc/File/Download', true);
+        xhr.open('get', 'http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3?Expires=1662526540&OSSAccessKeyId=FDqNygK1Ac2KrCAU&Signature=To%2B5Ew0jDB9aJI0SXWitfgcfMGs%3D', true);
         xhr.responseType = 'blob';
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         xhr.onload = function () {
             if (this.status == 200) {
                 var blob = this.response;
-                openDownloadDialog(blob, "Excel模版下载.xlsx")
+                openDownloadDialog(blob, "谢苒萱.mp3")
             }
         }
         xhr.send()
