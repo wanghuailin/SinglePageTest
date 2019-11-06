@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>读取excel</title>
+    <script src="./jquery-1.10.2.js"></script>
+    <script lang="javascript" src="./js-xlsx-master/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<input id="excelFile"
+       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" type="file"
+       value="上传">
+<a href="javascript:void(0);" onclick="readerexcle()">读取excel</a>
+<p>这里是展示区</p>
+<div id="table">
+
+</div>
+</body>
+<script>
+    function readerexcle() {
+        readWorkbookFromLocalFile($("#excelFile").get(0).files[0], function (data) {
+            readWorkbook(data);
+        });
+    }
+    // 读取本地excel文件
+    function readWorkbookFromLocalFile(file, callback) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+            if (callback) callback(workbook);
+        };
+        reader.readAsBinaryString(file);
+    }
+
+    function readWorkbook(workbook) {
+        var sheetNames = workbook.SheetNames; // 工作表名称集合
+        var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
+        var csv = XLSX.utils.sheet_to_csv(worksheet); //生成CSV格式
+        console.log(csv);
+        var json = XLSX.utils.sheet_to_json(worksheet); //输出JSON格式
+        console.log(json);
+        if (json && json.length > 0) {
+            json.forEach(function (item) {
+                $("#table").append("<p>" + JSON.stringify(item) + "</p>");
+            })
+        }
+
+        var html = XLSX.utils.sheet_to_html(worksheet); //生成HTML格式
+        console.log(html);
+    }
+</script>
+</html>
