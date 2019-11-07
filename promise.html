@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+</head>
+<body>
+
+</body>
+<script>
+    function china() {
+        console.log('china中国')
+        var p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                console.log('中国  国家')
+                resolve('教育大省份')
+            }, 1000)
+        })
+        return p;
+    }
+
+    function jiangshu(data) {
+        console.log('江苏' + data);
+        var p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                console.log('江苏 省份')
+                resolve('地级市');
+            }, 500)
+        })
+        return p;
+    }
+
+    function xian(data) {
+        console.log('盱眙县' + data)
+        var p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                console.log('盱眙县');
+                resolve('淮河镇')
+            }, 200)
+        })
+        return p;
+    }
+
+    china().then(jiangshu).then(xian).then(function (data) {
+        console.log(data)
+    })
+</script>
+</html>
