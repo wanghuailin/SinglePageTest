@@ -129,9 +129,7 @@
                 }
                 $("#onStart").find("div").not("." + myclass + "").css("background-color", "#cacaca");
 
-                // sortable.option("disabled", false);
-                // sortable.option("filter", ".book");
-                sortable.option("draggable", ".courseware");
+                sortable.option("draggable", "." + myclass + "");
             },
             onMove: function (/**Event*/evt, /**Event*/originalEvent) {
                 console.log("onMove");
