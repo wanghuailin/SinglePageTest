@@ -64,7 +64,19 @@
     </div>
 </div>
 
+<div id="onStart">
+    <div class="book"><p>book</p></div>
+    <div class="book"><p>book</p></div>
+    <div class="courseware"><p>courseware</p></div>
+    <div class="courseware"><p>courseware</p></div>
+    <div class="courseware"><p>courseware</p></div>
+    <div class="courseware"><p>courseware</p></div>
+    <div class="hte"><p>hte</p></div>
+    <div class="hte"><p>hte</p></div>
+</div>
+
 <script>
+    var sortable = "";
     $(function () {
         //base
         var list = document.getElementById("list");
@@ -99,6 +111,42 @@
             });
         });
         DragNotOpenPage($("#multi img"));
+
+        //拖动开始增加禁止拖动区域
+        sortable = Sortable.create(byId('onStart'), {
+            group: 'onStart',
+            animation: 150,
+            onStart: function (evt) {
+                console.log("onStart");
+                console.log(evt);
+                var myclass = $(evt.item).attr("class");
+                if (myclass.indexOf("book") >= 0) {
+                    myclass = "book";
+                } else if (myclass.indexOf("courseware") >= 0) {
+                    myclass = "courseware";
+                } else if (myclass.indexOf("hte") >= 0) {
+                    myclass = "hte";
+                }
+                $("#onStart").find("div").not("." + myclass + "").css("background-color", "#cacaca");
+
+                // sortable.option("disabled", false);
+                // sortable.option("filter", ".book");
+                sortable.option("draggable", ".courseware");
+            },
+            onMove: function (/**Event*/evt, /**Event*/originalEvent) {
+                console.log("onMove");
+                console.log(evt);
+            },
+            onEnd: function (evt) {
+                console.log("onEnd");
+                console.log(evt);
+
+                $("#onStart").find("div").css("background-color", "#ffffff");
+                sortable.option("draggable", "div");
+            },
+        });
+
+        DragNotOpenPage($("#onStart div"));
 
         //禁止拖拽打开新页面
         function DragNotOpenPage(drag) {
