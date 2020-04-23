@@ -471,6 +471,15 @@
 
     // 获取百度地图实例，使用百度地图自带的控件
     var bmap = myChart.getModel().getComponent('bmap').getBMap();
+    // 设置最小缩放值
+    bmap.setMinZoom(5);
+    // 设置最大缩放值
+    bmap.setMaxZoom(8);
+    // 缩放结束后的事件
+    bmap.addEventListener('zoomend', function () {
+        // 打印出当前缩放值
+        console.log(20180925104046, bmap.getZoom());
+    })
     bmap.addControl(new BMap.MapTypeControl());
 </script>
 </html>
