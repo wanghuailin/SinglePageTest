@@ -450,8 +450,17 @@
                         show: true
                     }
                 },
-                tooltip:{
-
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter: function (params) {
+                        console.log()
+                        var result = params.name + "<br>";//名称
+                        result += "数值：" + params.value[2] + "<br>";//数据
+                        return result;
+                    }
                 }
             },
         ]
