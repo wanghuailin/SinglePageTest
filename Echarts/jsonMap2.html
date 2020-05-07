@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json 绘制地图</title>
+    <script src="../Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="main" style="width: 1000px;height:600px;margin: 0 auto;"></div>
+</body>
+<script src="echarts.min.js"></script>
+<script>
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.showLoading();
+
+    $.get('./data/China.json', function (geoJson) {
+
+        myChart.hideLoading();
+
+        echarts.registerMap('China', geoJson);
+
+        myChart.setOption(option = {
+            title: {
+                text: '中国地图',
+            },
+            series: [
+                {
+                    name: '香港18区人口密度',
+                    type: 'map',
+                    mapType: 'China', // 自定义扩展图表类型
+                    label: {
+                        show: true
+                    },
+                    data: []
+                }
+            ]
+        });
+    });
+</script>
+</html>
