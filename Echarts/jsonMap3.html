@@ -297,7 +297,27 @@
                 scaleLimit: {
                     min: 1,
                     max: 5
-                }
+                },
+                label: {
+                    show: true,//显示省份标签
+                    textStyle: {color: "#c71585"},//省份标签字体颜色
+                    emphasis: {//对应的鼠标悬浮效果
+                        show: true,
+                        textStyle: {color: "#800080"}
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        borderWidth: .5,//区域边框宽度
+                        borderColor: '#009fe8',//区域边框颜色
+                        areaColor: "#ffefd5",//区域颜色
+                    },
+                    emphasis: {
+                        borderWidth: .5,
+                        borderColor: '#4b0082',
+                        areaColor: "#ffdead",
+                    }
+                },
             },
             series: [
                 //画坐标数据图
@@ -306,9 +326,6 @@
                     type: 'scatter',
                     coordinateSystem: 'geo',
                     data: convertData2(data),
-                    symbolSize: function (val) {  //图元的大小。
-                        return val[2] / 10;
-                    },
                     label: {
                         formatter: '{b}',
                         position: 'right',
@@ -343,7 +360,7 @@
                         show: true,
                         period: 6,
                         trailLength: 0,
-                        symbol: 'arrow', //'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+                        symbol: 'none', //'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
                         symbolSize: 10
                     },
                     lineStyle: {
