@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>json 绘制地图--贴近设计图</title>
     <script src="jquery-1.10.2.js"></script>
+    <script src="dist/echarts.js"></script>
 </head>
 <body>
-<div id="main" style="width: 1000px;height:1000px;margin: 0 auto;"></div>
+<div id="main" style="width: 1000px;height:1000px;margin: 0 auto;background-color: #1a99e2;"></div>
 </body>
-<script src="echarts.min.js"></script>
 <script>
     //中国各省省会  https://zhidao.baidu.com/question/202829791.html
     var data = [
@@ -296,30 +296,30 @@
                 roam: true,
                 scaleLimit: {
                     min: 1,
-                    max: 5
+                    max: 4
                 },
                 label: {
                     show: true,//显示省份标签
-                    textStyle: {color: "#c71585"},//省份标签字体颜色
-                    emphasis: {//对应的鼠标悬浮效果
-                        show: true,
-                        textStyle: {color: "#800080"}
-                    }
+                    textStyle: {color: "#50ffff"},//省份标签字体颜色
                 },
                 itemStyle: {
-                    normal: {
-                        borderWidth: .5,//区域边框宽度
-                        borderColor: '#009fe8',//区域边框颜色
-                        areaColor: "#ffefd5",//区域颜色
+                    borderWidth: 2,//区域边框宽度
+                    borderColor: '#00e4ff',//区域边框颜色
+                    areaColor: "none",//区域颜色
+                },
+                emphasis: {//对应的鼠标悬浮效果
+                    label: {
+                        show: true,
+                        textStyle: {color: "#ffffff"},
                     },
-                    emphasis: {
-                        borderColor: '#4b0082',
-                        areaColor: '#F3B329',//鼠标选择区域颜色
+                    itemStyle: {
+                        borderColor: '#00e5fe',
+                        areaColor: '#00e5fe',//鼠标选择区域颜色
                         shadowOffsetX: 0,
                         shadowOffsetY: 0,
                         shadowBlur: 20,
                         borderWidth: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        shadowColor: 'rgba(0,229,254, 0.5)'
                     }
                 },
             },
@@ -331,25 +331,25 @@
                     coordinateSystem: 'geo',
                     data: convertData2(data),
                     label: {
-                        formatter: '{b}',
-                        position: 'right',
                         show: false
                     },
                     itemStyle: {
-                        color: 'purple'
+                        color: '#308363'
                     },
                     emphasis: {
                         label: {
-                            show: true
+                            show: false
                         }
                     },
+                    //是否开启鼠标 hover 的提示动画效果。
+                    hoverAnimation: false,
                     tooltip: {
+                        show: false,
                         trigger: 'item',
                         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
                             type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                         },
                         formatter: function (params) {
-                            console.log()
                             var result = params.name + "<br>";//名称
                             result += "数值：" + params.value[2] + "<br>";//数据
                             return result;
@@ -369,7 +369,7 @@
                     },
                     lineStyle: {
                         normal: {
-                            color: "#a6c84c",
+                            color: "#00e4ff",
                             width: 2,
                             opacity: 0.6,
                             curveness: 0.2
@@ -381,12 +381,9 @@
                         position: 'right',
                         show: false
                     },
-                    itemStyle: {
-                        color: 'purple'
-                    },
                     emphasis: {
                         label: {
-                            show: true
+                            show: false
                         }
                     }
                 },
