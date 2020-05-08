@@ -8,6 +8,10 @@
 </head>
 <body>
 <div id="main" style="width: 1000px;height:1000px;margin: 0 auto;background-color: #1a99e2;"></div>
+<div id="showparams"
+     style="display:none;width: 100px;height: 100px;position: absolute;left: 0px;right: 0px;background-color: #ffffff">
+    <span></span>
+</div>
 </body>
 <script>
     //中国各省省会  https://zhidao.baidu.com/question/202829791.html
@@ -391,10 +395,29 @@
         };
         myChart.setOption(option);
 
-        // myChart.on('mouseover', function (params) {
-        //     var dataIndex = params.dataIndex;
-        //     console.log(params);
-        // });
+        myChart.on('mouseover', function (params) {
+            var dataIndex = params.dataIndex;
+            console.log(params);
+            if (params.componentType == "geo") {
+                var xy = getMousePos();
+                $("#showparams").css("left", xy.x + 50).css("top", xy.y + 50);
+                $("#showparams").find("span").text(params.name);
+                $("#showparams").show();
+            }
+        });
+        myChart.on('mouseout', function (params) {
+            $("#showparams").hide();
+        });
     });
+
+    function getMousePos(event) {
+        var e = event || window.event;
+        var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+        var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+        var x = e.pageX || e.clientX + scrollX;
+        var y = e.pageY || e.clientY + scrollY;
+        //alert('x: ' + x + '\ny: ' + y);
+        return {'x': x, 'y': y};
+    }
 </script>
 </html>
