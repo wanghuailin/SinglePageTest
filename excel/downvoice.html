@@ -8,13 +8,14 @@
 <body>
 <a href="javascript:void(0);" onclick="downexcle()">点击下载音频文件</a>
 <audio id="StuNameVoice"
-       src="http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3?Expires=1662526540&amp;OSSAccessKeyId=FDqNygK1Ac2KrCAU&amp;Signature=To%2B5Ew0jDB9aJI0SXWitfgcfMGs%3D"
+       src="http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3"
        controls="controls"></audio>
 </body>
 <script>
+    //由于音频地址Key泄漏，修改地址，功能没有问题
     function downexcle() {
         var xhr = new XMLHttpRequest();
-        xhr.open('get', 'http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3?Expires=1662526540&OSSAccessKeyId=FDqNygK1Ac2KrCAU&Signature=To%2B5Ew0jDB9aJI0SXWitfgcfMGs%3D', true);
+        xhr.open('get', 'http://bucket-hexfuture3.hexfuture.net/aeaba87e-fa77-477f-8079-1b9d6f0be548/temp.mp3', true);
         xhr.responseType = 'blob';
         xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         xhr.onload = function () {
