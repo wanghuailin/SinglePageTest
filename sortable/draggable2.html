@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draggable原方法拖拽仿sortble</title>
+    <script src="../Script/jquery-1.10.2.js"></script>
+    <style>
+        .test {
+            text-align: center;
+        }
+
+        .test > div, .block > div {
+            width: 250px;
+            background-color: #0aaaf1;
+            padding: 5px 10px;
+            margin: 5px auto;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .block {
+            width: 500px;
+            height: 300px;
+            border: 2px solid #0aaaf1;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="test">
+    <span>可以拖拽调序</span>
+    <div draggable="true"><span>例一</span></div>
+    <div draggable="true"><span>例二</span></div>
+    <div draggable="true"><span>例三</span></div>
+    <div draggable="true"><span>例四</span></div>
+    <div draggable="true"><span>例五</span></div>
+</div>
+<div class="block">
+    <span>往此区域拖拽</span>
+</div>
+<script>
+    /*
+    1、被拖对象：dragstart事件，被拖动的元素，开始拖放触发
+    2、被拖对象：drag事件，被拖放的元素，拖放过程中
+    3、经过对象：dragenter事件，拖放过程中鼠标经过的元素，被拖放的元素“开始”进入其它元素范围内（刚进入）
+    4、经过对象：dragover事件，拖放过程中鼠标经过的元素，被拖放的元素正在本元素范围内移动(一直)
+    5、经过对象：dragleave事件，拖放过程中鼠标经过的元素，被拖放的元素离开本元素范围
+    6、目标地点：drop事件，拖放的目标元素，其他元素被拖放到本元素中
+    7、被拖对象：dragend事件，拖放的对象元素，拖放操作结束
+    * */
+
+    var that = "";
+    var thatTop = 0;
+    $(document.body).on('dragstart', '.test>div', function (event) {
+        event.stopPropagation();
+        that = $(event.target);
+        $(".test>div").removeAttr("style");
+        $(this).css('background-color', '#0af13c');
+    });
+    $(document.body).on('drag', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        thatTop = $(that).offset().top;
+    });
+    $(document.body).on('drop', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var target = getTarget($(event.target));
+        $(that).insertAfter(target);
+    });
+    $(document.body).on('dragend', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    });
+    $(document.body).on('dragenter', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    });
+    $(document.body).on('dragover', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var target = getTarget($(event.target));
+        // console.log(thatTop + "--" + $(target).offset().top);
+        // console.log("dragover" + $(target).find("span").text());
+        if (thatTop < $(target).offset().top) {
+            $(that).insertAfter(target);
+        } else if (thatTop > $(target).offset().top) {
+            $(that).insertBefore(target);
+        }
+    });
+    $(document.body).on('dragleave', '.test>div', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    });
+
+    //获取目标元素
+    function getTarget(target) {
+        if (target.attr("draggable") != "true") {
+            target = target.parent();
+            return getTarget(target)
+        } else {
+            return target;
+        }
+    }
+
+
+    //============区域拖拽=================
+    $(document.body).on('drop', '.block', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $(this).append(that);
+    });
+    /*
+    ondragover 事件规定在何处放置被拖动的数据。
+    默认地，无法将数据/元素放置到其他元素中。如果需要设置允许放置，我们必须阻止对元素的默认处理方式。
+    这要通过调用 ondragover 事件的 event.preventDefault() 方法
+    */
+    $(document.body).on('dragover', '.block', function (event) {
+        event.preventDefault();
+    });
+</script>
+</body>
+</html>
