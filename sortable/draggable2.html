@@ -57,12 +57,15 @@
         event.stopPropagation();
         that = $(event.target);
         $(".test>div").removeAttr("style");
-        $(this).css('background-color', '#0af13c');
+        //开始时设置透明，使跟随鼠标的模态框变暗
+        $(this).css('background-color', 'rgba(10,170,241,0.5)');
     });
     $(document.body).on('drag', '.test>div', function (event) {
         event.stopPropagation();
         event.preventDefault();
         thatTop = $(that).offset().top;
+        //拖拽时恢复，只保留了跟随鼠标的模态框变暗
+        $(that).removeAttr("style");
     });
     $(document.body).on('drop', '.test>div', function (event) {
         event.stopPropagation();
