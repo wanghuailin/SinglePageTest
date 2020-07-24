@@ -68,6 +68,7 @@
     </div>
     <div>
         <button type="button" id="clearrect">橡皮擦</button>
+        <button type="button" id="clearRectAll">清除</button>
     </div>
 </div>
 <canvas id="_canvas" width="500px" height="500px">
@@ -98,6 +99,12 @@
             var context = canvas_.getContext("2d");
             context.lineWidth = Width.replace("px", "");
         });
+
+        //清除
+        $("#clearRectAll").click(function () {
+            var context = canvas_.getContext("2d");
+            context.clearRect(0, 0, screen.width, screen.height);
+        })
     })
 </script>
 <script type="text/javascript">
