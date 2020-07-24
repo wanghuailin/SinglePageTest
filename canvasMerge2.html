@@ -189,6 +189,7 @@
 </script>
 
 <script>
+    //参考资料 ：  https://segmentfault.com/a/1190000016031115?utm_source=tag-newest
     var c2 = document.getElementById("myCanvas2");
     var ctx2 = c2.getContext("2d");
     var img2 = document.getElementById("tulip2");
@@ -197,18 +198,20 @@
     $("#merge").click(function () {
         var imgUrl = document.getElementById("_canvas").toDataURL("image/png");
         var img = new Image();
+        img.onload = function () {
+            var img2 = document.getElementById("tulip2");
+            var c3 = document.getElementById("canvasMerge");
+            var ctx3 = c3.getContext("2d");
+            ctx3.drawImage(img2, 0, 0, c3.width, c3.height);
+            ctx3.globalCompositeOperation = "source-over";
+            ctx3.drawImage(img, 0, 0, c3.width, c3.height);
+
+            //绘制文字
+            ctx3.font = "100px red";
+            ctx3.fillText("天若有情", 10, 100);
+            ctx3.strokeText("天若有情", 10, 200);
+        }
         img.src = imgUrl;
-
-        var c2 = document.getElementById("myCanvas2");
-        var ctx2 = c2.getContext("2d");
-        var img2 = document.getElementById("tulip2");
-        ctx2.drawImage(img2, 0, 0, c2.width, c2.height);
-
-        var c3 = document.getElementById("canvasMerge");
-        var ctx3 = c3.getContext("2d");
-        ctx3.drawImage(img2, 0, 0, c3.width, c3.height);
-        ctx3.globalCompositeOperation = "source-over";
-        ctx3.drawImage(img, 0, 0, c3.width, c3.height);
     })
 </script>
 </html>
