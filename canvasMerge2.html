@@ -77,7 +77,8 @@
 
 <button id="merge">合并</button>
 <canvas id="myCanvas2" width="500px" height="500px"></canvas>
-<img id="tulip2" src="./Content/images/temp_wm.png" hidden="hidden">
+<img id="tulip2" src="//cms1004.hexfuture.net/FileManage/DownLoadImage?id=2585594031396" hidden="hidden">
+<!--<img id="tulip2" src="./Content/images/temp_wm.png" hidden="hidden">-->
 
 <canvas id="canvasMerge" width="500px" height="500px" style="background-color: #f0f0f0"></canvas>
 </body>
@@ -197,10 +198,12 @@
 
 <script>
     //参考资料 ：  https://segmentfault.com/a/1190000016031115?utm_source=tag-newest
-    var c2 = document.getElementById("myCanvas2");
-    var ctx2 = c2.getContext("2d");
-    var img2 = document.getElementById("tulip2");
-    ctx2.drawImage(img2, 0, 0, c2.width, c2.height);
+    window.onload = function () {
+        var c2 = document.getElementById("myCanvas2");
+        var ctx2 = c2.getContext("2d");
+        var img2 = document.getElementById("tulip2");
+        ctx2.drawImage(img2, 0, 0, c2.width, c2.height);
+    }
 
     $("#merge").click(function () {
         var imgUrl = document.getElementById("_canvas").toDataURL("image/png");
@@ -217,6 +220,8 @@
             ctx3.font = "100px red";
             ctx3.fillText("天若有情", 10, 100);
             ctx3.strokeText("天若有情", 10, 200);
+
+            console.log(c3.toDataURL("image/png"))
         }
         img.src = imgUrl;
     })
