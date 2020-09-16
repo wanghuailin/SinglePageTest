@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 画板获取图像</title>
+    <script type="application/javascript" src="../Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="contentHolder">
+    <video id="video" width="320" height="320" autoplay>
+    </video>
+    <button id="snap"> 拍照</button>
+    <canvas id="canvas" width="320" height="320">
+    </canvas>
+</div>
+<script>
+    var canvas = document.getElementById("canvas"),
+            context = canvas.getContext("2d"),
+            video = document.getElementById("video"),
+            videoObj = {"video": true},
+            errBack = function (error) {
+                console.log("Video capture error: ", error.code);
+            };
+    //navigator.getUserMedia这个写法在Opera中好像是navigator.getUserMedianow
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia(videoObj, function (stream) {
+            video.src = stream;
+            video.play();
+        }, errBack);
+    } else if (navigator.webkitGetUserMedia) {
+        navigator.webkitGetUserMedia(videoObj, function (stream) {
+            video.src = window.webkitURL.createObjectURL(stream);
+            video.play();
+        }, errBack);
+    }
+    //这个是拍照按钮的事件，
+    $("#snap").click(function () {
+        context.drawImage(video, 0, 0, 320, 320);
+        video.pause();
+    });
+</script>
+</body>
+</html>
