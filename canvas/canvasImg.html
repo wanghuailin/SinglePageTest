@@ -52,17 +52,23 @@
         });
 
         //计算宽高
+        //重新渲染canvas画板
         function canvasFollow() {
             let $this = $("#tulip2");
             var height1 = $($this).height();
             var width1 = $($this).width();
+            var canvas = document.getElementById("_canvas");
+            var ctx = canvas.getContext('2d');
+            var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             $("#_canvas").attr("height", height1);
             $("#_canvas").attr("width", width1);
             $("#_canvas").css("left", $("img").get(0).offsetLeft);
             $("#_canvas").css("top", $("img").get(0).offsetTop);
+            ctx.putImageData(imgData, 0, 0);
         }
 
 
+        //图片旋转
         /*
          原理：利用canvas对象来旋转。
          实现方式：首先创建一个canvas元素，然后把img元素绘入canvas。
