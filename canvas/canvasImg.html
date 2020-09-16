@@ -98,7 +98,7 @@
                 step--;
                 step < min_step && (step = max_step);
             }
-            img.setAttribute('step', step);
+            img.setAttribute('step', step - 1);
             var canvas = document.getElementById('pic_' + pid);
             if (canvas == null) {
                 // img.style.display = 'none';
@@ -135,7 +135,6 @@
                     break;
             }
             ctx.restore();//恢复状态
-            $("body").append(canvas);
             var imgUrl = canvas.toDataURL("image/png");
             img.style.width = canvas.width + "px";
             img.style.height = canvas.height + "px";
