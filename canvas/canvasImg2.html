@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 图片有操作，图片缩放旋转--canvas文字跟着变大</title>
+    <script type="application/javascript" src="../Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div style="width: 410px;margin: 0 auto">
+    <button id="large">放大</button>
+    <button id="small">缩小</button>
+    <button id="xuzhuan">旋转</button>
+</div>
+<div style="width:410px;height:306px;margin:10px auto;position: relative;overflow: auto;border: 1px solid #333">
+    <canvas id="_canvas" width="410" height="306"
+            style="position:absolute;left:0px;top:0px;z-index: 1"></canvas>
+    <img id="tulip2" src="canvasimg.png"
+         style="display:block;margin:0 auto;width: 410px;height: 306px;user-select: none;">
+</div>
+</body>
+<script>
+    $(function () {
+        //放大图片
+        $("#large").click(function () {
+            let $this = $("#tulip2");
+            var height1 = $($this).height();
+            var width1 = $($this).width();
+            $($this).height(height1 * 1.2);
+            $($this).width(width1 * 1.2);
+            canvasFollow();
+        });
+
+        //缩小图片
+        $("#small").click(function () {
+            let $this = $("#tulip2");
+            var height1 = $($this).height();
+            var width1 = $($this).width();
+            $($this).height(height1 / 1.2);
+            $($this).width(width1 / 1.2);
+            canvasFollow();
+        });
+
+        //旋转图片
+        //参考 https://blog.csdn.net/smartsmile2012/article/details/67635067?utm_source=blogxgwz8
+        let activeRotate = 0;
+        $("#xuzhuan").click(function () {
+            let $this = $("#tulip2");
+            // activeRotate = (activeRotate + 90) % 360;
+            // $this.css('transform', 'rotate(' + activeRotate + 'deg)');
+            rotateImg("tulip2", "right");
+            canvasFollow();
+        });
+
+        //计算宽高
+        //重新渲染canvas画板
+        function canvasFollow() {
+            let $this = $("#tulip2");
+            var height1 = $($this).height();
+            var width1 = $($this).width();
+            var canvas = document.getElementById("_canvas");
+            var ctx = canvas.getContext('2d');
+            // var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let imgUrl = canvas.toDataURL("image/png");
+            let canvasImg = new Image();
+            canvasImg.src = imgUrl;
+            canvasImg.width = width1;
+            canvasImg.height = height1;
+            canvasImg.onload = function () {
+                ctx.drawImage(canvasImg, 0, 0, width1, height1);
+            }
+            $("#_canvas").attr("height", height1);
+            $("#_canvas").attr("width", width1);
+            $("#_canvas").css("left", $("img").get(0).offsetLeft);
+            $("#_canvas").css("top", $("img").get(0).offsetTop);
+            // ctx.putImageData(imgData, 0, 0);
+        }
+
+
+        //图片旋转
+        /*
+         原理：利用canvas对象来旋转。
+         实现方式：首先创建一个canvas元素，然后把img元素绘入canvas。
+         但是，实际上，这是默认情况，就是图片没旋转时。
+         如果图片要旋转90度的话，就需要先把canvas画布旋转90度后再绘图。
+         描述如下： （内部旋转原理是这样的，图片的坐标是从左上角开始计算，
+         向右为x正方向，向下为y正方向，在旋转画布canvas时，实际上是这个坐标在旋转
+
+         解释：   canvas.width与height就不用解释了吧，应该。rotate应该也不用吧？关键是
+         drawImage(img, x, y);
+         其中的x，y是指从哪一点开始画，因为整个坐标系统旋转了，所以，x，y不一样，
+         比如step=1，图片向右旋转了90度，即坐标系旋转了90度，那么起始位置应该是
+         x = 0,   y=  img.height 其它类似可得。
+        */
+        function rotateImg(pid, direction) {
+            //最小与最大旋转方向，图片旋转4次后回到原方向
+            var min_step = 0;
+            var max_step = 3;
+            var img = document.getElementById(pid);
+            if (img == null) return;
+            //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+            var height = img.height;
+            var width = img.width;
+            var step = img.getAttribute('step');
+            if (step == null) {
+                step = min_step;
+            }
+            if (direction == 'right') {
+                step++;
+                //旋转到原位置，即超过最大值
+                step > max_step && (step = min_step);
+            } else {
+                step--;
+                step < min_step && (step = max_step);
+            }
+            img.setAttribute('step', step - 1);
+            var canvas = document.getElementById('pic_' + pid);
+            if (canvas == null) {
+                // img.style.display = 'none';
+                canvas = document.createElement('canvas');
+                canvas.setAttribute('id', 'pic_' + pid);
+                // img.parentNode.appendChild(canvas);
+            }
+            //旋转角度以弧度值为参数
+            var degree = step * 90 * Math.PI / 180;
+            var ctx = canvas.getContext('2d');
+            switch (step) {
+                case 0:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    break;
+                case 1:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, 0, -height, width, height);
+                    break;
+                case 2:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, -height, width, height);
+                    break;
+                case 3:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, 0, width, height);
+                    break;
+            }
+            ctx.restore();//恢复状态
+            var imgUrl = canvas.toDataURL("image/png");
+            img.style.width = canvas.width + "px";
+            img.style.height = canvas.height + "px";
+            img.src = imgUrl;
+        }
+    })
+</script>
+<script type="text/javascript">
+    var canvas_ = document.getElementById("_canvas");
+
+    var context = canvas_.getContext("2d");
+    context.strokeStyle = "red";//设置笔触颜色
+    context.lineWidth = 2;//设置线条粗细
+
+    var array_paint = [];
+    var current_y = 0;
+    var current_x = 0;
+    //判断鼠标是否按下
+    var m_down = false;
+
+    //画线
+    function paint() {
+        context.beginPath();//清空子路径
+        context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
+        if (array_paint.length == 1)
+            context.lineTo(array_paint[0][0] + 1, array_paint[0][1] + 1);//从画笔位置到x1,y1画一条线
+        else {
+            var i = 1;
+            for (i in array_paint) {
+                context.lineTo(array_paint[i][0], array_paint[i][1]);
+                context.moveTo(array_paint[i][0], array_paint[i][1]);
+            }
+
+        }
+        context.closePath();//闭合路径
+        context.stroke();//画线框
+    }
+
+    var IsPaint = true;
+    $("#clearrect").click(function () {
+        IsPaint = !IsPaint;
+    })
+
+    //橡皮擦
+    function clearRect() {
+        context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
+        if (array_paint.length == 1)
+            context.clearRect(array_paint[0][0] + 1, array_paint[0][1] + 1, 20, 20);//从画笔位置到x1,y1画一条线
+        else {
+            var i = 1;
+            for (i in array_paint) {
+                context.clearRect(array_paint[i][0], array_paint[i][1], 20, 20);
+                context.moveTo(array_paint[i][0], array_paint[i][1]);
+            }
+        }
+    }
+
+    //按下鼠标
+    canvas_.onmousedown = function (event) {
+        m_down = true;
+        current_x = event.offsetX;
+        current_y = event.offsetY;
+        array_paint.push([current_x, current_y]);
+        if (IsPaint) {
+            paint();
+        } else {
+            clearRect();
+        }
+    }
+
+    //鼠标松开,清空数据
+    canvas_.onmouseup = function (event) {
+        m_down = false;
+        array_paint = [];
+    }
+
+    //鼠标按下后拖动
+    canvas_.onmousemove = function (event) {
+        if (m_down) {
+            current_x = event.offsetX;
+            current_y = event.offsetY;
+            array_paint.push([current_x, current_y]);
+            if (IsPaint) {
+                paint();
+            } else {
+                clearRect();
+            }
+        }
+    }
+</script>
+</html>
