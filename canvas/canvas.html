@@ -68,6 +68,7 @@
     </div>
     <div>
         <button type="button" id="clearrect">橡皮擦</button>
+        <button id="isdoit">判断canvas上是否有绘制内容</button>
     </div>
 </div>
 <canvas id="_canvas">
@@ -102,6 +103,21 @@
             var context = canvas_.getContext("2d");
             context.lineWidth = Width.replace("px", "");
         });
+
+        $("#isdoit").click(function () {
+            var canvas = document.getElementById("_canvas");
+            var isdoit = isCanvasBlank(canvas);
+            console.log("是否绘画" + !isdoit);
+        })
+
+        //判断canvas是否绘制签名
+        function isCanvasBlank(canvas) {
+            //PNG 算法
+            var blank = document.createElement('canvas');
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            return canvas.toDataURL() == blank.toDataURL();
+        }
     })
 </script>
 <script type="text/javascript">
