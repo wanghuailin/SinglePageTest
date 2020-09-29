@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas划线不影响滚动条</title>
+    <script src="//static2.hexfuture.net/hex.config.js?v=1.0.0"></script>
+</head>
+<body>
+<div style="width: 500px;height: 300px;margin: 0 auto;overflow: auto;touch-action: none;">
+    <canvas id="_canvas" width="500px" height="500px" style="background-color: #808080">
+
+    </canvas>
+</div>
+</body>
+<script type="text/javascript">
+    /* touch-action: none; */
+    var canvas_ = document.getElementById("_canvas");
+
+    var context = canvas_.getContext("2d");
+    context.strokeStyle = "red";//设置笔触颜色
+    context.lineWidth = 4;//设置线条粗细
+
+    var array_paint = [];
+    var current_y = 0;
+    var current_x = 0;
+    //判断鼠标是否按下
+    var m_down = false;
+
+    //画线
+    function paint() {
+        context.beginPath();//清空子路径
+        context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
+        if (array_paint.length == 1)
+            context.lineTo(array_paint[0][0] + 1, array_paint[0][1] + 1);//从画笔位置到x1,y1画一条线
+        else {
+            var i = 1;
+            for (i in array_paint) {
+                context.lineTo(array_paint[i][0], array_paint[i][1]);
+                context.moveTo(array_paint[i][0], array_paint[i][1]);
+            }
+
+        }
+        context.closePath();//闭合路径
+        context.stroke();//画线框
+    }
+
+    //按下鼠标
+    var mousedownObserver = function (event) {
+        m_down = true;
+        current_x = event.offsetX;
+        current_y = event.offsetY;
+        if (!current_x) {
+            current_x = event.touches[0].pageX;
+            current_y = event.touches[0].pageY;
+        }
+        array_paint.push([current_x, current_y]);
+        paint();
+    }
+
+    //鼠标松开,清空数据
+    var mouseupObserver = function (event) {
+        m_down = false;
+        array_paint = [];
+    }
+
+    //鼠标按下后拖动
+    var mousemoveObserver = function (event) {
+        if (m_down) {
+            current_x = event.offsetX;
+            current_y = event.offsetY;
+            if (!current_x) {
+                current_x = event.touches[0].pageX;
+                current_y = event.touches[0].pageY;
+            }
+            array_paint.push([current_x, current_y]);
+            paint();
+        }
+    }
+    window.document.addEventListener('mousedown', this.mousedownObserver, false);
+    window.document.addEventListener('mousemove', this.mousemoveObserver, false);
+    window.document.addEventListener('mouseup', this.mouseupObserver, false);
+    window.document.addEventListener('touchstart', this.mousedownObserver, false);
+    window.document.addEventListener('touchmove', this.mousemoveObserver, false);
+    window.document.addEventListener('touchend', this.mouseupObserver, false);
+</script>
+</html>
