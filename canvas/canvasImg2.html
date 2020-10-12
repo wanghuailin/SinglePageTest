@@ -260,7 +260,7 @@
             let canvasPic = new Image();
             canvasPic.src = canvasHistory[step];
             canvasPic.addEventListener('load', () => {
-                context.drawImage(canvasPic, 0, 0);
+                context.drawImage(canvasPic, 0, 0, $("#_canvas").width(), $("#_canvas").height());
             });
         } else {
             console.log('不能再继续撤销了');
