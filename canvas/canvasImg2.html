@@ -10,6 +10,7 @@
     <button id="large">放大</button>
     <button id="small">缩小</button>
     <button id="xuzhuan">旋转</button>
+    <button id="return">撤销</button>
 </div>
 <div style="width:410px;height:306px;margin:10px auto;position: relative;overflow: auto;border: 1px solid #333">
     <canvas id="_canvas" width="410" height="306"
@@ -157,10 +158,7 @@
 </script>
 <script type="text/javascript">
     var canvas_ = document.getElementById("_canvas");
-
     var context = canvas_.getContext("2d");
-    context.strokeStyle = "red";//设置笔触颜色
-    context.lineWidth = 2;//设置线条粗细
 
     var array_paint = [];
     var current_y = 0;
@@ -170,6 +168,8 @@
 
     //画线
     function paint() {
+        context.strokeStyle = "red";//设置笔触颜色
+        context.lineWidth = 2;//设置线条粗细
         context.beginPath();//清空子路径
         context.moveTo(array_paint[0][0], array_paint[0][1]);//将画笔移到x0,y0处
         if (array_paint.length == 1)
@@ -222,6 +222,7 @@
     canvas_.onmouseup = function (event) {
         m_down = false;
         array_paint = [];
+        canvasDraw();
     }
 
     //鼠标按下后拖动
@@ -237,5 +238,37 @@
             }
         }
     }
+
+    //撤销
+    var canvasHistory = [];
+    var step = -1;
+
+    // 绘制方法
+    function canvasDraw() {
+        step++;
+        if (step < canvasHistory.length) {
+            canvasHistory.length = step; // 截断数组
+        }
+        canvasHistory.push(canvas_.toDataURL()); // 添加新的绘制到历史记录
+    }
+
+    // 撤销方法
+    function canvasUndo() {
+        if (step >= 0) {
+            step--;
+            context.clearRect(0, 0, $("#_canvas").width(), $("#_canvas").height());
+            let canvasPic = new Image();
+            canvasPic.src = canvasHistory[step];
+            canvasPic.addEventListener('load', () => {
+                context.drawImage(canvasPic, 0, 0);
+            });
+        } else {
+            console.log('不能再继续撤销了');
+        }
+    }
+
+    $("#return").click(function () {
+        canvasUndo();
+    });
 </script>
 </html>
