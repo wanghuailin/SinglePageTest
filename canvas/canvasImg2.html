@@ -6,11 +6,16 @@
     <script type="application/javascript" src="../Script/jquery-1.10.2.js"></script>
 </head>
 <body>
-<div style="width: 410px;margin: 0 auto">
-    <button id="large">放大</button>
-    <button id="small">缩小</button>
-    <button id="xuzhuan">旋转</button>
-    <button id="return">撤销</button>
+<div style="width: 410px;margin: 0 auto;display: flex;justify-content: space-between;">
+    <div>
+        <button id="large">放大</button>
+        <button id="small">缩小</button>
+        <button id="xuzhuan">旋转</button>
+    </div>
+    <div>
+        <button id="clearrect">橡皮擦</button>
+        <button id="return">撤销</button>
+    </div>
 </div>
 <div style="width:410px;height:306px;margin:10px auto;position: relative;overflow: auto;border: 1px solid #333">
     <canvas id="_canvas" width="410" height="306"
@@ -189,6 +194,11 @@
     var IsPaint = true;
     $("#clearrect").click(function () {
         IsPaint = !IsPaint;
+        if (IsPaint) {
+            $("#clearrect").text("橡皮擦")
+        } else {
+            $("#clearrect").text("画笔")
+        }
     })
 
     //橡皮擦
