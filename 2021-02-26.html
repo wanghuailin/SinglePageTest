@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--360 使用Google Chrome Frame-->
+    <meta name="renderer" content="webkit">
+    <!--移动设备-->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <!--小图标-->
+    <title>每周一题 | 2021-02-26</title>
+    <link href="//static2.hexfuture.net/buildCSS/basev1020.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #35383a;
+        }
+
+        div.x {
+            height: 10px;
+            position: fixed;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            display: flex;
+            border-bottom: 1px solid white;
+        }
+
+        div.x > i {
+            flex: 1;
+            border-right: 1px solid white;
+        }
+
+        div.y {
+            width: 10px;
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid white;
+        }
+
+        div.y > i {
+            flex: 1;
+            border-top: 1px solid white;
+        }
+
+        main {
+            position: fixed;
+            left: 10px;
+            right: 10px;
+            top: 10px;
+            bottom: 10px;
+
+        }
+
+        p#count {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 30px;
+        }
+
+    </style>
+    <style>
+        main > i {
+            display: block;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            color: #35383a;
+            font-size: 14px;
+            border-radius: 50%;
+            background-color: white;
+            bottom: 0;
+            transform: translate(-50%, 50%)
+        }
+
+        main > i#point1 {
+            left: 5%;
+        }
+
+        main > i#point2 {
+            left: 15%;
+        }
+
+        main > i#point3 {
+            left: 25%;
+        }
+
+        main > i#point4 {
+            left: 35%;
+        }
+
+        main > i#point5 {
+            left: 45%;
+        }
+
+        main > i#point6 {
+            left: 55%;
+        }
+
+        main > i#point7 {
+            left: 65%;
+        }
+
+        main > i#point8 {
+            left: 75%;
+        }
+
+        main > i#point9 {
+            left: 85%;
+        }
+
+        main > i#point10 {
+            left: 95%;
+        }
+    </style>
+</head>
+<body>
+<div class="x"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="y"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<p id="count">0</p>
+<main>
+    <i id='point1' count="0">0</i>
+    <i id='point2' count="0">0</i>
+    <i id='point3' count="0">0</i>
+    <i id='point4' count="0">0</i>
+    <i id='point5' count="0">0</i>
+    <i id='point6' count="0">0</i>
+    <i id='point7' count="0">0</i>
+    <i id='point8' count="0">0</i>
+    <i id='point9' count="0">0</i>
+    <i id='point10' count="0">0</i>
+</main>
+<script>
+    //代码写在这里
+    //生成随机数，统计随机数数量和百分比
+    function input(count) {
+        var pointList = [];
+        for (var i = 1; i <= 10; i++) {
+            pointList.push({"id": "point" + i, "count": 0, "rate": 0})
+        }
+        for (var j = 1; j <= count; j++) {
+            var randomCount = parseInt(Math.random() * 10);
+            pointList[randomCount].count++;
+            pointList[randomCount].rate = parseInt(pointList[randomCount].count * 100 / j);
+            setPoint();
+            document.getElementById("count").innerText = count;
+        }
+
+        //设置页面的值
+        function setPoint() {
+            pointList.forEach(function (item) {
+                document.getElementById(item.id).innerText = item.count + "/" + item.rate;
+                document.getElementById(item.id).style.bottom = item.rate + "%";
+            })
+        }
+    }
+</script>
+<script>
+    input(10000)
+</script>
+</body>
+</html>
