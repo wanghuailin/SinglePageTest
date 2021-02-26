@@ -151,20 +151,27 @@
         for (var i = 1; i <= 10; i++) {
             pointList.push({"id": "point" + i, "count": 0, "rate": 0})
         }
-        for (var j = 1; j <= count; j++) {
-            var randomCount = parseInt(Math.random() * 10);
-            pointList[randomCount].count++;
-            pointList[randomCount].rate = parseInt(pointList[randomCount].count * 100 / j);
-            setPoint();
-            document.getElementById("count").innerText = count;
-        }
+
+        var j = 1;
+        var st = setInterval(function () {
+            if (j > count) {
+                clearInterval(st);
+            } else {
+                var randomCount = parseInt(Math.random() * 10);
+                pointList[randomCount].count++;
+                setPoint(j);
+                j++;
+            }
+        }, 100)
 
         //设置页面的值
-        function setPoint() {
+        function setPoint(j) {
             pointList.forEach(function (item) {
+                item.rate = parseInt(item.count * 100 / j);
                 document.getElementById(item.id).innerText = item.count + "/" + item.rate;
                 document.getElementById(item.id).style.bottom = item.rate + "%";
             })
+            document.getElementById("count").innerText = j;
         }
     }
 </script>
