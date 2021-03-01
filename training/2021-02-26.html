@@ -145,7 +145,8 @@
 </main>
 <script>
     //代码写在这里
-    //生成随机数，统计随机数数量和百分比
+    //1、生成随机数，统计随机数数量和百分比
+    //2、计时器循环赋值
     function input(count) {
         var pointList = [];
         for (var i = 1; i <= 10; i++) {
@@ -162,7 +163,7 @@
                 setPoint(j);
                 j++;
             }
-        }, 100)
+        }, 10)
 
         //设置页面的值
         function setPoint(j) {
