@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>段落换行位置</title>
+</head>
+<body>
+<p id="p1">asdfabcd1234zxcvzxcv5679你的；了看见爱上；kjhewqar了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；暗示法发你的；了看见离asdgfsdfgsdfg爱上；的开飞机撒</p>
+<p id="w1"></p>
+<p id="p2">asdfabcd1234zxcvzxcv5679你的；了看见爱上；kjhewqar了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；暗示法发你的；了看见离asdgfsdfgsdfg爱上；的开飞机撒</p>
+<p id="w2"></p>
+</body>
+<script>
+    // https://segmentfault.com/q/1010000012867703
+    // 两种方法：
+    // 挨个取一个字符加到最后，直到p元素的高度达到两倍行高
+    // 将元素中的文本按字符拆分span元素，取第二行第一个元素（elementFromPoint）
+    // 第二种方式精度较高。。。
+
+    void function main1() {
+        const p = document.getElementById('p1');
+        const w = document.getElementById('w1');
+        const text = p.textContent;
+        w.textContent = text.charAt(0);
+        const lineHeight = w.clientHeight;
+        for (var i = 1; w.clientHeight < 2 * lineHeight && i < text.length; ++i) {
+            //将一个给定的文本节点插入在相对于被调用的元素给定的位置
+            w.insertAdjacentText('beforeend', text.charAt(i));
+        }
+        w.textContent = `第 ${i} 个字符：${text[i]}`;
+    }();
+
+    void function main2() {
+        const p = document.getElementById('p2');
+        const w = document.getElementById('w2');
+        const text = p.textContent;
+        w.textContent = text.charAt(0);
+        const lineHeight = w.clientHeight;
+        w.innerHTML = text.split('').map(c => `<span>${c}</span>`).join('');
+        //getBoundingClientRect用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
+        const clientRect = w.getBoundingClientRect();
+        //elementFromPoint 根据坐标获得元素
+        // 语法：
+        //     oElement = document.elementFromPoint ( iX , iY )
+        // 参数：
+        //     iX :　 必选项。整数(Integer)。单位：象素(Pixel)。定位横坐标偏移量。
+        //     iY :　 必选项。整数(Integer)。单位：象素(Pixel)。定位纵坐标偏移量。
+        // 返回值：
+        //     oElement :　 对象(Element)。返回获取的对象的引用。
+        const span = document.elementFromPoint(clientRect.left + 1, clientRect.top + lineHeight + 1);
+        for (var i = 1; w.children[i] !== span && i < text.length; ++i);
+        w.textContent = `第 ${i} 个字符：${text[i]}`;
+    }();
+</script>
+</html>
