@@ -9,8 +9,13 @@
 <p id="w1"></p>
 <p id="p2">asdfabcd1234zxcvzxcv5679你的；了看见爱上；kjhewqar了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；了看见爱上；kjhewqar暗示法发你的；了看见离asdgfsdfgsdfg爱上；暗示法发你的；了看见离asdgfsdfgsdfg爱上；的开飞机撒</p>
 <p id="w2"></p>
+<div id="p3"><p hexid="5ecaf01e4a18ccba4bb590ed1f69b664">阅读下面文段，自行探究，完成文后的问题。</p><p hexid="9866cb5ac742aa45d3dfcc81c676b728">&nbsp; &nbsp; &nbsp; &nbsp;①中国是弱国，所以中国人当然是低能儿，分数在六十分以上，便不是自己的能力了：也无怪他们疑惑。但我接着便有参观枪毙中国人的命运了。第二年添教霉菌学，细菌的形状是全用电影来显示的，一段落已完而还没有到下课的时候，便影几片时事的片子，自然都是日本战胜俄国的情形。但偏有中国人夹在里边：给俄国人做侦探，被日本军捕获，要枪毙了，围着看的也是一群中国人；在讲堂里的还有一个我。</p><p hexid="0b79d6aec1b6a72ad7cc7fb2a1999e0c">&nbsp; &nbsp; &nbsp; &nbsp; “万岁！”他们都拍掌欢呼起来。</p><p hexid="68df46b4bbbf43b02b5c14769c7bc6ae">&nbsp; &nbsp; &nbsp; &nbsp;这种欢呼，是每看一片都有的，但在我，这一声却特别听得刺耳。此后回到中国来，我看见那些闲看枪毙犯人的人们，他们也何尝不酒醉似的喝采，——呜呼，无法可想！但在那时那地，我的意见却变化了。</p><p hexid="987a8e2ec6bdb81bee3d5cf3d60729cb">&nbsp; &nbsp; &nbsp; &nbsp;到第二学年的终结，我便去寻藤野先生，告诉他我将不学医学，并且离开这仙台。他的脸色仿佛有些悲哀，似乎想说话，但竟没有说。</p><p hexid="806f6e43820b5d7e1cded33d79555a43">&nbsp; &nbsp; &nbsp; &nbsp;但不知怎地，我总还时时记起他，在我所认为我师的之中，他是最使我感激，给我鼓励的一个。有时我常常想：他的对于我的热心的希望，不倦的教诲，小而言之，是为中国，就是希望中国有新的医学；大而言之，是为学术，就是希望新的医学传到中国去。他的性格，在我的眼里和心里是伟大的，虽然他的姓名并不为许多人所知道。</p>
+</div>
+<p id="w3"></p>
 </body>
 <script>
+    //*****************不能使用文本自动格式************************************//
+
     // https://segmentfault.com/q/1010000012867703
     // 两种方法：
     // 挨个取一个字符加到最后，直到p元素的高度达到两倍行高
@@ -48,8 +53,42 @@
         // 返回值：
         //     oElement :　 对象(Element)。返回获取的对象的引用。
         const span = document.elementFromPoint(clientRect.left + 1, clientRect.top + lineHeight + 1);
-        for (var i = 1; w.children[i] !== span && i < text.length; ++i);
+        for (var i = 1; w.children[i] !== span && i < text.length; ++i) ;
         w.textContent = `第 ${i} 个字符：${text[i]}`;
+    }();
+
+    //我的方法--多行查找
+    void function main3() {
+        const p = document.getElementById('p3');
+        const w = document.getElementById('w3');
+        const text = p.textContent;
+        w.textContent = text.charAt(0);
+        const lineHeight = w.clientHeight;
+        let textContent = "";
+        for (var i = 0; i < p.childNodes.length; ++i) {
+            if (p.childNodes[i].tagName == "P") {
+                if (p.childNodes[i].getClientRects()[0].height > lineHeight) {
+                    textContent += checkedElement(p.childNodes[i])+"<br>";
+                }
+            }
+        }
+        w.innerHTML = textContent;
+
+        function checkedElement(element) {
+            const text = element.textContent;
+            const w = document.getElementById('w3');
+            w.textContent = text.charAt(0);
+            const lineHeight = w.clientHeight;
+            w.innerHTML = text.split('').map(c => `<span>${c}</span>`).join('');
+            const clientRect = w.getBoundingClientRect();
+            let result="";
+            for (var j=1;j<element.getClientRects()[0].height/lineHeight;j++){
+                const span = document.elementFromPoint(clientRect.left + 1, clientRect.top + lineHeight*j + 1);
+                for (var i = 1; w.children[i] !== span && i < text.length; ++i) ;
+                result+= `第 ${j+1} 行-第 ${i} 个字符：${text[i]} `;
+            }
+            return result;
+        }
     }();
 </script>
 </html>
