@@ -17,6 +17,19 @@
 <body style="padding: 10px">
 <div class="svgdiv">
     <div>
+        <p>line和polyline;线和折线</p>
+    </div>
+    <div>
+        <svg width="300" height="180">
+            <line x1="0" y1="0" x2="200" y2="0" style="stroke:rgb(0,0,0);stroke-width:5" />
+        </svg>
+        <svg width="300" height="180">
+            <polyline points="3,3 30,28 3,53 30,80" fill="none" stroke="black" />
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
         <p>使用SVG绘制圆形</p>
         <ul>
             <li>&lt;svg&gt;标签中<code>height</code>和<code>width</code>属性是设置SVG文档的高宽，<code>version</code>属性可定义所使用的 SVG
@@ -33,6 +46,17 @@
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" height="250px" width="500px" version="1.1">
             <circle cx="200" cy="120" r="100" stroke="#afeedd" stroke-width="5" fill="#f0ddff"/>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>椭圆</p>
+        <p><code>&lt;ellipse&gt;</code>的cx属性和cy属性，指定了椭圆中心的横坐标和纵坐标（单位像素）；rx属性和ry属性，指定了椭圆横向轴和纵向轴的半径（单位像素）。</p>
+    </div>
+    <div>
+        <svg width="300" height="180">
+            <ellipse cx="60" cy="60" ry="40" rx="20" stroke="black" stroke-width="5" fill="silver"/>
         </svg>
     </div>
 </div>
@@ -158,8 +182,33 @@
     </div>
 </div>
 <div class="svgdiv">
+    <div>
+        <p>path标签用于制路径。</p>
+        <p>M：移动到（moveto）<br> L：画直线到（lineto）<br> Z：闭合路径<br></p>
+    </div>
+    <div>
+        <svg width="300" height="180">
+            <path d="M 18,3 L 46,3 L 46,40 L 61,40 L 32,68 L 3,40 L 18,40 Z"></path>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
     <div><p></p></div>
     <div></div>
 </div>
+<svg viewBox="0 0 100 100" width="100" height="100">
+    <image xlink:href="./success.png" width="50%" height="50%"/>
+</svg>
+<svg width="500px" height="500px">
+    <rect x="0" y="0" width="100" height="100" fill="#feac5e">
+        <animate attributeName="x" from="0" to="500" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="width" to="500" dur="2s" repeatCount="indefinite" />
+    </rect>
+</svg>
+<svg width="500px" height="500px">
+    <rect x="250" y="250" width="50" height="50" fill="#4bc0c8">
+        <animateTransform attributeName="transform" type="rotate" begin="0s" dur="10s" from="0 200 200" to="360 400 400" repeatCount="indefinite" />
+    </rect>
+</svg>
 </body>
 </html>
