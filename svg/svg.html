@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5之SVG的使用</title>
+    <style>
+        .svgdiv {
+            display: flex;
+        }
+
+        .svgdiv > div {
+            flex: 1;
+            display: flex;
+        }
+    </style>
+</head>
+<body style="padding: 10px">
+<div class="svgdiv">
+    <div>
+        <p>使用SVG绘制圆形</p>
+        <ul>
+            <li>&lt;svg&gt;标签中<code>height</code>和<code>width</code>属性是设置SVG文档的高宽，<code>version</code>属性可定义所使用的 SVG
+                版本，<code>xmlns</code> 属性可定义 SVG 命名空间；
+            </li>
+            <li>&lt;circle&gt;是SVG中用来创建圆形的标签，<code>cx</code> 和 <code>cy</code> 属性定义圆中心的 <code>x</code> 和 <code>y</code>
+                坐标，如果忽略这两个属性，那么圆点会被设置为 (0, 0)，<code>r</code>属性定义圆的半径；
+            </li>
+            <li>
+                <code>stroke</code> 和 <code>stroke-width</code> 属性控制如何显示形状的轮廓，<code>fill</code> 属性设置形状内的颜色；
+            </li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" height="250px" width="500px" version="1.1">
+            <circle cx="200" cy="120" r="100" stroke="#afeedd" stroke-width="5" fill="#f0ddff"/>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>使用SVG绘制矩形</p>
+        <ul>
+            <li>rect 元素的 <code>width</code> 和 <code>height</code>属性可定义矩形的高度和宽度；</li>
+            <li>style 属性用来定义 CSS 属性</li>
+            <li>CSS 的 <code>fill</code> 属性定义矩形的填充颜色（rgb 值、颜色名或者十六进制值）；</li>
+            <li>CSS 的 <code>stroke-width</code> 属性定义矩形边框的宽度；</li>
+            <li>CSS 的 <code>stroke</code> 属性定义矩形边框的颜色；</li>
+            <li>属性定义矩形的左侧位置，y 属性定义矩形的顶端位置</li>
+            <li>CSS 的 <code>fill-opacity</code> 属性定义填充颜色透明度，取值为0-1；</li>
+            <li>CSS 的 <code>stroke-opacity</code> 属性定义轮廓颜色的透明度，取值为0-1；</li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="500px" height="250px" version="1.1">
+            <rect x="50" y="50" width="300" height="150"
+                  style="fill:rgb(145,245,255);stroke-width:5;stroke:#EE799F;fill-opacity:0.9;stroke-opacity:0.9;"/>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>使用SVG绘制多边形</p>
+        <ul>
+            <li>&lt;polygon&gt; 标签用来创建含有不少于三个边的图形，也就是多边形，多边形是由直线组成，其形状是"封闭"的；</li>
+            <li>points 属性定义多边形每个角的 x 和 y 坐标，x和y之间用逗号隔开，坐标与坐标之间用空格隔开；</li>
+            <li>
+                <p>fill-rule属性用于指定使用哪一种算法去判断画布上的某区域是否属于该图形“内部”，它有三个有效值nonzero（非零） 、evenodd（奇偶）、inherit，默认为nonzero；</p>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="250px" height="250px">
+            <polygon points="100,10 40,180 190,60 10,60 160,180"
+                     style="fill:#B4EEB4;stroke:#DB7093   ;stroke-width:3;fill-rule:nonzero;"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="250px" height="250px">
+            <polygon points="100,10 40,180 190,60 10,60 160,180"
+                     style="fill:#B4EEB4;stroke:#DB7093   ;stroke-width:3;fill-rule:evenodd;"/>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>SVG模糊效果</p>
+        <ul>
+            <li>
+                <code>&lt;filter&gt;</code>元素id属性定义一个滤镜的唯一名称；</li>
+            <li>
+                <code>&lt;feGaussianBlur&gt;</code>元素定义模糊效果；</li>
+            <li>
+                <code>in="SourceGraphic"</code>这个部分定义了由整个图像创建效果；</li>
+            <li>
+                <code>stdDeviation</code>属性定义模糊量；</li>
+            <li>
+                <code>&lt;rect&gt;</code>元素的滤镜属性用来把元素链接到"f1"滤镜，这里是一个矩形；
+            </li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+                <filter id="keai" x="0" y="0">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+                </filter>
+            </defs>
+            <rect width="150" height="100" stroke="red" stroke-width="5"
+                  fill="#7EC0EE" filter="url(#keai)" />
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>SVG 阴影</p>
+        <ul>
+            <li>&lt;defs&gt;元素定义短并含有特殊元素（如滤镜）定义；</li>
+            <li>&lt;filter&gt;标签用来定义SVG滤镜，&lt;filter&gt;标签使用必需的id属性来定义向图形应用哪个滤镜；</li>
+            <li>&lt;feOffset&gt;元素是用于创建阴影效果；</li>
+            <li>&lt;feColorMatrix&gt;过滤器是用来转换偏移的图像使之更接近黑色的颜色；</li>
+            <li>&lt;feGaussianBlur&gt;元素的stdDeviation属性定义了模糊量；</li>
+            <li>&lt;feBlend&gt;SVG 滤镜。使用不同的混合模式把两个对象合成在一起。</li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="250px" height="250px">
+            <defs>
+                <filter id="myImg" x="0" y="0" width="200%" height="200%">
+                    <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10" />
+                    <feColorMatrix result = "matrixOut" in = "offOut" type = "matrix" values = "0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+                    <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+                    <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                </filter>
+            </defs>
+            <rect width="200" height="200" stroke="#90EE90" stroke-width="5" fill="#FFEFDB" filter="url(#myImg)" />
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>SVG渐变</p>
+        <ul>
+            <li>渐变是一种从一种颜色到另一种颜色的平滑过渡。另外，可以把多个颜色的过渡应用到同一个元素上；</li>
+            <li>&lt;linearGradient&gt;元素用于定义线性渐变，&lt;linearGradient&gt;标签必须嵌套在&lt;defs&gt;的内部；</li>
+            <li>&lt;linearGradient&gt;标签的id属性可为渐变定义一个唯一的名称；</li>
+            <li>&lt;linearGradient&gt;标签的X1，X2，Y1，Y2属性定义渐变开始和结束位置；</li>
+            <li>渐变的颜色范围可由两种或多种颜色组成，每种颜色通过一个&lt;stop&gt;标签来规定，offset属性用来定义渐变的开始和结束位置；</li>
+        </ul>
+    </div>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="250px">
+            <defs>
+                <linearGradient id="yuan" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgb(238,210,238);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgb(255,250,205);stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <ellipse cx="200" cy="100" rx="150" ry="80" fill="url(#yuan)" />
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div><p></p></div>
+    <div></div>
+</div>
+</body>
+</html>
