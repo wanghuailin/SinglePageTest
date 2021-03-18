@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>svg拼图</title>
+</head>
+<body>
+<p><strong><code>&lt;g&gt;</code>标签</strong><br> <code>&lt;g&gt;</code>标签用于将多个形状组成一个组（group），方便复用。</p>
+<div>
+    <svg width="300" height="100">
+        <g id="myCircle">
+            <text x="25" y="20">圆形</text>
+            <circle cx="50" cy="50" r="20"/>
+        </g>
+        <use href="#myCircle" x="100" y="0" fill="blue"/>
+        <use href="#myCircle" x="200" y="0" fill="white" stroke="blue"/>
+    </svg>
+</div>
+<div>
+    <div id="content_views" class="htmledit_views">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">transform 相对比较难理解的是 2D 的集合 matrix 。&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">这里只是对 matrix 里面的元素进行分解&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">matrix( 1 , 0 , 0 , 1 , 0 , 0 )&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">1 2 3 4 5 6&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">1. 正常值为1，定义的是 scaleX 通过设置 X 轴的值来定义缩放。值：&gt;=0&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">2. 正常值为0，定义的是 skew 定义 2D 倾斜&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">3. 正常值为0，定义的是 rotate 定义2D 旋转角度&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">4. 正常值为1，定义的是 scaleY 通过设置 Y 轴的值来定义缩放。值：&gt;=0&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">5. 正常值为0，定义的是 translateX 通过设置 X 轴的值来定义左右位移。值：任意&nbsp;</span>
+        <br style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">
+        <span style="color:rgb(63,63,63); font-family:&quot;microsoft yahei&quot;; font-size:15px">6. 正常值为0，定义的是 translateY 通过设置 Y 轴的值来定义上下位移。值：任意</span>
+    </div>
+</div>
+<div style="width: 500px; height: 500px; margin: 0 auto;border: 1px solid #eeeeee">
+    <svg width="500" height="500" preserveAspectRatio="xMidYMid meet">
+        <g>
+            <g>
+                <g transform="matrix(0.2,0,0,0.2,103,156)">
+                    <image width="1470px" height="964px" preserveAspectRatio="xMidYMid slice"
+                           xlink:href="https://cdn-cnc.17zuoye.com/ucenter/public/skin/openlogin/images/bannerBg/scene_all/img_36.png?v=2"></image>
+                </g>
+                <g transform="matrix(0.2,0,0,0.2,163,146)">
+                    <image width="123px" height="467px" preserveAspectRatio="xMidYMid slice"
+                           xlink:href="https://cdn-cnc.17zuoye.com/ucenter/public/skin/openlogin/images/bannerBg/scene_all/img_34.png?v=2"></image>
+                </g>
+                <g transform="matrix(0.2,0,0,0.2,223,176)">
+                    <image width="252px" height="496px" preserveAspectRatio="xMidYMid slice"
+                           xlink:href="https://cdn-cnc.17zuoye.com/ucenter/public/skin/openlogin/images/bannerBg/scene_all/img_33.png?v=2"></image>
+                </g>
+                <g transform="matrix(0.2,0,0,0.2,283,216)">
+                    <image width="210px" height="458px" preserveAspectRatio="xMidYMid slice"
+                           xlink:href="https://cdn-cnc.17zuoye.com/ucenter/public/skin/openlogin/images/bannerBg/scene_all/img_35.png?v=2"></image>
+                </g>
+            </g>
+        </g>
+    </svg>
+</div>
+</body>
+</html>
