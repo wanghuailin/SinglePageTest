@@ -21,10 +21,10 @@
     </div>
     <div>
         <svg width="300" height="180">
-            <line x1="0" y1="0" x2="200" y2="0" style="stroke:rgb(0,0,0);stroke-width:5" />
+            <line x1="0" y1="0" x2="200" y2="0" style="stroke:rgb(0,0,0);stroke-width:5"/>
         </svg>
         <svg width="300" height="180">
-            <polyline points="3,3 30,28 3,53 30,80" fill="none" stroke="black" />
+            <polyline points="3,3 30,28 3,53 30,80" fill="none" stroke="black"/>
         </svg>
     </div>
 </div>
@@ -108,13 +108,17 @@
         <p>SVG模糊效果</p>
         <ul>
             <li>
-                <code>&lt;filter&gt;</code>元素id属性定义一个滤镜的唯一名称；</li>
+                <code>&lt;filter&gt;</code>元素id属性定义一个滤镜的唯一名称；
+            </li>
             <li>
-                <code>&lt;feGaussianBlur&gt;</code>元素定义模糊效果；</li>
+                <code>&lt;feGaussianBlur&gt;</code>元素定义模糊效果；
+            </li>
             <li>
-                <code>in="SourceGraphic"</code>这个部分定义了由整个图像创建效果；</li>
+                <code>in="SourceGraphic"</code>这个部分定义了由整个图像创建效果；
+            </li>
             <li>
-                <code>stdDeviation</code>属性定义模糊量；</li>
+                <code>stdDeviation</code>属性定义模糊量；
+            </li>
             <li>
                 <code>&lt;rect&gt;</code>元素的滤镜属性用来把元素链接到"f1"滤镜，这里是一个矩形；
             </li>
@@ -124,11 +128,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
             <defs>
                 <filter id="keai" x="0" y="0">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
                 </filter>
             </defs>
             <rect width="150" height="100" stroke="red" stroke-width="5"
-                  fill="#7EC0EE" filter="url(#keai)" />
+                  fill="#7EC0EE" filter="url(#keai)"/>
         </svg>
     </div>
 </div>
@@ -148,13 +152,14 @@
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="250px" height="250px">
             <defs>
                 <filter id="myImg" x="0" y="0" width="200%" height="200%">
-                    <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10" />
-                    <feColorMatrix result = "matrixOut" in = "offOut" type = "matrix" values = "0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
-                    <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
-                    <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    <feOffset result="offOut" in="SourceGraphic" dx="10" dy="10"/>
+                    <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                                   values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+                    <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10"/>
+                    <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
                 </filter>
             </defs>
-            <rect width="200" height="200" stroke="#90EE90" stroke-width="5" fill="#FFEFDB" filter="url(#myImg)" />
+            <rect width="200" height="200" stroke="#90EE90" stroke-width="5" fill="#FFEFDB" filter="url(#myImg)"/>
         </svg>
     </div>
 </div>
@@ -173,11 +178,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500px" height="250px">
             <defs>
                 <linearGradient id="yuan" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:rgb(238,210,238);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgb(255,250,205);stop-opacity:1" />
+                    <stop offset="0%" style="stop-color:rgb(238,210,238);stop-opacity:1"/>
+                    <stop offset="100%" style="stop-color:rgb(255,250,205);stop-opacity:1"/>
                 </linearGradient>
             </defs>
-            <ellipse cx="200" cy="100" rx="150" ry="80" fill="url(#yuan)" />
+            <ellipse cx="200" cy="100" rx="150" ry="80" fill="url(#yuan)"/>
         </svg>
     </div>
 </div>
@@ -193,22 +198,53 @@
     </div>
 </div>
 <div class="svgdiv">
-    <div><p></p></div>
-    <div></div>
+    <div>
+        <p>插入图片文件</p>
+        <p>上面代码中，<code>&lt;image&gt;</code>的<code>xlink:href</code>属性表示图像的来源。</p>
+    </div>
+    <div>
+        <svg viewBox="0 0 100 100" width="100" height="100">
+            <image xlink:href="./success.png" width="50%" height="50%"/>
+        </svg>
+    </div>
 </div>
-<svg viewBox="0 0 100 100" width="100" height="100">
-    <image xlink:href="./success.png" width="50%" height="50%"/>
-</svg>
-<svg width="500px" height="500px">
-    <rect x="0" y="0" width="100" height="100" fill="#feac5e">
-        <animate attributeName="x" from="0" to="500" dur="2s" repeatCount="indefinite" />
-        <animate attributeName="width" to="500" dur="2s" repeatCount="indefinite" />
-    </rect>
-</svg>
-<svg width="500px" height="500px">
-    <rect x="250" y="250" width="50" height="50" fill="#4bc0c8">
-        <animateTransform attributeName="transform" type="rotate" begin="0s" dur="10s" from="0 200 200" to="360 400 400" repeatCount="indefinite" />
-    </rect>
-</svg>
+<div class="svgdiv">
+    <div>
+        <p>动画效果</p>
+        <p>attributeName：发生动画效果的属性名。<br> from：单次动画的初始值。<br> to：单次动画的结束值。<br> dur：单次动画的持续时间。<br> repeatCount：动画的循环模式。<br>
+            可以在多个属性上面定义动画。</p>
+    </div>
+    <div>
+        <svg width="500px" height="500px">
+            <rect x="0" y="0" width="100" height="100" fill="#feac5e">
+                <animate attributeName="x" from="0" to="500" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="width" to="500" dur="2s" repeatCount="indefinite"/>
+            </rect>
+        </svg>
+    </div>
+</div>
+<div class="svgdiv">
+    <div>
+        <p>变形</p>
+        <div>
+            <code>&lt;animate&gt;</code>的transform属性不起作用，如果需要变形，就要使用标签。<br>
+            <p>上面代码中，<code>&lt;animateTransform&gt;</code>的效果为旋转（rotate），这时from和to属性值有三个数字，第一个数字是角度值，第二个值和第三个值是旋转中心的坐标。from="0
+                200 200"表示开始时，角度为0，围绕(200, 200)开始旋转；to="360 400 400"表示结束时，角度为360，围绕(400, 400)旋转。</p>
+        </div>
+    </div>
+    <div>
+        <svg width="500px" height="500px" style="border: 1px solid #333">
+            <rect x="250" y="250" width="50" height="50" fill="#4bc0c8">
+                <animateTransform attributeName="transform" type="rotate" begin="0s" dur="10s" from="0 200 200"
+                                  to="360 400 400" repeatCount="indefinite"/>
+            </rect>
+            <rect x="250" y="250" width="50" height="50" fill="#4bc0c8"></rect>
+            <circle cx="200" cy="200" r="10" fill="#f0ddff"/>
+            <text x="200" y="200">200*200</text>
+            <circle cx="400" cy="400" r="10" fill="#f0ddff"/>
+            <text x="400" y="400">400*400</text>
+        </svg>
+    </div>
+</div>
 </body>
 </html>
