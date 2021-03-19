@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用svga动画</title>
+    <script src="https://cdn.jsdelivr.net/npm/svgaplayerweb@2.3.1/build/svga.min.js"></script>
+</head>
+<body>
+<div id="demoCanvas" style="width: 500px;height: 500px"></div>
+<script>
+    var player = new SVGA.Player('#demoCanvas');
+    var parser = new SVGA.Parser('#demoCanvas'); // Must Provide same selector eg:#demoCanvas IF support IE6+
+    parser.load('Beam.svga', function (videoItem) {
+        player.setVideoItem(videoItem);
+        player.startAnimation();
+    })
+</script>
+</body>
+</html>
