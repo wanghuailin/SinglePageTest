@@ -9,6 +9,32 @@
             left: 12%;
             top: 25%;
             z-index: 2;
+            transition: all 1s ease-out;
+            animation: lefttop 1s ease 0.8s infinite, leftleft 1s ease;
+        }
+
+        @keyframes lefttop {
+            0% {
+                top: 25%;
+            }
+            25% {
+                top: 27%;
+            }
+            75% {
+                top: 23%;
+            }
+            100% {
+                top: 25%;
+            }
+        }
+
+        @keyframes leftleft {
+            0% {
+                left: 14%;
+            }
+            100% {
+                left: 12%;
+            }
         }
 
         .middle {
@@ -17,6 +43,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
+            transition: all 1s ease-out;
         }
 
         .right {
@@ -24,8 +51,35 @@
             left: 48%;
             top: 25%;
             z-index: 2;
+            transition: all 1s ease-out;
+            animation: righttop 1s ease 0.8s infinite, rightleft 1s ease;
+        }
+
+        @keyframes righttop {
+            0% {
+                top: 25%;
+            }
+            25% {
+                top: 27%;
+            }
+            75% {
+                top: 23%;
+            }
+            100% {
+                top: 25%;
+            }
+        }
+
+        @keyframes rightleft {
+            0% {
+                left: 44%;
+            }
+            100% {
+                left: 48%;
+            }
         }
     </style>
+    <script src="../Script/jquery-1.10.2.js"></script>
 </head>
 <body>
 <div style="width: 300px;height: 300px;margin: 0 auto;border: 1px solid gainsboro;position: relative">
