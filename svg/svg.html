@@ -258,5 +258,75 @@
         </svg>
     </div>
 </div>
+<div class="svgdiv">
+    <div>
+        <p>生成环形进度条</p>
+        <div>
+            <p><strong>stroke-dasharray</strong></p>
+            <p>官方解释为可控制用来描边的点划线的图案范式，即定义虚线每段长度即虚线间间隔，数与数之间用逗号或者空白隔开，指定短划线和缺口的长度。如果提供了奇数个值，则这个值的数列重复一次，从而变成偶数个值。</p>
+            <p><strong>stroke-dashoffset</strong></p>
+            <p>标识的是整个路径的偏移值。</p>
+            <p><code>stroke-dashoffset</code>则指定了dash模式到路径开始的距离，就是虚线绘制的起点距路径开始的距离</p>
+        </div>
+    </div>
+    <div>
+        <style>
+            /*生成环形进度条*/
+            .svg {
+                transform: rotate(-90deg);
+            }
+
+            .progress {
+                animation: rotate 1500ms linear both;
+            }
+
+            @keyframes rotate {
+                from {
+                    stroke-dashoffset: 471px;
+                }
+                to {
+                    stroke-dashoffset: 0px;
+                }
+            }
+        </style>
+        <svg width="150px" height="150px" class="svg">
+            <circle r="70" cy="75" cx="75" stroke-width="8" stroke="#EAEFF4" stroke-linejoin="round"
+                    stroke-linecap="round" fill="none"/>
+            <circle class="progress" r="70" cy="75" cx="75" stroke-width="8" stroke="#1593FF" stroke-linejoin="round"
+                    stroke-linecap="round" fill="none" stroke-dashoffset="0px" stroke-dasharray="471px"/>
+        </svg>
+        <style>
+            path{
+                stroke-dasharray: 1000;
+                stroke-dashoffset: 1000;
+                animation: draw 5s ease 3;
+            }
+            @keyframes draw{
+                0%{
+                    stroke-dashoffset: 1000;
+                }
+                100%{
+                    stroke-dashoffset: 0;
+                }
+            }
+        </style>
+        <svg width="500px" height="500px">
+            <path d="M153 334
+C153 334 151 334 151 334
+C151 339 153 344 156 344
+C164 344 171 339 171 334
+C171 322 164 314 156 314
+C142 314 131 322 131 334
+C131 350 142 364 156 364
+C175 364 191 350 191 334
+C191 311 175 294 156 294
+C131 294 111 311 111 334
+C111 361 131 384 156 384
+C186 384 211 361 211 334
+C211 300 186 274 156 274"
+                  style="fill:white;stroke:red;stroke-width:2"/>
+        </svg>
+    </div>
+</div>
 </body>
 </html>
