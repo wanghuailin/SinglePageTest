@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>svg十六进制</title>
+    <style>
+        .left {
+            position: absolute;
+            left: 12%;
+            top: 25%;
+            z-index: 2;
+        }
+
+        .middle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .right {
+            position: absolute;
+            left: 48%;
+            top: 25%;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
-<div style="width: 500px;height: 500px;margin: 0 auto;border: 1px solid gainsboro">
-    <img src="./hex/left.svg">
-    <img src="./hex/middle.svg">
-    <img src="./hex/right.svg">
+<div style="width: 300px;height: 300px;margin: 0 auto;border: 1px solid gainsboro;position: relative">
+    <img src="./hex/left.svg" width="100px" height="100px" class="left">
+    <img src="./hex/middle.svg" width="300px" height="300px" class="middle">
+    <img src="./hex/right.svg " width="100px" height="100px" class="right">
 </div>
 </body>
 </html>
