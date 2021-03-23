@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--360 使用Google Chrome Frame-->
+    <meta name="renderer" content="webkit">
+    <!--移动设备-->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>树状结构</title>
+    <link href="https://static2.hexfuture.net/buildCSS/basev105.css" rel="stylesheet" type="text/css">
+    <script src="https://static2.hexfuture.net/js/tools/vue.min.js"></script>
+    <style>
+        div div {
+            padding-left: 50px;
+        }
+
+        p {
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            border: 1px solid white;
+        }
+
+        p:hover {
+            border: 1px solid #333;
+        }
+
+        p.all {
+            background-color: cornflowerblue !important;
+            color: aliceblue !important;
+        }
+
+        p.half {
+            background-color: lavender;
+        }
+    </style>
+</head>
+<body>
+<main vue-id="tree" style="padding: 50px">
+    <p>全选</p>
+    <div v-for="(oneNode1, index1) in tree">
+        <p v-text="index1 + ' ' + oneNode1.name" @click="select(1,index1)" :class="oneNode1.state"></p>
+        <div v-for="(oneNode2, index2) in oneNode1.childNodes">
+            <p v-text="index1 + '.' + index2 + ' ' + oneNode2.name" @click="select(2,index1,index2)"
+               :class="oneNode2.state"></p>
+            <div v-for="(oneNode3, index3) in oneNode2.childNodes">
+                <p v-text="index1 + '.' + index2 +'.'+index3+ ' ' + oneNode3.name"
+                   @click="select(3,index1,index2,index3)" :class="oneNode3.state"></p>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    let tree = [
+        {
+            name: '第一层节点',
+            state: "", //all,half
+            childNodes: [
+                {
+                    name: '第二层节点', state: "",
+                    childNodes: [
+                        {name: '第三层节点', state: ""},
+                        {name: '第三层节点', state: ""},
+                        {name: '第三层节点', state: ""},
+                        {name: '第三层节点', state: ""},
+                        {name: '第三层节点', state: ""},
+                        {name: '第三层节点', state: ""},
+                    ]
+                },
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""}
+            ]
+        },
+        {
+            name: '第一层节点',
+            state: "", //all,half
+            childNodes: [
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+            ]
+        },
+        {
+            name: '第一层节点',
+            state: "", //all,half
+            childNodes: [
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+                {name: '第二层节点', state: ""},
+            ]
+        },
+    ]
+
+    let vue_tree = new Vue({
+        el: '[vue-id="tree"]',
+        data: {
+            tree: []
+        },
+        mounted: function () {
+            this.tree = tree;
+        },
+        methods: {
+            select(grade, index1, index2, index3) {
+                let item;
+                if (grade == 1) {
+                    item = this.tree[index1]
+                }
+                if (grade == 2) {
+                    item = this.tree[index1].childNodes[index2]
+                }
+                if (grade == 3) {
+                    item = this.tree[index1].childNodes[index2].childNodes[index3]
+                }
+
+                item.state = item.state == "all" ? "" : "all";
+                this.checked(grade, index1, index2, index3);
+            },
+            checked(grade, index1, index2, index3) {
+                if (grade == 1) {
+                    this.lower(this.tree[index1]);
+                }
+                if (grade == 2) {
+                    this.lower(this.tree[index1].childNodes[index2]);
+                    this.upper(index1, index2, index3);
+                }
+                if (grade == 3) {
+                    this.upper(index1, index2, index3);
+                }
+            },
+            lower(item) {
+                let _this = this;
+                if (item.childNodes && item.childNodes.length > 0) {
+                    item.childNodes.forEach(function (child) {
+                        child.state = item.state;
+                        _this.lower(child);
+                    })
+                }
+            },
+            upper() {
+
+            },
+        }
+    });
+</script>
+</body>
+</html>
