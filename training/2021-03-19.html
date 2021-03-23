@@ -41,13 +41,17 @@
 <main vue-id="tree" style="padding: 50px">
     <p>全选</p>
     <div v-for="(oneNode1, index1) in tree">
-        <p v-text="index1 + ' ' + oneNode1.name" @click="select(1,index1)" :class="oneNode1.state"></p>
+        <p v-text="index1 + ' ' + oneNode1.name" @click="select([index1])" :class="oneNode1.state"></p>
         <div v-for="(oneNode2, index2) in oneNode1.childNodes">
-            <p v-text="index1 + '.' + index2 + ' ' + oneNode2.name" @click="select(2,index1,index2)"
+            <p v-text="index1 + '.' + index2 + ' ' + oneNode2.name" @click="select([index1,index2])"
                :class="oneNode2.state"></p>
             <div v-for="(oneNode3, index3) in oneNode2.childNodes">
                 <p v-text="index1 + '.' + index2 +'.'+index3+ ' ' + oneNode3.name"
-                   @click="select(3,index1,index2,index3)" :class="oneNode3.state"></p>
+                   @click="select([index1,index2,index3])" :class="oneNode3.state"></p>
+                <div v-for="(oneNode4, index4) in oneNode3.childNodes">
+                    <p v-text="index1 + '.' + index2 +'.'+index3+ '.'+index4 + ' ' + oneNode4.name"
+                       @click="select([index1,index2,index3,index4])" :class="oneNode4.state"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -61,7 +65,17 @@
                 {
                     name: '第二层节点', state: "",
                     childNodes: [
-                        {name: '第三层节点', state: ""},
+                        {
+                            name: '第三层节点', state: "",
+                            childNodes: [
+                                {name: '第四层节点', state: "",},
+                                {name: '第四层节点', state: ""},
+                                {name: '第四层节点', state: ""},
+                                {name: '第四层节点', state: ""},
+                                {name: '第四层节点', state: ""},
+                                {name: '第四层节点', state: ""},
+                            ]
+                        },
                         {name: '第三层节点', state: ""},
                         {name: '第三层节点', state: ""},
                         {name: '第三层节点', state: ""},
@@ -111,32 +125,16 @@
             this.tree = tree;
         },
         methods: {
-            select(grade, index1, index2, index3) {
-                let item;
-                if (grade == 1) {
-                    item = this.tree[index1]
-                }
-                if (grade == 2) {
-                    item = this.tree[index1].childNodes[index2]
-                }
-                if (grade == 3) {
-                    item = this.tree[index1].childNodes[index2].childNodes[index3]
+            select(idList) {
+                let item = this.tree[idList[0]];
+                for (let i = 1; i < idList.length; i++) {
+                    item = item.childNodes[idList[i]];
                 }
 
                 item.state = item.state == "all" ? "" : "all";
-                this.checked(grade, index1, index2, index3);
-            },
-            checked(grade, index1, index2, index3) {
-                if (grade == 1) {
-                    this.lower(this.tree[index1]);
-                }
-                if (grade == 2) {
-                    this.lower(this.tree[index1].childNodes[index2]);
-                    this.upper(this.tree[index1], []);
-                }
-                if (grade == 3) {
-                    this.upper(this.tree[index1].childNodes[index2], [index1]);
-                }
+
+                this.lower(item);
+                this.upper(item, idList);
             },
             lower(item) {
                 let _this = this;
@@ -147,7 +145,7 @@
                     })
                 }
             },
-            upper(item, parentId) {
+            upper(item, idList) {
                 let _this = this;
                 if (item.childNodes && item.childNodes.length > 0) {
                     let count = item.childNodes.filter(function (child) {
@@ -163,9 +161,14 @@
                     } else if (count == 0 && count2 == 0) {
                         item.state = "";
                     }
-                    if (parentId && parentId.length > 0) {
-                        _this.upper(_this.tree[parentId[0]], []);
+                }
+                idList.pop();
+                if (idList && idList.length > 0) {
+                    let item = this.tree[idList[0]];
+                    for (let i = 1; i < idList.length; i++) {
+                        item = item.childNodes[idList[i]];
                     }
+                    _this.upper(item, idList);
                 }
             },
         }
