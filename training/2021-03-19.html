@@ -125,6 +125,7 @@
             this.tree = tree;
         },
         methods: {
+            //选择效果
             select(idList) {
                 let item = this.tree[idList[0]];
                 for (let i = 1; i < idList.length; i++) {
@@ -136,6 +137,7 @@
                 this.lower(item);
                 this.upper(item, idList);
             },
+            //向下递归
             lower(item) {
                 let _this = this;
                 if (item.childNodes && item.childNodes.length > 0) {
@@ -145,6 +147,7 @@
                     })
                 }
             },
+            //向上递归
             upper(item, idList) {
                 let _this = this;
                 if (item.childNodes && item.childNodes.length > 0) {
