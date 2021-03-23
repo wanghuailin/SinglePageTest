@@ -132,10 +132,10 @@
                 }
                 if (grade == 2) {
                     this.lower(this.tree[index1].childNodes[index2]);
-                    this.upper(index1, index2, index3);
+                    this.upper(this.tree[index1], [index1]);
                 }
                 if (grade == 3) {
-                    this.upper(index1, index2, index3);
+                    this.upper(this.tree[index1].childNodes[index2], [index2, index1]);
                 }
             },
             lower(item) {
@@ -147,8 +147,20 @@
                     })
                 }
             },
-            upper() {
-
+            upper(item, parentId) {
+                let _this = this;
+                if (item.childNodes && item.childNodes.length > 0) {
+                    let count = item.childNodes.filter(function (child) {
+                        return child.state == "all";
+                    }).length;
+                    if (count == item.childNodes.length) {
+                        item.state = "all";
+                    } else if (count > 0) {
+                        item.state = "half";
+                    } else {
+                        item.state = "";
+                    }
+                }
             },
         }
     });
