@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>clip-path裁切</title>
+</head>
+<body>
+<ul>
+    <li>使用clip-path要从同一个方向绘制，如果顺时针绘制就一律顺时针，逆时针就一律逆时针，因为polygon是一个连续的线段，若线段彼此有交集，面积区域就会有相减的状况发生（当然如果这是你要的效果就无妨了）。</li>
+    <li>如果绘制时采用「比例」的方式绘制，长宽就必须要先行设定，不然有可能绘制出来的长宽和我们想像的就会有落差，使用「像素」绘制就没有这种问题。</li>
+</ul>
+<div>
+    <style>
+        .circle {
+            width: 100px;
+            height: 100px;
+            background: #0cc;
+            clip-path: circle(50% at 50% 50%);
+        }
+    </style>
+    <p>圆形circle（半径at圆心坐标）</p>
+    <div class="circle"></div>
+
+    <style>
+        .inset {
+            width: 100px;
+            height: 100px;
+            background: #99f;
+            clip-path: inset(10px 20px 30px 10px round 20px 5px 50px 0);
+        }
+    </style>
+    <p>内置矩形inset（上右下左的边距round上右下左圆角）</p>
+    <div class="inset"></div>
+
+    <style>
+        .a{
+            width:100px;
+            height:87px;
+            background:#c00;
+            clip-path:polygon(0% 100%, 50%  0%,100% 100%);
+        }
+    </style>
+    <p>正三角形</p>
+    <div class="a"></div>
+</div>
+</body>
+</html>
