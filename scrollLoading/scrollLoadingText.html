@@ -38,11 +38,21 @@
         .topWrap > .progressBarWrap > .progressBar > .animation {
             display: block;
             height: 100%;
-            width: 80%;
+            width: 0%;
             border-radius: 28px;
-            /*线性渐变*/
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
-            animation: animationEffect 1.2s infinite;
+            background: #fff;
+            animation: animationEffect 2s infinite;
+        }
+
+        @-webkit-keyframes animationEffect {
+            0% {
+                opacity: .3;
+                width: 0%;
+            }
+            100% {
+                opacity: 0;
+                width: 100%;
+            }
         }
 
         #text {
@@ -100,7 +110,7 @@
             }
             document.body.querySelector('.progressBar').style.width = loading.percent + '%';
             document.body.querySelector('.percent').innerHTML = loading.percent + '%';
-        }, 50)
+        }, 100)
     }
 
     function hideLoading() {
@@ -140,7 +150,7 @@
         hideLoading();
         document.getElementById("text").style.top = textTop - 30 * step + "px";
         showLoading();
-    }, 2000)
+    }, 5000)
 </script>
 </body>
 </html>
