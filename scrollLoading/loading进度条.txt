@@ -1,0 +1,39 @@
+<!--loading层-->
+<div id="loading" style="display: none">
+    <div class="center">
+        <div class="topWrap">
+            <div class="progressBarWrap">
+                <i class="progressBar">
+                    <i class="animationEffect"></i>
+                </i>
+            </div>
+            <span class="percent">...</span>
+        </div>
+        <p class="bottomWrap loadingText" >加载中…</p>
+    </div>
+</div>
+
+
+.topWrap
+  display: flex
+  justify-content: center
+  height: 26px
+  align-items: center
+  .progressBarWrap
+    border-radius: 28px
+    border: 1px solid rgba(255, 255, 255, 0.4)
+    .progressBar
+      display: block
+      height: 100%
+      width: 0
+      background: rgba(255, 255, 255, 0.8)
+      border-radius: 28px
+      transition: all .5s ease
+      .animationEffect
+        &.animation
+          display: block
+          height: 100%
+          width: 80%
+          border-radius: 28px
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6))
+          animation: animationEffect 1.2s infinite
