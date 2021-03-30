@@ -78,7 +78,7 @@
         </div>
     </div>
     <div id="text" style="line-height: 30px;text-align: center;">
-        <p><i>(加载中) </i> 统计习题数量</p>
+        <p class="active"><i>(加载中) </i> 统计习题数量</p>
         <p><i>(等待中) </i> 统计习题分数</p>
         <p><i></i>加载图片</p>
         <p><i></i>加载表格</p>
@@ -125,6 +125,7 @@
     showLoading();
     let stepInterval = setInterval(function () {
         document.getElementById("text").children[step].children[0].innerHTML = "(已完成)";
+        document.getElementById('text').children[step].className = "";
         step++;
         if (step >= 5) {
             clearInterval(stepInterval);
@@ -132,6 +133,7 @@
             document.getElementById('loading').style.display = 'none';
         }
         document.getElementById("text").children[step].children[0].innerHTML = "(加载中)";
+        document.getElementById('text').children[step].className = 'active';
         if (document.getElementById("text").children[step + 1]) {
             document.getElementById("text").children[step + 1].children[0].innerHTML = "(等待中)";
         }
