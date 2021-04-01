@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索关键字高亮显示</title>
+    <script src="Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<input type="text" id="kw">
+<button id="btn">搜索</button>
+<div id="content">
+    <p>题库【北师版】<span><i>数学</i></span>七年级下册第二届</p>
+    <p>题库【人教版】数学七年级下册-期末测验</p>
+    <p>题库【北师版】期末数学七年级下册第二届评优大赛</p>
+    <p>演练-数学七年级下册-第二届评优大赛</p>
+</div>
+<script>
+    $("#btn").click(function () {
+        let keyword = $("#kw").val();
+        clearword(document.getElementById("content"));
+        colorword(document.getElementById("content"), keyword);
+    })
+
+    function colorword(node, keyword) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            var childNode = node.childNodes[i];
+            if (childNode.nodeType === 1) {
+                let re = new RegExp('(' + keyword + ')', 'g');
+                childNode.innerHTML = childNode.innerHTML.replace(re, '<span class="keyWord" style="color:#FF7707">$1</span>');
+            }
+        }
+    }
+
+    function clearword(node) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+            var childNode = node.childNodes[i];
+            if (childNode.nodeType === 1 && $(childNode).find(".keyWord").length > 0) {
+                let re = $(childNode).find(".keyWord").text();
+                childNode.innerHTML = childNode.innerHTML.replace('<span class="keyWord" style="color:#FF7707">' + re + '</span>', re);
+            }
+        }
+    }
+</script>
+</body>
+</html>
