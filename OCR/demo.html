@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--360 使用Google Chrome Frame-->
+    <meta name="renderer" content="webkit">
+    <!--移动设备-->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <!--小图标-->
+    <title>OCR-DEMO</title>
+    <script src="./a_jquery-1.10.2.js"></script>
+    <script src="./HexEditor.js"></script>
+    <style>
+        main {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+        }
+
+        div.left {
+            width: 50%;
+            position: relative;
+        }
+
+        div.left > div.shadows {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        div.left > div.shadows > div {
+            position: absolute;
+            background-color: rgba(0, 0, 0, .4);
+        }
+
+        div.left > div.imgBox {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        div.left > div.imgBox > img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0 auto;
+        }
+
+        div.right {
+            flex: 1;
+            background-color: lightgray;
+            padding: 10px;
+        }
+
+        div.right > textarea {
+            padding: 20px;
+            width: 100%;
+            height: 300px;
+            background-color: black;
+            color: aliceblue;
+        }
+
+        div.right button {
+            margin: 10px;
+        }
+
+        div.right button.active {
+            background-color: cornflowerblue;
+        }
+    </style>
+    <script>
+        var $_GET = (function () {
+            var url = window.document.location.href.toString();
+            var u = url.split(".html?");
+            if (typeof (u[1]) == "string") {
+                u = u[1].split("&");
+                var get = {};
+                for (var i in u) {
+                    var j = u[i].split("=");
+                    get[j[0]] = j[1];
+                }
+                return get;
+            } else {
+                return {};
+            }
+        })();
+    </script>
+</head>
+<body>
+<main>
+    <div class="left">
+        <div id="shadows" class="shadows"
+             onmousedown="mouseShadows('down')" onmousemove="mouseShadows('move')" onmouseup="mouseShadows('up')">
+            <div id="shadow1"></div>
+            <div id="shadow2"></div>
+            <div id="shadow3"></div>
+            <div id="shadow4"></div>
+        </div>
+        <div class="imgBox">
+            <img id="img" src="#" onload="imgLoaded()">
+        </div>
+    </div>
+    <div class="right">
+        <div id="list" class="list"></div>
+        <div id="editorArea" class="editorArea"></div>
+        <button onclick="getExeJson();">获取 题Json</button>
+        <!--        <button onclick="changeET('Choice');">变身成选择题</button>-->
+        <textarea></textarea>
+    </div>
+</main>
+<script>
+    let dom_shadow1 = document.body.querySelector('#shadow1')
+    let dom_shadow2 = document.body.querySelector('#shadow2')
+    let dom_shadow3 = document.body.querySelector('#shadow3')
+    let dom_shadow4 = document.body.querySelector('#shadow4')
+    let $_shadow1 = $(dom_shadow1)
+    let $_shadow2 = $(dom_shadow2)
+    let $_shadow3 = $(dom_shadow3)
+    let $_shadow4 = $(dom_shadow4)
+
+    let $_editorArea = $('#editorArea')
+    let $_list = $('#list')
+    let exeList = []
+
+    var E = window.HexEditor
+    let editor
+
+    let imgUrl
+
+    let dom_img = getImgUrl()
+
+    let imgW, imgH
+    let imgOW, imgOH
+
+    function getImgUrl() {
+        imgUrl = $_GET['img'];
+        imgUrl = imgUrl === undefined ? './img.jpeg' : decodeURIComponent(imgUrl)
+        document.body.querySelector('#img').setAttribute('src', imgUrl)
+        return document.body.querySelector('#img')
+    }
+
+    function imgLoaded() {
+        if (imgUrl === undefined) return
+        console.log(event)
+        var image = new Image()
+        image.src = imgUrl
+        image.onload = function (e) {
+            imgOW = image.width
+            imgOH = image.height
+
+            console.log(imgOW)
+        }
+        imgW = dom_img.getBoundingClientRect().width
+        imgH = dom_img.getBoundingClientRect().height
+        let dom_shadows = document.body.querySelector('#shadows')
+        dom_shadows.setAttribute('style', 'width: ' + imgW + 'px;height: ' + imgH + 'px')
+    }
+
+    let isDown = false
+
+    function mouseShadows(eventName) {
+        if (eventName === 'move' && !isDown) return false
+
+        let e = window.event
+
+        let x = e.pageX
+        let y = e.pageY
+
+        let xy = getXY(x, y)
+
+        switch (eventName) {
+            case 'down': {
+                isDown = true
+                removeAllAttr()
+                $_shadow1.css('left', 0).css('top', 0).css('right', 0).css('bottom', imgH - xy.y)
+                $_shadow2.css('left', 0).css('top', xy.y).css('right', imgW - xy.x).css('bottom', imgH - xy.y)
+                $_shadow3.css('left', xy.x).css('top', xy.y).css('right', 0).css('bottom', imgH - xy.y)
+                $_shadow4.css('left', 0).css('top', xy.y).css('right', 0).css('bottom', 0)
+                scope.leftTop.x = xy.x
+                scope.leftTop.y = xy.y
+                break;
+            }
+            case 'move': {
+                $_shadow2.css('bottom', imgH - xy.y)
+                $_shadow3.css('left', xy.x).css('bottom', imgH - xy.y)
+                $_shadow4.css('top', xy.y)
+                break
+            }
+            case 'up': {
+                isDown = false
+                $_shadow2.css('bottom', imgH - xy.y)
+                $_shadow3.css('left', xy.x).css('bottom', imgH - xy.y)
+                $_shadow4.css('top', xy.y)
+                scope.rightBottom.x = xy.x
+                scope.rightBottom.y = xy.y
+                outPutScope();
+                break
+            }
+        }
+    }
+
+    function getXY(x, y) {
+        let xy = { x: 0, y: 0 }
+
+        let imgX = dom_img.getBoundingClientRect().x
+        let imgY = dom_img.getBoundingClientRect().y
+
+        xy.x = x - imgX
+        xy.y = y - imgY
+
+        return xy
+    }
+
+    function removeAllAttr() {
+        for (let oneChild of document.body.querySelector('#shadows').children) {
+            oneChild.removeAttribute('style')
+        }
+    }
+
+    let scope = {
+        leftTop: { x: 0, y: 0 },
+        rightBottom: { x: 0, y: 0 }
+    }
+
+    function outPutScope() {
+        console.log(scope)
+        scope.leftTop.x = scope.leftTop.x / imgW * imgOW
+        scope.leftTop.y = scope.leftTop.y / imgH * imgOH
+        scope.rightBottom.x = scope.rightBottom.x / imgW * imgOW
+        scope.rightBottom.y = scope.rightBottom.y / imgH * imgOH
+        let resourceid = $_GET['id'] === undefined
+            ? imgUrl.split('/')[imgUrl.split('/').length - 1].split('=')[1] : $_GET['id'];
+        $.ajax({
+            url: '//exerciseocr.hexfuture.net/getWordByPoint',
+            method: 'GET',
+            data: {
+                resourceid: resourceid,
+                leftup: parseInt(scope.leftTop.x) + ',' + parseInt(scope.leftTop.y),
+                rightdown: parseInt(scope.rightBottom.x) + ',' + parseInt(scope.rightBottom.y)
+            },
+            success: function (data) {
+                if (!Array.isArray(data)) data = [data]
+                $_list[0].innerHTML = ''
+                $.each(data, function (i, el) {
+                    $_list.append($(`<button data-index="${i}">第${i + 1}题 ${el.ExerciseType}</button>`))
+                    console.log(transform(el))
+                    exeList.push(transform(el))
+                })
+                changeEditorArea($(exeList[0].EditorContent), exeList[0].ET, 0)
+            }
+        });
+    }
+
+    function transform(json) {
+        function createHexId() {
+            let hexId = '';
+            for (let i = 0; i < 8; i++) {
+                hexId += (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+            }
+            return hexId;
+        }
+
+        if (!json.ET) return false
+        json.EditorContent = ''
+        switch (json.ET) {
+            case 'Choice': {
+                //()
+                json.ExerciseSubject = json.ExerciseSubject.replace(/\(\)/g, '<span contenteditable="false" unselectable="on">(&emsp;&emsp;)</span>')
+                json.EditorContent += `<p hexid="${createHexId()}">${json.ExerciseSubject}</p>`
+                $.each(json.AnswersOptions, (i, el) => {
+                    const optionIndex = String.fromCharCode('A'.charCodeAt(0) + i) + '.';
+                    json.EditorContent +=
+                        `<p hexid="${createHexId()}"><span class="h-e-option" contenteditable="false" unselectable="on"><input type="checkbox"><span>${optionIndex}</span></span>${el}</p>`
+                })
+                break
+            }
+            case 'FillBlank': {
+                json.ExerciseSubject = json.ExerciseSubject.replace(/{#blank#}[0-9]{#\/blank#}/g, '<span blankindex="1" contenteditable="false" unselectable="on">__1__</span>')
+                json.EditorContent += `<p hexid="${createHexId()}">${json.ExerciseSubject}</p>`
+                break
+            }
+            case 'Subjective': {
+                json.EditorContent += `<p hexid="${createHexId()}">${json.ExerciseSubject}</p>`
+                break
+            }
+        }
+        return json
+    }
+
+    function changeEditorArea($_content, et, i) {
+        $(`button[data-index]`).removeClass('active')
+        $(`button[data-index="${i}"]`).addClass('active')
+        $_editorArea[0].innerHTML = ''
+        $_editorArea.append($_content)
+        editor = new E('#editorArea')
+        editor.config.et = et
+        editor.config.uploadImgServer = '//cms.hexfuture.net/'
+        editor.config.ssotoken = '710174871018F99507E2875BFF0EDC8971541AFDB2940481DA81E57D4DB2C2C5D518C1010712F09D99C7C8E4CA3737245A67C5420AF45B3BCEF01589D18E611742EC8CABB310F5DA62D54082FDA596CA0153FD924BD3F0345127D5E92764BCD308609D19B9D26C244BDA1B3886A47ED081E8FED9DB7D8BC2'
+        editor.create()
+    }
+
+    function getExeJson() {
+        document.body.querySelector('textarea').value =
+            JSON.stringify(editor.getExeJson())
+                .replace(/",/g, `",\n`)
+                .replace(/],/g, `",\n`)
+                .replace(/:\[/g, `:\n[`)
+
+    }
+
+    function changeET(et) {
+        $_editorArea[0].innerHTML = editor.getHtml()
+        editor = new E('#editorArea')
+        editor.config.et = et
+        editor.config.uploadImgServer = '//cms.hexfuture.net/'
+        editor.config.ssotoken = '710174871018F99507E2875BFF0EDC8971541AFDB2940481DA81E57D4DB2C2C5D518C1010712F09D99C7C8E4CA3737245A67C5420AF45B3BCEF01589D18E611742EC8CABB310F5DA62D54082FDA596CA0153FD924BD3F0345127D5E92764BCD308609D19B9D26C244BDA1B3886A47ED081E8FED9DB7D8BC2'
+        editor.create()
+    }
+
+    $(document.body).on('click', 'button[data-index]', function (e) {
+        document.body.querySelector('textarea').value = ''
+        let index = parseInt($(this).attr('data-index'))
+        changeEditorArea($(exeList[index].EditorContent), exeList[index].ET, index)
+    })
+
+</script>
+</body>
+</html>
