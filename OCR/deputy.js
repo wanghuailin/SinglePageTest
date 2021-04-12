@@ -1,4 +1,3 @@
-import $ from "jquery"
 import tools from "../tools/tools"
 import {apiConfig} from "../apiConfig"
 
