@@ -74,12 +74,12 @@ let deputy = {
                 console.log(imgOW);
 
                 // 图片box的宽高
-                let imgBoxW = $imgBox[0].getBoundingClientRect().width
-                let imgBoxH = $imgBox[0].getBoundingClientRect().height
+                let imgBoxW = $imgBox[0].getBoundingClientRect().width;
+                let imgBoxH = $imgBox[0].getBoundingClientRect().height;
 
                 //图片box的左边距
-                let imgBoxX = $deputyDiv[0].getBoundingClientRect().left
-                let imgBoxY = $deputyDiv[0].getBoundingClientRect().top
+                let imgBoxX = $deputyDiv[0].getBoundingClientRect().left;
+                let imgBoxY = $deputyDiv[0].getBoundingClientRect().top;
                 console.log(imgBoxX, imgBoxY)
 
                 // 获取鼠标点击坐标
