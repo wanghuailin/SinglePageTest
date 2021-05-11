@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑器demo</title>
+    <script src="jquery-1.10.2.js"></script>
+    <!--设置域，防止脚本跨域-->
+    <script>document.domain = "hexfuture.net";</script>
+    <!--引入bootstrap-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+    <!--编辑器样式-->
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/css/style.min.css">
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/plugins/hexformula/css/formulaMath.min.css">
+    <!--编辑器脚本-->
+    <script src="//EditorStyle.hexfuture.net/Editor/lite/js/base/hexframe.min.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/lite/js/hexStudyEditor.min.js"></script>
+</head>
+<body>
+
+<div id="text" class="hex-rich-editor" hre-height="250" manual-init="true" sub-tools="off">
+    <p hexid="c0fd69af319fa8a7de467fc4adf8db11">自近代以来，日本不断发动侵略中国的战争，给中国人民带来深重的灾难。阅读下列材料，回答问题。</p>
+    <p hexid="d444f20191b2627b7ab3f59fcc514884">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;材料一：1894年11月旅顺屠城后，美国纽约《世界报》谴责日本时说：“日本是披着文明的皮而带有野蛮筋骨的怪兽。日本今已摘下文明的假面具，露出了野蛮的真面目”。</p>
+    <p hexid="d56c6bd5206ce238f256e49cbeaf7d4c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;材料二：日本右翼势力宣称：“在支那事变（指1937-1945年日本侵华战争）发展的过程中，日军……并没有掠夺领土的性质，最重要的是，日本方面并没有掠夺领土的意图。”
+    </p>
+    <p hexid="627d8ceafc410db73104d59a17879cbc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;材料三：日本军国主义发动对华侵略，最致命的错误是大大低估了中国民众内部深深蕴藏着的那种无穷无尽的力量，特别是当中华民族处于生死攸关时那种万众一心的民族凝聚力。</p>
+    <p hexid="6fc7b3716cf14e88306ea28615ac8d2d">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;材料四：1945年8月21日，《新华日报》发表社论指出。“半个世纪的愤怒，五十年的屈辱，在今天这一天宣泄清洗了……”</p>
+</div>
+<button id="textbtn">获取文本编辑器的值</button>
+<div id="textHtml"></div>
+
+<!--编辑器配置-->
+<script src="customEditor.js"></script>
+<script>
+    CustomEditor.MInit_Blank('#text', $('#text').html());
+    $(document.body).on("click", "#textbtn", function (event) {
+        //获取编辑器的值
+        var textopic = CustomEditor.EditorContent('#text');
+        $("#textHtml").html(textopic);
+    });
+</script>
+</body>
+</html>
