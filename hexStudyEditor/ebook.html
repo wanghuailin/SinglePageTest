@@ -29,13 +29,848 @@
         }
     </style>
 </head>
-<body>
-
-<div id="text" manual-init="true" sub-tools="off">
+<body class="hex-rich-editor" outline="on">
+<!--章节目录-->
+<div class="catalog">
+    <h4 class="blockHeader">
+        <i class="fa fa-list"></i>
+        <span>章节目录</span>
+    </h4>
+    <div class="listBox blockBody">
+        <div class="item">
+            <h5 class="itemClick">
+                <span class="caret" style="transform: rotate(0deg);"></span>
+                <a href="javascript:;" id="2160368550384" class="chapter">第一章</a>
+                <span class="fa fa-book"></span>
+            </h5>
+        </div>
+    </div>
 </div>
-<button id="settextbtn">设置文本编辑器的值</button>
-<button id="gettextbtn">获取文本编辑器的值</button>
-<div id="textHtml">
+<!--主体-->
+<div class="main">
+    <!--编辑器的工具栏-->
+    <div class="toolbar">
+        <div class="wrap">
+            <div class="toolsBox">
+                <a href="javascript:;" class="showMore"><i class="fa fa-ellipsis-h"></i></a>
+                <a href="javascript:;" class="sourceCode">源码</a>
+                <a href="javascript:;" id="previewPage">预览</a>
+                <button id="ebookSaveBtn" type="button" class="btn btn-primary btn-sm save-content">保存</button>
+            </div>
+            <ul class="tools"></ul>
+        </div>
+        <div class="popMenuBox">
+            <ul class="underlinepicker">
+                <!--字体选择器-->
+                <li><a href="javascript:;" style="border-bottom:1px solid #000">下划线</a></li>
+                <li><a href="javascript:;" style="border-bottom:1px dotted #000">下划点线</a></li>
+                <li><a href="javascript:;" style="border-bottom:1px dashed #000">下划虚线</a></li>
+                <li><a href="javascript:;" action="clean">清除下划线</a></li>
+            </ul>
+            <ul class="classpicker">
+                <li><a href="javascript:;" class="paragraph1" apply-range="paragraph">正文一（段落应用）</a></li>
+                <li><a href="javascript:;" class="paragraph2" apply-range="paragraph">正文二（段落应用）</a></li>
+                <li><a href="javascript:;" class="paragraph3" apply-range="paragraph">正文三（段落应用）</a></li>
+                <li><a href="javascript:;" class="paragraph1" apply-range="page">正文一（全文应用）</a></li>
+                <li><a href="javascript:;" class="paragraph2" apply-range="page">正文二（全文应用）</a></li>
+                <li><a href="javascript:;" class="paragraph3" apply-range="page">正文三（全文应用）</a></li>
+                <li><a href="javascript:;" class="heading1">标题一</a></li>
+                <li><a href="javascript:;" class="heading2">标题二</a></li>
+                <li><a href="javascript:;" class="heading3">标题三</a></li>
+            </ul>
+            <ul class="fontpicker">
+                <!--字体选择器-->
+                <li><a href="javascript:;" style="font-family: 宋体, SimSun;">宋体</a></li>
+                <li><a href="javascript:;" style="font-family: 仿宋, FangSong;">仿宋</a></li>
+                <li><a href="javascript:;" style="font-family: 黑体, SimHei;">黑体</a></li>
+                <li><a href="javascript:;" style="font-family: 楷体, 楷体_GB2312, SimKai;">楷体</a></li>
+                <li><a href="javascript:;" style="font-family: 微软雅黑, 'Microsoft YaHei';">微软雅黑</a></li>
+                <li><a href="javascript:;" style="font-family: arial, helvetica, sans-serif;">arial</a></li>
+                <li><a href="javascript:;" style="font-family: 'arial black', 'avant garde';">arial black</a></li>
+                <li><a href="javascript:;" style="font-family: 'times new roman';">time new roman</a></li>
+                <li><a href="javascript:;" style="font-family: Courier New;">Courier New</a></li>
+            </ul>
+            <ul class="sizepicker">
+                <!--字号选择器-->
+                <li><a href="javascript:;" style="font-size: 0.750rem;" fontsize="0.750rem">12</a></li>
+                <li><a href="javascript:;" style="font-size: 0.875rem;" fontsize="0.875rem">14</a></li>
+                <li><a href="javascript:;" style="font-size: 1.000rem;" fontsize="1.000rem">16</a></li>
+                <li><a href="javascript:;" style="font-size: 1.125rem;" fontsize="1.125rem">18</a></li>
+                <li><a href="javascript:;" style="font-size: 1.250rem;" fontsize="1.250rem">20</a></li>
+                <li><a href="javascript:;" style="font-size: 1.375rem;" fontsize="1.375rem">22</a></li>
+                <li><a href="javascript:;" style="font-size: 1.500rem;" fontsize="1.500rem">24</a></li>
+                <li><a href="javascript:;" style="font-size: 2.000rem;" fontsize="2.000rem">32</a></li>
+            </ul>
+            <div class="colorpicker">
+                <!--颜色选择器-->
+                <div class="input-group" style="margin:5px 0;">
+                    <input type="text" class="form-control" placeholder="颜色代码">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">确定</button>
+                </span>
+                </div>
+                <ul>
+                    <li><a href="javascript:;" title="#E53333" style="background: #E53333;"></a></li>
+                    <li><a href="javascript:;" title="#E56600" style="background: #E56600;"></a></li>
+                    <li><a href="javascript:;" title="#FF9900" style="background: #FF9900;"></a></li>
+                    <li><a href="javascript:;" title="#64451D" style="background: #64451D;"></a></li>
+                    <li><a href="javascript:;" title="#DFC5A4" style="background: #DFC5A4;"></a></li>
+                    <li><a href="javascript:;" title="#FFE500" style="background: #FFE500;"></a></li>
+                    <li><a href="javascript:;" title="#009900" style="background: #009900;"></a></li>
+                    <li><a href="javascript:;" title="#006600" style="background: #006600;"></a></li>
+                    <li><a href="javascript:;" title="#99BB00" style="background: #99BB00;"></a></li>
+                    <li><a href="javascript:;" title="#B8D100" style="background: #B8D100;"></a></li>
+                    <li><a href="javascript:;" title="#60D978" style="background: #60D978;"></a></li>
+                    <li><a href="javascript:;" title="#337FE5" style="background: #337FE5;"></a></li>
+                    <li><a href="javascript:;" title="#003399" style="background: #003399;"></a></li>
+                    <li><a href="javascript:;" title="#4C33E5" style="background: #4C33E5;"></a></li>
+                    <li><a href="javascript:;" title="#9933E5" style="background: #9933E5;"></a></li>
+                    <li><a href="javascript:;" title="#CC33E5" style="background: #CC33E5;"></a></li>
+                    <li><a href="javascript:;" title="#EE33EE" style="background: #EE33EE;"></a></li>
+                    <li><a href="javascript:;" title="#00D5FF" style="background: #00D5FF;"></a></li>
+                    <li><a href="javascript:;" title="#FFFFFF" style="background: #FFFFFF;"></a></li>
+                    <li><a href="javascript:;" title="#CCCCCC" style="background: #CCCCCC;"></a></li>
+                    <li><a href="javascript:;" title="#999999" style="background: #999999;"></a></li>
+                    <li><a href="javascript:;" title="#666666" style="background: #666666;"></a></li>
+                    <li><a href="javascript:;" title="#333333" style="background: #333333;"></a></li>
+                    <li><a href="javascript:;" title="#000000" style="background: #000000;"></a></li>
+                </ul>
+            </div>
+            <div class="popover bottom in linkPop">
+                <div class="arrow"></div>
+                <h3 class="popover-title">添加超链接</h3>
+                <div class="popover-content">
+                    <div class="input-group">
+                        <span class="input-group-addon">地址</span>
+                        <input type="text" class="form-control link-href" value="http://" spellcheck="false">
+                    </div>
+                    <div class="btn-box">
+                        <button type="button" class="btn btn-success certain">确定</button>
+                    </div>
+                </div>
+            </div>
+            <div class="popover bottom in toolsPop">
+                <!--缩放的工具栏菜单-->
+                <span class="arrow"></span>
+                <div class="popover-content">
+                    <ul class="tools"></ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--编辑器iframe-->
+    <div class="iframeCodeBox blockBody">
+        <iframe id="page" class="iframe" src="//EditorStyle.hexfuture.net/Editor/full/iframe/iframe.html"
+                scrolling="auto"
+                frameborder="0" seamless onload="init();"></iframe>
+        <textarea class="code" spellcheck="false"></textarea>
+        <div class="outline">
+            <div class="ctrl">
+                <h3 class="btn btn-sm btn-info" draggable="true">
+                    <a href="javascript:;" draggable="false">标题</a> <!--兼容IE-->
+                </h3>
+                <div class="btn-group Default" style="display: block;">
+                    <span class="btn btn-sm btn-info delete" title="删除"><i class="fa fa-trash"></i></span>
+                </div>
+                <div class="btn-group Picture">
+                    <span class="btn btn-sm btn-info edit" title="编辑"><i class="fa fa-pencil"></i></span>
+                    <span class="btn btn-sm btn-info delete" title="删除"><i class="fa fa-trash"></i></span>
+                </div>
+                <div class="btn-group Table">
+                    <span class="btn btn-sm btn-info" target=".insert"><i
+                            class="fa fa-plus-square-o"></i>&nbsp;插入</span>
+                    <span class="btn btn-sm btn-info" target=".remove"><i class="fa fa-times"></i>&nbsp;移除</span>
+                    <span class="btn btn-sm btn-info" target=".merge"><i class="fa fa-random"></i>&nbsp;合并</span>
+                    <span class="btn btn-sm btn-info" target=".split"><i class="fa fa-scissors"></i>&nbsp;拆分</span>
+                    <span class="btn btn-sm btn-info style"><i class="fa fa-pencil-square-o"></i>&nbsp;样式</span>
+                    <span class="btn btn-sm btn-info delete"><i class="fa fa-trash"></i>&nbsp;删除</span>
+                </div>
+            </div>
+            <p style="width: 100%;height: 1px;position: absolute;left:0; top: 0;"></p>
+            <p style="width: 100%;height: 1px;position: absolute;left:0; bottom: 0;"></p>
+            <p style="width: 1px;height: 100%;position: absolute;left:0; top: 0;"></p>
+            <p style="width: 1px;height: 100%;position: absolute;right:0; bottom: 0;"></p>
+        </div>
+        <div class="table-ctrlBox">
+
+            <ul class="dropdown-menu insert">
+                <li command="insertRow" parameter="before"><a href="javascript:;">在上方插入行</a></li>
+                <li command="insertRow" parameter="after"><a href="javascript:;">在下方插入行</a></li>
+                <li command="insertColBefore"><a href="javascript:;">在左侧插入列</a></li>
+                <li command="insertColAfter"><a href="javascript:;">在右侧插入列</a></li>
+            </ul>
+
+            <ul class="dropdown-menu remove">
+                <li command="removeRow"><a href="javascript:;">移除行</a></li>
+                <li command="removeCol"><a href="javascript:;">移除列</a></li>
+            </ul>
+
+            <ul class="dropdown-menu merge">
+                <li command="mergeRight"><a href="javascript:;">向右合并单元格</a></li>
+                <li command="mergeDown"><a href="javascript:;">向下合并单元格</a></li>
+            </ul>
+
+            <ul class="dropdown-menu split">
+                <li command="splitHorizon"><a href="javascript:;">水平拆分</a></li>
+                <li command="splitVertical"><a href="javascript:;">垂直拆分</a></li>
+            </ul>
+
+            <div class="modal fade style">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">表格样式设置</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">表格风格</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="table-style" value="table-bordered">
+                                        <img src="/Scripts/NewEditor/images/normal-border-table.png" width="65"
+                                             alt="全边框">
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="table-style" value="horizontal-bordered">
+                                        <img src="/Scripts/NewEditor/images/horizontal-border-table.png" width="65"
+                                             alt="横边框">
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="table-style" value="part-bordered">
+                                        <img src="/Scripts/NewEditor/images/part-border-table.png" width="65"
+                                             alt="部分边框">
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="table-style" value="bold-bordered">
+                                        <img src="/Scripts/NewEditor/images/bold-border-table.png" width="65"
+                                             alt="外边框加粗">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">单元格及边框样式</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-inline">
+                                        单元格颜色：
+                                        <div class="input-group">
+                                            <input type="text" class="cell-color form-control" style="width: 120px;">
+                                            <!--type = color 不支持透明色-->
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-default changeCellColor" type="button">变更</button>
+                                        </span>
+                                        </div>
+                                        <input class="html5ColorPicker" type="color">
+                                        <object class="nativeColorPicker"
+                                                classid="clsid:3050f819-98b5-11cf-bb82-00aa00bdce0b"></object>
+                                        单元格宽度:
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" step="1" min="1" max="100"
+                                                   style="width: 120px;">
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    注意：同一行无论有几个单元格设置了宽度，所有设置的宽度加起来超过或小于100%都会按100%显示，请尽量保证宽度和为100%。
+                                    <hr>
+                                    <div class="form-inline">
+                                        边框颜色：
+                                        <div class="input-group">
+                                            <input type="text" class="border-color form-control" style="width: 120px;">
+                                            <!--type = color 不支持透明色-->
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-default changeBorderColor" type="button">变更</button>
+                                        </span>
+                                        </div>
+                                        <input class="html5ColorPicker" type="color">
+                                        边框样式：
+                                        <label class="radio-inline">
+                                            <input type="radio" name="border-style" value="solid">实线
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="border-style" value="dashed">虚线
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary certain">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="line"></div>
+    </div>
+</div>
+<!--右侧的插入元素列表-->
+<div class="modules">
+    <h4 class="blockHeader">
+        <i class="fa fa-plus"></i>
+        <span>插入元素</span>
+    </h4>
+    <div class="blockBody moduleBox">
+        <section class="inlineModule">
+            <h5>行内元素——点击插入</h5>
+            <ul></ul>
+        </section>
+        <section class="blockModule">
+            <h5>行间元素——拖拽插入</h5>
+            <ul></ul>
+        </section>
+    </div>
+</div>
+<!--添加音标模态框-->
+<div class="modal fade phonogram-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加音标</h3>
+            </div>
+            <div class="modal-body">
+                <div class="" style="padding: 0 0 10px 0;color: #FF2C30">注：多个文字时，请用空格键分隔拼音</div>
+                <div class="input-group">
+                    <span class="input-group-addon">拼音</span>
+                    <input type="text" class="form-control phonogram-sup">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑音标模态框-->
+<div class="modal fade phonogram-edit-dialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">编辑拼音</h3>
+            </div>
+            <div class="modal-body">
+                <p style="text-align: center;"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delete-phonogram" class="btn btn-danger" data-dismiss="modal">删除</button>
+                <button type="button" id="edit-phonogram" class="btn btn-success" data-dismiss="modal">编辑</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--章标题部分视图-->
+<div class="modal fade chapter-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加章节标题</h3>
+            </div>
+            <div class="modal-body">
+                <div style="margin:5px;">
+                    类别:
+                    <label style="margin:0 10px;"><input type="radio" name="chapter-type" value="chapter"/>章标题</label>
+                    <label style="margin:0 10px;"><input type="radio" name="chapter-type" value="section"/>节标题</label>
+                    <label style="margin:0 10px;"><input type="radio" name="chapter-type" value="common"/>小标题</label>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">编号</span>
+                            <input type="text" class="form-control chapter-index">
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="input-group">
+                            <span class="input-group-addon">标题</span>
+                            <input type="text" class="form-control chapter-title">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--知识点关联部分视图-->
+<div class="modal fade keypoint-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>关联知识点</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    选择知识点：
+                    <select id="kpCategory" class="form-control">
+                        <option value="0">请选择知识点分类</option>
+                    </select>
+                    <select id="keyPointSelect" class="form-control">
+                        <option value="0">请选择知识点</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--原书页码模态框-->
+<div class="modal fade pagenum-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>请输入原书页码</h3>
+            </div>
+            <div class="modal-body">
+                <div style="overflow: hidden">
+                    <div class="input-group" style="width: 44%;float: left;">
+                        <span class="input-group-addon">页码</span>
+                        <input type="text" class="form-control page-num">
+                    </div>
+                    <div class="input-group" style="width: 44%;float: left;margin-left: 12%;">
+                        <span class="input-group-addon">段落数</span>
+                        <input type="text" class="form-control paragraph-num">
+                    </div>
+                </div>
+                <div class="panel" style="margin-bottom: -10px;">
+                    <h4 style="margin-top: 15px;">上传背景图片</h4>
+                    <div class="fristway">
+                        <h6 style="margin-left: 15px;display: inline-block">方式一： 本地上传图片</h6>
+                        <img style="display: inline-block;width: 100px;height: 100px;margin-left: 20px;border: 1px solid #eee;"/>
+                        <button id="bgimg_btn" type="button" class="btn btn-primary" style="margin-left: 30px">上传
+                        </button>
+                        <input id="fileupload_resource" type="file" name="file"
+                               accept="image/gif,image/jpeg,image/bmp,image/png,image/ico,image/jpg"
+                               style="display:none;"/>
+                    </div>
+                    <div class="secondway">
+                        <h6 style="margin-left: 15px;">方式二： 选择系统推荐图片</h6>
+                        <div class="system_bgimg_list"
+                             style="width: 540px;height: 190px;max-height:190px;margin: 0 auto;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+                <button type="button" class="btn btn-success certainedit" style="display: none;">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加表格部分视图-->
+<div class="modal fade table-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加表格</h3>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">表格样式</div>
+                    <div class="panel-body">
+                        <label class="radio-inline">
+                            <input type="radio" name="table-type" value="table-bordered" checked>
+                            <img src="/Scripts/NewEditor/images/normal-border-table.png" width="65" alt="全边框">
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="table-type" value="horizontal-bordered">
+                            <img src="/Scripts/NewEditor/images/horizontal-border-table.png" width="65" alt="横边框">
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="table-type" value="part-bordered">
+                            <img src="/Scripts/NewEditor/images/part-border-table.png" width="65" alt="部分边框">
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="table-type" value="bold-bordered">
+                            <img src="/Scripts/NewEditor/images/bold-border-table.png" width="65" alt="外边框加粗">
+                        </label>
+                        <hr/>
+                        <div class="form-inline">
+                            单元格颜色：
+                            <select class="form-control table-bg">
+                                <option value="" selected="selected">默认</option>
+                                <option value="active">浅灰</option>
+                                <option value="success">浅绿</option>
+                                <option value="warning">浅黄</option>
+                                <option value="info">浅蓝</option>
+                                <option value="danger">浅红</option>
+                            </select>
+                            边框颜色：<input type="color" class="border-color" value="#dddddd" width="100px;">
+                            边框样式：
+                            <label class="radio-inline">
+                                <input type="radio" name="border-type" value="solid" checked>实线
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="border-type" value="dashed">虚线
+                            </label>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">行数</div>
+                                    <input type="number" min="1" max="30" step="1" class="form-control row-num">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">列数</div>
+                                    <input type="number" min="1" max="30" step="1" class="form-control col-num">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">表格标题及说明</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">编号</div>
+                                    <input type="text" class="form-control index">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">标题</div>
+                                    <input type="text" class="form-control title">
+                                </div>
+                            </div>
+                        </div>
+                        <textarea class="form-control description"
+                                  style="width: 100%; margin-top:10px; resize:vertical;"
+                                  placeholder="说明文字..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加分类部分视图-->
+<div class="modal fade column-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加分栏</h3>
+            </div>
+            <div class="modal-body">
+
+                <span>选择分栏数量：</span>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="column-num" autocomplete="off" value="2" checked> 两栏
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="column-num" autocomplete="off" value="3"> 三栏
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="column-num" autocomplete="off" value="4"> 四栏
+                    </label>
+                </div>
+                <hr>
+                <div class="editColumn">
+                    <span>缩放选中分栏：</span>
+                    <button type="button" class="btn btn-default expand">拓宽分栏</button>
+                    <button type="button" class="btn btn-default narrow">缩窄分栏</button>
+                    <span>选中分栏背景颜色：</span><input type="color" class="col-bg-color"/>
+                </div>
+                <hr>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-6"></div>
+                        <div class="col-xs-6"></div>
+                    </div>
+                </div>
+                <hr>
+                <p>注意：分栏的边框只为编辑过程中提供辅助服务，实际并不存在，如需边框请使用表格。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--课件关联部分视图-->
+<div class="modal fade courseware-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>关联课件</h3>
+            </div>
+            <div class="modal-body">
+                <table cellpadding="0" cellspacing="0" style="line-height:30px;" width="100%" class="table">
+                    <tr>
+                        <td align="right" valign="top" style="width:100px;">课件标题：</td>
+                        <td align="left"><span id="txtCoursewareTitle"></span>&nbsp;<input type="button"
+                                                                                           id="btnBrowserCourseware"
+                                                                                           value="浏览课件"
+                                                                                           onclick="openBrowserCourseWareDialog()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">缩略图：</td>
+                        <td align="left"><img id="imgCoursewareCover" alt="" width="100" height="100"></td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">课件说明：</td>
+                        <td align="left">
+                            <div id="txtCoursewareDescription" style="max-height:80px; overflow-y:auto;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">课件编号：</td>
+                        <td align="left"><input id="cwIndex" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">课件内/外：</td>
+                        <td align="left">
+                            <select id="cwInOut">
+                                <option value="in">课件内</option>
+                                <option value="out">课件外</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">宽：</td>
+                        <td align="left"><input id="txtWidth" type="text" width="50px" value="280"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right" valign="top">高：</td>
+                        <td align="left"><input id="txtHeight" type="text" width="50px" value="210"/></td>
+                    </tr>
+
+                    <tr class="hidden">
+                        <td>
+                            <input id="txtCoursewareKey" type="hidden"/><input id="txtVideoType" type="hidden"/><input
+                                id="txtFileURL" type="hidden"/><input type="hidden" id="txtCoursewareType"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--课件列表的层&#45;&#45;选择课件-->
+<div class="modal fade" id="openCoursewareDataList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" id="ajaxOpenCoursewareDataList"></div>
+</div>
+<!--注释部分视图-->
+<div class="modal fade note-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加注释</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">上标文字</span>
+                    <input type="text" class="form-control note-sup">
+                </div>
+                <hr>
+                <ul>
+                    <li class="note-audio"><a href="javascript:;" class="fa fa-file-audio-o" title="音频"></a></li>
+                    <li class="note-picture"><a href="javascript:;" class="fa fa-file-image-o" title="图片"></a></li>
+                    <li class="note-formula"><a href="javascript:;" class="fa fa-balance-scale" title="公式"></a></li>
+                </ul>
+                <iframe class="note-content" src="//EditorStyle.hexfuture.net/Editor/full/iframe/iframe.html"
+                        scrolling="auto" frameborder="0" seamless></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--插入图片部分视图-->
+<div class="modal fade picture-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>插入图片</h3>
+            </div>
+            <div class="modal-body">
+                <iframe id="uploadIframe" src="//EditorStyle.hexfuture.net/Upload/UploadImgInit"
+                        style="width: 100%; height: 180px;" frameborder="0"></iframe>
+                <hr>
+                <div class="picture-layout">
+                    <label>
+                        <input type="checkbox" class="desc-position"> 图片编号标题说明文字居右
+                    </label>
+                </div>
+                <div class="picture-desc">
+                    <div class="form-inline" style="margin-bottom:10px;">
+                        <span style="width: 70px; display: inline-block;">图片编号:</span>
+                        <input type="text" class="form-control index">
+                        <span style="width: 70px; display: inline-block;">图片标题:</span>
+                        <input type="text" class="form-control title">
+                    </div>
+
+                    <div class="form-inline">
+                        <span style="width: 70px; display: inline-block;">说明文字:</span>
+                        <textarea class="form-control description" style="width: 475px; resize:vertical;"></textarea>
+                    </div>
+
+                </div>
+                <div class="picture-size form-inline">
+                    <span>图片大小：</span>
+                    <div class="input-group">
+                        <span class="input-group-addon">宽</span>
+                        <input type="text" class="form-control width">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">高</span>
+                        <input type="text" class="form-control height">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--音频-->
+<div class="modal fade audio-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加音频</h3>
+            </div>
+            <div class="modal-body">
+                <iframe id="uploadAudioIframe" src="//EditorStyle.hexfuture.net/Upload/UploadAudioInit"
+                        style="width: 100%; height: 110px;" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--数学公式-->
+<div class="modal fade formula-dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加公式</h3>
+            </div>
+            <div class="modal-body">
+                <iframe src="//EditorStyle.hexfuture.net/Editor/full/plugins/HexFormula/hexformula.html"
+                        class="formula-iframe" frameborder="0" style="width:100%; height:400px;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success insertCss">插入文本公式</button>
+                <button type="button" class="btn btn-success insertImg">插入图片公式</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--列表-->
+<div class="modal fade list-dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3>添加列表</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-inline">
+                    列表样式：
+                    <select class="form-control list-style">
+                        <option value="">数字</option>
+                        <option value="decimal-leading-zero">两位数字</option>
+                        <option value="cjk-ideographic">中文数字</option>
+                        <option value="lower-alpha">小写字母</option>
+                        <option value="upper-alpha">大写字母</option>
+                        <option value="lower-roman">小写罗马字母</option>
+                        <option value="upper-roman">大写罗马字母</option>
+                        <option value="circle">空心圆</option>
+                        <option value="disc">实心圆</option>
+                        <option value="square">实心方块</option>
+                    </select>
+                    <div class="input-group">
+                        <span class="input-group-addon">列数</span>
+                        <input type="number" min="1" max="30" step="1" class="form-control">
+                    </div>
+                </div>
+
+                <hr/>
+
+                效果预览：
+                <ol>
+                    <li>条目一</li>
+                    <li>条目二</li>
+                    <li>条目三</li>
+                </ol>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success certain">确定</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--知识点展示-->
+<div class="popover right keypoint-list" style="display: none;">
+    <div class="arrow"></div>
+    <h3 class="popover-title" style="display: none;"></h3>
+    <div class="popover-content">
+        <ul></ul>
+    </div>
+</div>
+<!--页码展示-->
+<div class="popover right page-list" style="display: none;">
+    <div class="arrow"></div>
+    <h3 class="popover-title" style="display: none;"></h3>
+    <div class="popover-content">
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+</div>
+
+<!--数据-->
+<div id="textHtml" style="display: none;">
     <p hexid="5a08417364d3746392e0a15c4a3e8a00" style="text-align: center;" class="heading1"
        keypoint="863288673601|0,0,0"><span style="font-family: 楷体, 楷体_GB2312, SimKai;">第1课<sup><a href="javascript:;"
                                                                                                   class="note"
@@ -50,7 +885,7 @@
          style="text-align: center;">
         <courseware id="863290251588" name="863290251588" cwurl="/FileProgress/CoursewarePlay/863290251588"
                     cwex="/FileProgress/CoursewareExplain/863290251588" cwtype="3" cwshowmodel="in"><img
-                id="imgCoursewareCover" alt="" width="280" height="210" src="/FileProgress/Download2/863290251558">
+                id="imgCoursewareCover333" alt="" width="280" height="210" src="/FileProgress/Download2/863290251558">
         </courseware>
     </div>
     <p hexid="3f254b12edb72aab18b5d3e7bc178f68" class="paragraph1" style="text-align: center;"><br></p>
@@ -65,7 +900,7 @@
          style="text-align: center;">
         <courseware id="863290251606" name="863290251606" cwurl="/FileProgress/CoursewarePlay/863290251606"
                     cwex="/FileProgress/CoursewareExplain/863290251606" cwtype="3" cwshowmodel="in"><img
-                id="imgCoursewareCover" alt="" width="280" height="210" src="/FileProgress/Download2/863290251598">
+                id="imgCoursewareCover222" alt="" width="280" height="210" src="/FileProgress/Download2/863290251598">
         </courseware>
     </div>
     <p hexid="02403a808bcec7c2a0403432eb2cb6cd"><br></p>
@@ -158,20 +993,67 @@
     </div>
 </div>
 
-<!--编辑器配置-->
-<script src="customEditor.js"></script>
 <script>
-    CustomEditor.MInit_Blank('#text', $('#text').html());
-    $(document.body).on("click", "#settextbtn", function (event) {
-        //设置编辑器的值
-        CustomEditor.SetContent('#text', $('#textHtml').html());
-        $('#textHtml').html('');
-    });
-    $(document.body).on("click", "#gettextbtn", function (event) {
+    //设置编辑器的值
+    function init() {
+        HexStudy.Editor.init($('#textHtml').html());
+    }
+
+    $(document.body).on("click", "#ebookSaveBtn", function (event) {
         //获取编辑器的值
-        var textopic = CustomEditor.EditorContent('#text');
+        var textopic = HexStudy.Editor.getContent();
         $("#textHtml").html(textopic);
     });
+</script>
+<script>
+    //打开选择课件的页面
+    function openBrowserCourseWareDialog(ebookId) {
+        ebookId = "863288438505";
+        $.ajax({
+            type: "Post",
+            url: "//editor.hexfuture.net/EbookEdit/NewGetCoursewareList?EbookId=" + ebookId,
+            success: function (data) {
+                if (data.state == "error") {
+                    alert(data.msg);
+                    return false;
+                } else {
+                    $("#ajaxOpenCoursewareDataList").empty();
+                    $("#ajaxOpenCoursewareDataList").append(data);
+                    $("#openCoursewareDataList").modal('toggle');
+                }
+            }
+        });
+    }
+
+    //课件列表的确认按钮
+    function chooseSelectedCourseware() {
+        var key = $("#coursewareKey").val(),
+            title = $("#coursewareTitle").val(),
+            description = $("#coursewareDescription").val(),
+            cover = $("#coursewareCourseCover").val(),
+            coursewareType = $("#coursewareType").val(),
+
+            fileUrl = $("#coursewareFileURL").html();
+
+        if (key == "") {
+            alert('请选择课件');
+            return false;
+        }
+        if (title == "") {
+
+            alert("课件标题不能为空");
+            return false;
+        }
+
+        $("#imgCoursewareCover").attr("src", cover);
+        $("#txtCoursewareTitle").html(title);
+        $("#txtCoursewareDescription").html(description);
+        $("#txtCoursewareKey").val(key);
+        $("#txtFileURL").val(fileUrl);
+        $("#txtCoursewareType").val(coursewareType);
+
+        $("#openCoursewareDataList").modal('hide');
+    }
 </script>
 </body>
 </html>
