@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>编辑器demo</title>
-    <script src="jquery-1.10.2.js"></script>
+    <title>编辑器教材demo</title>
+    <!--引入的是full文件夹下的-->
     <!--设置域，防止脚本跨域-->
     <script>document.domain = "hexfuture.net";</script>
+    <!--引入jquery-->
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/base/jquery-1.11.1.min.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/upload/jquery-ui-1.9.2.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/upload/sparkmd5.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/upload/fileupload/jquery.fileupload.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/upload/jquery.hexstudy.upload.js"></script>
     <!--引入bootstrap-->
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script src="bootstrap.min.js"></script>
+    <link href="//EditorStyle.hexfuture.net/Editor/full/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/base/bootstrap.min.js"></script>
     <!--编辑器样式-->
-    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/css/style.min.css">
-    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/lite/plugins/hexformula/css/formulaMath.min.css">
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/full/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/full/css/style.min.css">
+    <link rel="stylesheet" href="//EditorStyle.hexfuture.net/Editor/full/plugins/hexformula/css/formulaMath.min.css">
     <!--编辑器脚本-->
-    <script src="//EditorStyle.hexfuture.net/Editor/lite/js/base/hexframe.min.js"></script>
-    <script src="//EditorStyle.hexfuture.net/Editor/lite/js/hexStudyEditor.min.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/base/hexframe.min.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/plugins/beautifycode/beautifyHTML.min.js"></script>
+    <script src="//EditorStyle.hexfuture.net/Editor/full/js/hexStudyEditor.min.js"></script>
     <style>
         html, body, #text {
             height: 100%;
@@ -24,7 +31,7 @@
 </head>
 <body>
 
-<div id="text">
+<div id="text" manual-init="true" sub-tools="off">
 </div>
 <button id="settextbtn">设置文本编辑器的值</button>
 <button id="gettextbtn">获取文本编辑器的值</button>
