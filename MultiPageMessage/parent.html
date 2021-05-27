@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父页面</title>
+    <style>
+        html, body, .main {
+            height: 100%;
+            margin: 0;
+        }
+
+        .main {
+            display: flex;
+        }
+
+        .main > div {
+            flex: 1;
+            border: 1px solid #333333;
+        }
+    </style>
+    <script src="../Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div class="main">
+    <div>
+        <iframe src="./children.html" style="width: 100%;height: 100%;"></iframe>
+    </div>
+    <div>
+        <span>父页内容</span>
+        <button id="ptoc">父子通信</button>
+        <button id="screen">分屏</button>
+        <div id="text">
+
+        </div>
+    </div>
+</div>
+<script>
+    //简单父子页面通信
+    $("#ptoc").click(function () {
+        var obj = {method: "parentToChildren", name: "父页信息"};
+        window.frames[0].postMessage(obj, "*");
+    })
+
+    window.addEventListener('message', function (e) {
+        if (e.data.method == "childrenClose") {
+            $("iframe").parent().show();
+        }
+        textadd(e.data.method + ":" + e.data.name);
+    }, false);
+
+    function textadd(text) {
+        $("#text").append("<p>" + text + "</p>")
+    }
+
+    //打开子页
+    $("#screen").click(function () {
+        window.open("./children.html");
+        $("iframe").parent().hide();
+    })
+</script>
+</body>
+</html>

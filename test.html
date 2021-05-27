@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*A 和 B 在安全区 1200px 内， A 定宽 50px 高 200px 且不跟随滚动，B 变宽。B1 为 B 的子 div，且 B1 定宽 25px。
+        附加加分条件：当屏宽小于 1200px 时，B 填充满 剩余位置。*/
+
+        html, body {
+            height: 100%;
+        }
+
+        .main {
+            width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+        }
+
+        .main > .a {
+            width: 50px;
+            height: 200px;
+            border: 1px solid #333333;
+        }
+
+        .main > .b {
+            flex: 1;
+            position: relative;
+            border: 1px solid #333333;
+        }
+
+        .main > .b > .b1 {
+            position: absolute;
+            right: -25px;
+            top: 0px;
+            width: 25px;
+            height: 100%;
+            border: 1px solid #333333;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="a">A</div>
+    <div class="b">
+        <span>B</span>
+        <div class="b1">B1</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子页面</title>
+    <script src="../Script/jquery-1.10.2.js"></script>
+</head>
+<body>
+<div>
+    子页内容
+    <div id="text">
+
+    </div>
+</div>
+</body>
+<script>
+    window.addEventListener('message', function (e) {
+        if (e.data.method == "parentToChildren") {
+            var obj = {method: "childrenToParent", name: "子页信息"};
+            window.parent.postMessage(obj, "*");
+        }
+        textadd(e.data.method + ":" + e.data.name);
+    }, false);
+
+    function textadd(text) {
+        $("#text").append("<p>" + text + "</p>")
+    }
+
+    window.onbeforeunload = function (e) {
+        var obj = {method: "childrenClose", name: "子页关闭"};
+        window.opener.postMessage(obj, "*");
+    };
+
+</script>
+</html>
