@@ -41,9 +41,17 @@
         window.frames[0].postMessage(obj, "*");
     })
 
+    var childrenOpenCount = 0;
     window.addEventListener('message', function (e) {
         if (e.data.method == "childrenClose") {
             $("iframe").parent().show();
+        }
+        if (e.data.method == "childrenOpen") {
+            childrenOpenCount++;
+            $("iframe").parent().hide();
+            if (childrenOpenCount > 1) {
+                textadd("同时打开多个子页面");
+            }
         }
         textadd(e.data.method + ":" + e.data.name);
     }, false);
@@ -54,9 +62,15 @@
 
     //打开子页
     $("#screen").click(function () {
-        window.open("./children.html");
+        window.newWin = window.open("./children.html");
         $("iframe").parent().hide();
     })
+
+    //关闭父页
+    window.onbeforeunload = function (e) {
+        var obj = {method: "parentClose", name: "父页关闭"};
+        window.newWin.postMessage(obj, "*");
+    };
 </script>
 </body>
 </html>

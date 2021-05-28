@@ -26,10 +26,15 @@
         $("#text").append("<p>" + text + "</p>")
     }
 
+    //关闭子页
     window.onbeforeunload = function (e) {
         var obj = {method: "childrenClose", name: "子页关闭"};
         window.opener.postMessage(obj, "*");
     };
+
+    //开启了子页
+    var obj = {method: "childrenOpen", name: "子页已开启"};
+    window.opener.postMessage(obj, "*");
 
 </script>
 </html>
