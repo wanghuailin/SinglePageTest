@@ -58,7 +58,8 @@
 <div id="tab">
     <div id="demo">
         <div class="left">
-            <p v-for="el in catalogJsonList" v-text="el.EChapterNumber"></p>
+            <p v-for="el in catalogJsonList" v-text="el.EChapterNumber"
+               :style="{'height': el.EChapterNumberHeight* 22 +'px'}"></p>
         </div>
         <div class="right">
             <textarea placeholder="请在右边框选内容" @keydown.stop="tab($event)"></textarea>
@@ -66,6 +67,9 @@
     </div>
     <button @click="getCatalogValue()">确定</button>
 </div>
+<span id="text"
+      style="display: inline-block;width: 300px;margin: 0 auto;font-size: 14px;line-height: 22px;visibility: hidden;">计算文字高度</span>
+
 
 <script>
     var indent = '\t'; //tab
@@ -89,6 +93,14 @@
                 {
                     content: "小节名称",
                     level: 2,
+                },
+                {
+                    content: "这是一段很长的文字这是一段很长的文字这是一段很长的文字这是一段很长的文字这是一段很长的文字",
+                    level: 0,
+                },
+                {
+                    content: "短文字",
+                    level: 0,
                 },
             ]
             this.setCatalogValue(valuejson);
@@ -163,6 +175,7 @@
                             "EChapterName": item,
                             "EChapterGrade": grade, //1,2,3
                             "EChapterNumber": "CH",
+                            "EChapterNumberHeight": 1,
                         });
                     }
                 })
@@ -170,6 +183,7 @@
                 //设置 Number 和 ParentNumber(给接口传父子关系)
                 for (let i = 0; i < catalogJsonList.length; i++) {
                     catalogJsonList[i].Number = i + 1;
+                    catalogJsonList[i].EChapterNumberHeight = _this.getTextheight(catalogJsonList[i].EChapterName);
                 }
 
                 let step = 1;
@@ -206,6 +220,11 @@
 
                 _this.catalogJsonList = catalogJsonList;
                 console.log(catalogJsonList);
+            },
+            //获取文字宽高
+            getTextheight: function (text) {
+                $("#text").html(text);
+                return $("#text").height() / 22
             },
         }
     })
