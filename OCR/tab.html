@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟tab事件</title>
+    <script src="./a_jquery-1.10.2.js"></script>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        #tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #demo {
+            display: flex;
+            width: 400px;
+            border-radius: 4px;
+            border: 1px solid #E2E2E2;
+            margin: 0 auto;
+        }
+
+        #demo > div {
+            height: 300px;
+        }
+
+        #demo > div.left {
+            width: 100px;
+            background: #F5F7FA;
+            border-radius: 4px 0px 0px 4px;
+        }
+
+        #demo > div.left > p {
+            line-height: 22px;
+            font-size: 14px;
+        }
+
+
+        #demo > div.right {
+            width: 300px;
+        }
+
+        #demo > div.right > textarea {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            line-height: 22px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div id="tab">
+    <div id="demo">
+        <div class="left">
+            <p v-for="el in catalogJsonList" v-text="el.EChapterNumber"></p>
+        </div>
+        <div class="right">
+            <textarea placeholder="请在右边框选内容" @keydown.stop="tab($event)"></textarea>
+        </div>
+    </div>
+    <button @click="getCatalogValue()">确定</button>
+</div>
+
+<script>
+    var indent = '\t'; //tab
+
+    var tab = new Vue({
+        el: '#tab',
+        data: {
+            list: [],
+            catalogJsonList: []
+        },
+        mounted: function () {
+            let valuejson = [
+                {
+                    content: "章名称",
+                    level: 0,
+                },
+                {
+                    content: "节名称",
+                    level: 1,
+                },
+                {
+                    content: "小节名称",
+                    level: 2,
+                },
+            ]
+            this.setCatalogValue(valuejson);
+        },
+        methods: {
+            //设置文字 【3】代表页码(中文【】)
+            setCatalogValue: function (data) {
+                let html = $("textarea").val(); //追加文本
+                for (let item of data) {
+                    if (item.content.length > 0) {
+                        if (item.level == 0) {
+                            html += item.content + '\n';
+                        } else if (item.level == 1) {
+                            html += indent + item.content + '\n';
+                        } else {
+                            html += indent + indent + item.content + '\n';
+                        }
+                    }
+                }
+                $("textarea").val(html);
+            },
+            //模拟tab事件
+            tab: function ($ev) {
+                let $this = $ev.target;
+
+                let start = $this.selectionStart;
+                let end = $this.selectionEnd;
+                let selected = window.getSelection().toString();
+                if (($ev.shiftKey) && ($ev.keyCode === 9)) {
+                    console.log("shift Tab");
+                    event.stopPropagation();
+                    event.preventDefault();
+                    //减tab
+                    if (selected.indexOf(indent) == 0) {
+                        //第一行有tab，减去
+                        selected = selected.substr(1);
+                    }
+                    selected = selected.replace(/\n\t/g, '\n');
+                    $this.value = $this.value.substring(0, start) + selected + $this.value.substring(end);
+                    //神奇的是必须setTimeout才能定位光标
+                    setTimeout(function () {
+                        $this.setSelectionRange(start, start + selected.length);
+                        $this.focus();
+                    }, 0);
+                } else if ($ev.keyCode === 9) {
+                    console.log("Tab");
+                    //加tab
+                    selected = indent + selected.replace(/\n/g, '\n' + indent);
+                    $this.value = $this.value.substring(0, start) + selected + $this.value.substring(end);
+                    //神奇的是必须setTimeout才能定位光标
+                    setTimeout(function () {
+                        $this.setSelectionRange(start + indent.length, start + selected.length);
+                        $this.focus();
+                    }, 0);
+                }
+            },
+            //获取文字
+            getCatalogValue: function () {
+                let _this = this;
+
+                let catalogText = $("textarea").val();
+
+                //章节，等级，页码
+                let catalogJsonList = [];
+                let catalogTextList = catalogText.split("\n");
+                catalogTextList.forEach(function (item) {
+                    let subTextList = item.split(indent);
+                    let grade = subTextList.length;
+                    item = item.replace(/\t/g, '');
+                    if (item.length > 0) {
+                        catalogJsonList.push({
+                            "EChapterName": item,
+                            "EChapterGrade": grade, //1,2,3
+                            "EChapterNumber": "CH",
+                        });
+                    }
+                })
+
+                //设置 Number 和 ParentNumber(给接口传父子关系)
+                for (let i = 0; i < catalogJsonList.length; i++) {
+                    catalogJsonList[i].Number = i + 1;
+                }
+
+                let step = 1;
+                for (let i = 0; i < catalogJsonList.length; i++) {
+                    if (catalogJsonList[i].EChapterGrade == 1) {
+                        catalogJsonList[i].ParentNumber = 0;
+                        catalogJsonList[i].EChapterNumber += step;
+                        let step1 = 1;
+                        for (let j = i + 1; j < catalogJsonList.length; j++) {
+                            if (catalogJsonList[j].EChapterGrade == 1) {
+                                step++;
+                                break;
+                            }
+                            if (catalogJsonList[j].EChapterGrade == 2) {
+                                catalogJsonList[j].ParentNumber = catalogJsonList[i].Number;
+                                catalogJsonList[j].EChapterNumber += step + "." + step1;
+                                let step2 = 1;
+                                for (let z = j + 1; z < catalogJsonList.length; z++) {
+                                    if (catalogJsonList[z].EChapterGrade == 2) {
+                                        step1++;
+                                        break;
+                                    }
+                                    if (catalogJsonList[z].EChapterGrade == 3) {
+                                        catalogJsonList[z].ParentNumber = catalogJsonList[j].Number;
+                                        catalogJsonList[z].EChapterNumber += step + "." + step1 + "." + step2;
+                                        step2++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                _this.catalogJsonList = catalogJsonList;
+                console.log(catalogJsonList);
+            },
+        }
+    })
+</script>
+</body>
+</html>
