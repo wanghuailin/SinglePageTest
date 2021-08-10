@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>拖拽章节-有分组 vue.draggable例子</title>
+    <title>拖拽章节-无分组 vue.draggable例子</title>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
     <script src="https://www.itxst.com/package/vue/vue.min.js"></script>
@@ -37,22 +37,22 @@
 <div id="app">
     <div>{{drag?'拖拽中':'拖拽停止'}}</div>
     <draggable v-model="myArray" chosen-class="chosen" force-fallback="true" group="people" animation="1000"
-               @start="onStart" @end="onEnd">
+               @start="onStart" @end="onEnd" :move="onMove">
         <transition-group>
             <div class="item" v-for="element in myArray" :key="element.id">
                 <span v-text="element.name"></span>
                 <div class="block">
-                    <draggable v-model="element.list" chosen-class="chosen" force-fallback="true" group="children"
+                    <draggable v-model="element.list" chosen-class="chosen" force-fallback="true" group="people"
                                animation="1000"
-                               @start="onStart" @end="onEnd">
+                               @start="onStart" @end="onEnd" :move="onMove">
                         <transition-group>
                             <div class="item" v-for="item in element.list" :key="item.id">
                                 <span v-text="element.name+'～'+item.name"></span>
                                 <div class="block">
                                     <draggable v-model="item.list" chosen-class="chosen" force-fallback="true"
-                                               group="children2"
+                                               group="people"
                                                animation="1000"
-                                               @start="onStart" @end="onEnd">
+                                               @start="onStart" @end="onEnd" :move="onMove">
                                         <transition-group>
                                             <div class="item" v-for="item2 in item.list" :key="item2.id">
                                                 <span v-text="element.name+'～'+item.name+'~'+item2.name"></span>
@@ -81,56 +81,56 @@
                 drag: false,
                 myArray: [
                     {
-                        people: 'cn', id: 1, name: '第一章',
+                        people: 'cn', id: 1, name: '第一章', grade: 1,
                         list: [
                             {
-                                id: 11, name: '第一节',
+                                id: 11, name: '第一节', grade: 2,
                                 list: [
-                                    {id: 21, name: '第一小节'},
-                                    {id: 22, name: '第二小节'},
-                                    {id: 23, name: '第三小节'}
+                                    {id: 21, name: '第一小节', grade: 3},
+                                    {id: 22, name: '第二小节', grade: 3},
+                                    {id: 23, name: '第三小节', grade: 3}
                                 ]
                             },
                             {
-                                id: 12, name: '第二节',
+                                id: 12, name: '第二节', grade: 2,
                                 list: [
-                                    {id: 21, name: '第一小节'},
-                                    {id: 22, name: '第二小节'},
-                                    {id: 23, name: '第三小节'}
+                                    {id: 21, name: '第一小节', grade: 3},
+                                    {id: 22, name: '第二小节', grade: 3},
+                                    {id: 23, name: '第三小节', grade: 3}
                                 ]
                             },
                             {
-                                id: 13, name: '第三节',
+                                id: 13, name: '第三节', grade: 2,
                                 list: [
-                                    {id: 21, name: '第一小节'},
-                                    {id: 22, name: '第二小节'},
-                                    {id: 23, name: '第三小节'}
+                                    {id: 21, name: '第一小节', grade: 3},
+                                    {id: 22, name: '第二小节', grade: 3},
+                                    {id: 23, name: '第三小节', grade: 3}
                                 ]
                             }
                         ]
                     },
                     {
-                        people: 'cn', id: 2, name: '第二章',
+                        people: 'cn', id: 2, name: '第二章', grade: 1,
                         list: [
-                            {id: 21, name: '第一节'},
-                            {id: 22, name: '第二节'},
-                            {id: 23, name: '第三节'}
+                            {id: 21, name: '第一节', grade: 2},
+                            {id: 22, name: '第二节', grade: 2},
+                            {id: 23, name: '第三节', grade: 2}
                         ]
                     },
                     {
-                        people: 'cn', id: 3, name: '第三章',
+                        people: 'cn', id: 3, name: '第三章', grade: 1,
                         list: [
-                            {id: 31, name: '第一节'},
-                            {id: 32, name: '第二节'},
-                            {id: 33, name: '第三节'}
+                            {id: 31, name: '第一节', grade: 2},
+                            {id: 32, name: '第二节', grade: 2},
+                            {id: 33, name: '第三节', grade: 2}
                         ]
                     },
                     {
-                        people: 'cn', id: 4, name: '第四章',
+                        people: 'cn', id: 4, name: '第四章', grade: 1,
                         list: [
-                            {id: 41, name: '第一节'},
-                            {id: 42, name: '第二节'},
-                            {id: 43, name: '第三节'}
+                            {id: 41, name: '第一节', grade: 2},
+                            {id: 42, name: '第二节', grade: 2},
+                            {id: 43, name: '第三节', grade: 2}
                         ]
                     }
                 ]
@@ -138,12 +138,31 @@
         },
         methods: {
             onStart() {
-                this.drag = true;
+                // this.drag = true;
             },
             onEnd() {
-                this.drag = false;
+                // this.drag = false;
                 console.log(this.myArray);
-            }
+            },
+            //move回调方法
+            onMove(e, originalEvent) {
+                console.log(e)
+                /*e对象结构
+                draggedContext: 被拖拽的元素
+                    index: 被拖拽的元素的序号
+                    element: 被拖拽的元素对应的对象
+                    futureIndex: 预期位置、目标位置
+                relatedContext: 将停靠的对象
+                    index: 目标停靠对象的序号
+                    element: 目标的元素对应的对象
+                    list:  目标数组
+                    component: 将停靠的vue组件对象
+                */
+                if (e.draggedContext.element.grade < e.relatedContext.element.grade) {
+                    return false;
+                }
+                return true;
+            },
         }
     });
 </script>
